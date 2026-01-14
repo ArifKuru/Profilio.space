@@ -1,0 +1,103 @@
+@{
+    Layout = null;
+    string username = ViewBag.Username ?? "unknown";
+}
+
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-white">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Not Found | Profolio.space</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/public/favicon.png?v=4">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',
+                            primary: '#16A34A',
+                            border: '#E2E8F0'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="h-screen overflow-hidden antialiased text-slate-800 bg-gradient-to-br from-slate-50 to-slate-100">
+    <div class="flex h-full w-full items-center justify-center px-6">
+        <div class="max-w-2xl w-full text-center">
+            <!-- Logo -->
+            <div class="mb-8">
+                <a href="/">
+                    <img src="~/public/logo_text.png" alt="Profolio" class="h-10 mx-auto mb-6 object-contain">
+                </a>
+            </div>
+
+            <!-- 404 Illustration -->
+            <div class="mb-8">
+                <div class="relative inline-block">
+                    <div class="w-32 h-32 mx-auto mb-6 bg-slate-900 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user-slash text-5xl text-white"></i>
+                    </div>
+                    <div class="absolute -top-2 -right-2 w-8 h-8 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
+                        <i class="fas fa-exclamation text-white text-xs"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div class="mb-8">
+                <h1 class="text-6xl font-black text-slate-900 mb-4">404</h1>
+                <h2 class="text-2xl font-bold text-slate-800 mb-3">User Not Found</h2>
+                <p class="text-lg text-slate-600 mb-2">
+                    The user <span class="font-bold text-slate-900">"@username"</span> could not be found.
+                </p>
+                <p class="text-sm text-slate-500">
+                    The profile you're looking for may have been removed or the username might be incorrect.
+                </p>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="/" class="flex items-center justify-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-all shadow-sm font-semibold text-sm">
+                    <i class="fas fa-home"></i>
+                    <span>Go to Homepage</span>
+                </a>
+                <a href="/register" class="flex items-center justify-center gap-2 px-6 py-3 bg-white border border-brand-border text-slate-700 rounded-lg hover:bg-slate-50 transition-all shadow-sm font-semibold text-sm">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Create Account</span>
+                </a>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="mt-12 pt-8 border-t border-slate-200">
+                <p class="text-xs text-slate-400 uppercase tracking-widest mb-2">Looking for something else?</p>
+                <div class="flex flex-wrap items-center justify-center gap-4 text-sm text-slate-500">
+                    <a href="/login" class="hover:text-slate-900 transition-colors">Login</a>
+                    <span class="text-slate-300">|</span>
+                    <a href="/register" class="hover:text-slate-900 transition-colors">Register</a>
+                    <span class="text-slate-300">|</span>
+                    <a href="/#about" class="hover:text-slate-900 transition-colors">About</a>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="mt-12">
+                <p class="text-[10px] text-slate-300 uppercase tracking-widest">
+                    &copy; @DateTime.Now.Year profolio.space
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

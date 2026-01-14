@@ -1,0 +1,176 @@
+﻿@model CvBuilder.Models.CvViewModel
+@{
+    ViewBag.Title = "Build CV";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="flex flex-col" style="min-height: calc(100vh - 200px);">
+    <!-- Top Action Bar -->
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <h2 class="text-2xl font-bold text-app-textMain">Build CV</h2>
+            <p class="text-sm text-app-textSub mt-1">Preview and download your professional CV</p>
+        </div>
+        
+        <div class="flex items-center gap-3">
+            @if (Model != null && Model.User != null)
+            {
+                <!-- View Public Profile -->
+                <a href="/@Model.User.username" target="_blank" class="flex items-center gap-2 px-4 py-2 bg-white border border-app-soft rounded-lg text-app-textMain hover:bg-app-bg transition-colors text-sm font-medium">
+                    <i class="fas fa-external-link-alt text-xs"></i>
+                    <span>View Profile</span>
+                </a>
+                
+                <!-- Download PDF -->
+                <a href="@Url.Action("DownloadPdfAuth", "BuildCv")" class="flex items-center gap-2 px-4 py-2 bg-app-primary text-white rounded-lg hover:bg-app-primaryHover transition-colors text-sm font-medium shadow-sm">
+                    <i class="fas fa-download text-xs"></i>
+                    <span>Download PDF</span>
+                </a>
+            }
+        </div>
+    </div>
+
+    @if (Model != null && Model.User != null)
+    {
+        <!-- Statistics Cards -->
+        <div class="mb-6">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-2">
+                <div class="bg-white rounded-lg border border-app-soft p-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-briefcase text-blue-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-app-textMain">@(Model.Experiences?.Count ?? 0)</p>
+                            <p class="text-xs text-app-textSub">Experiences</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg border border-app-soft p-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-green-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-app-textMain">@(Model.Educations?.Count ?? 0)</p>
+                            <p class="text-xs text-app-textSub">Educations</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg border border-app-soft p-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-code text-purple-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-app-textMain">@(Model.Workflows?.Count ?? 0)</p>
+                            <p class="text-xs text-app-textSub">Projects</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg border border-app-soft p-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-trophy text-yellow-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-app-textMain">@(Model.Achievements?.Count ?? 0)</p>
+                            <p class="text-xs text-app-textSub">Achievements</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg border border-app-soft p-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-heart text-pink-600"></i>
+                        </div>
+                        <div>
+                            <p class="text-2xl font-bold text-app-textMain">@(Model.Interests?.Count ?? 0)</p>
+                            <p class="text-xs text-app-textSub">Interests</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-xs text-app-textSub text-center italic">Note: At least 2 items are recommended for each section!</p>
+        </div>
+
+        <!-- CV Preview Container -->
+        <div class="flex-1 bg-white rounded-xl border border-app-soft shadow-sm overflow-hidden flex flex-col">
+            <!-- Preview Header -->
+            <div class="px-6 py-4 border-b border-app-soft bg-app-bg/50 flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                    <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                    <span class="text-xs text-app-textSub ml-2">CV Preview</span>
+                </div>
+                <div class="flex items-center gap-2 text-xs text-app-textSub">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>@(Model.User?.username ?? "user")_CV.pdf</span>
+                </div>
+            </div>
+            
+            <!-- CV Preview Frame -->
+            <div class="flex-1 overflow-auto bg-gray-50 p-4" style="min-height: 600px;">
+                <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+                    <iframe src="@Url.Action("ViewCv", "BuildCv", new { userId = Model.User.id })" 
+                            class="w-full border-0" 
+                            style="min-height: 800px; width: 100%;"
+                            id="cvPreviewFrame"
+                            scrolling="yes">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="flex-1 bg-white rounded-xl border border-app-soft shadow-sm p-12 flex items-center justify-center">
+            <div class="text-center">
+                <i class="fas fa-exclamation-triangle text-4xl text-yellow-500 mb-4"></i>
+                <h3 class="text-lg font-semibold text-app-textMain mb-2">CV data could not be loaded</h3>
+                <p class="text-sm text-app-textSub mb-4">Please refresh the page or check your profile information.</p>
+                <a href="@Url.Action("Index", "About")" class="inline-flex items-center gap-2 px-4 py-2 bg-app-primary text-white rounded-lg hover:bg-app-primaryHover transition-colors text-sm font-medium">
+                    <i class="fas fa-user"></i>
+                    <span>Go to Profile</span>
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    #cvPreviewFrame {
+        width: 100%;
+        border: none;
+    }
+    
+    /* Hide scrollbar but allow scrolling */
+    .overflow-auto::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .overflow-auto::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .overflow-auto::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+    }
+    
+    .overflow-auto::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.3);
+    }
+    
+    /* For Firefox */
+    .overflow-auto {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+    }
+</style>

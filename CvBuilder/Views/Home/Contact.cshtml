@@ -1,0 +1,161 @@
+﻿@using CvBuilder.Models.Entity
+@model List<social_links>
+
+<section class="min-h-screen flex flex-col relative overflow-hidden" id="contact">
+
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 opacity-[0.02] pointer-events-none select-none">
+        <i class="fas fa-paper-plane text-[20rem] text-app-primary transform -rotate-12"></i>
+    </div>
+
+    <div class="flex-grow flex flex-col justify-center w-full max-w-5xl mx-auto px-6 py-10 relative z-10">
+
+        <div class="flex items-center gap-3 mb-8">
+            <div class="bg-app-primary/10 p-2.5 rounded-xl text-app-primary shadow-sm ring-1 ring-app-primary/20">
+                <i class="fas fa-paper-plane text-xl"></i>
+            </div>
+            <h2 class="text-3xl font-bold text-app-textMain tracking-tight">Contact</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+
+            <div class="space-y-5">
+                <h3 class="text-2xl font-bold text-app-textMain">Let's get in touch!</h3>
+                <p class="text-app-textSub text-base leading-relaxed max-w-md">
+                    I'm always open to discussing product design work or partnership opportunities.
+                </p>
+
+                <div class="flex items-center gap-3 text-app-textSub group pt-2">
+                    <div class="w-10 h-10 rounded-full bg-white border border-app-soft flex items-center justify-center text-app-primary shadow-sm group-hover:bg-app-primary group-hover:text-white transition-all duration-300">
+                        <i class="fas fa-envelope text-sm"></i>
+                    </div>
+                    <span class="font-medium text-app-textMain">@(ViewBag.TargetUserEmail ?? "contact@profolio.space")</span>
+                </div>
+            </div>
+
+            <form id="contactForm" onsubmit="submitForm(event)" class="bg-white p-6 rounded-2xl border border-app-soft shadow-lg relative overflow-hidden group hover:border-app-primary/30 transition-all duration-300">
+
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-app-primary to-app-secondary"></div>
+
+                <input type="hidden" name="user_id" value="@ViewBag.TargetUserId" />
+
+                <div class="space-y-3">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div class="space-y-1">
+                            <label for="name" class="text-[10px] font-bold text-app-textMain uppercase tracking-wider ml-1">Name</label>
+                            <input type="text" id="name" name="full_name" placeholder="John Doe" required
+                                   class="w-full bg-app-bg border border-app-soft rounded-lg px-3 py-2 text-sm text-app-textMain focus:outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20 transition-all duration-300 placeholder-gray-400" />
+                        </div>
+                        <div class="space-y-1">
+                            <label for="email" class="text-[10px] font-bold text-app-textMain uppercase tracking-wider ml-1">Email</label>
+                            <input type="email" id="email" name="email" placeholder="john@example.com" required
+                                   class="w-full bg-app-bg border border-app-soft rounded-lg px-3 py-2 text-sm text-app-textMain focus:outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20 transition-all duration-300 placeholder-gray-400" />
+                        </div>
+                    </div>
+
+                    <div class="space-y-1">
+                        <label for="subject" class="text-[10px] font-bold text-app-textMain uppercase tracking-wider ml-1">Subject <span class="text-gray-400 font-normal normal-case">(Optional)</span></label>
+                        <input type="text" id="subject" placeholder="Project Inquiry"
+                               class="w-full bg-app-bg border border-app-soft rounded-lg px-3 py-2 text-sm text-app-textMain focus:outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20 transition-all duration-300 placeholder-gray-400" />
+                    </div>
+
+                    <div class="space-y-1">
+                        <label for="message" class="text-[10px] font-bold text-app-textMain uppercase tracking-wider ml-1">Message</label>
+                        <textarea id="message" name="message" rows="3" placeholder="How can I help you?" required
+                                  class="w-full bg-app-bg border border-app-soft rounded-lg px-3 py-2 text-sm text-app-textMain focus:outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20 transition-all duration-300 placeholder-gray-400 resize-none"></textarea>
+                    </div>
+
+                    <button type="submit" id="submitBtn"
+                            class="w-full py-2.5 px-4 bg-app-textMain text-white font-bold rounded-xl shadow-md hover:bg-app-primary hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-app-primary/25 text-sm mt-2">
+                        <span>Send Message</span>
+                        <i class="fas fa-paper-plane text-xs"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="w-full text-center space-y-2 pb-10 relative z-10">
+        <p class="text-app-textSub text-xs font-medium opacity-70">
+            &copy; @DateTime.Now.Year Profolio.space. All rights reserved.
+        </p>
+
+        <div>
+            <a href="/register" class="inline-flex items-center gap-1.5 text-app-primary font-bold hover:text-app-accent hover:underline decoration-2 underline-offset-2 transition-all text-xs">
+                <i class="fas fa-magic text-[10px]"></i>
+                <span>Build your own Profolio space</span>
+            </a>
+        </div>
+    </footer>
+</section>
+
+<script>
+    function submitForm(event) {
+        event.preventDefault();
+
+        const form = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const originalBtnText = submitBtn.innerHTML;
+
+        const formData = new FormData(form);
+        const subject = document.getElementById('subject').value.trim();
+        let message = formData.get('message');
+
+        if (subject) {
+            message = `Subject: ${subject}\n\n${message}`;
+            formData.set('message', message);
+        }
+
+        // Butonu pasife al
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+        fetch('/Home/Contact', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // --- BAŞARILI MESAJI (MODERN) ---
+                    Swal.fire({
+                        title: 'Message Sent!',
+                        text: 'Thank you for reaching out. I will get back to you soon.',
+                        icon: 'success',
+                        confirmButtonText: 'Great!',
+                        confirmButtonColor: '#16A34A', // Sitenin primary rengi
+                        background: '#ffffff',
+                        color: '#333',
+                        timer: 5000, // 5 saniye sonra otomatik kapanır
+                        timerProgressBar: true
+                    });
+
+                    form.reset(); // Formu temizle
+                } else {
+                    // --- HATA MESAJI (MODERN) ---
+                    Swal.fire({
+                        title: 'Oops...',
+                        text: data.message || "Something went wrong.",
+                        icon: 'error',
+                        confirmButtonText: 'Try Again',
+                        confirmButtonColor: '#d33'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // --- GENEL HATA MESAJI ---
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'An unexpected error occurred while sending the message.',
+                    icon: 'error',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#d33'
+                });
+            })
+            .finally(() => {
+                // Butonu eski haline getir
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            });
+    }
+</script>

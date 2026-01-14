@@ -1,0 +1,961 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Profolio.space - Create Your Professional Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="~/public/favicon.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: {
+                        app: {
+                            primary: '#16A34A',
+                            secondary: '#DCFCE7',
+                            dark: '#0F172A',
+                            bg: '#F1F5F9',
+                            soft: '#CBD5E1',
+                            textMain: '#1E293B',
+                            textSub: '#64748B',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* --- SCROLLBAR STİLİ (Index.cshtml'den alındı) --- */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0F172A; /* Sidebar rengiyle uyumlu koyu arka plan */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #16A34A; /* Yeşil hover efekti */
+            }
+    </style>
+</head>
+<body class="bg-app-bg text-app-textMain antialiased leading-relaxed font-medium">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-app-soft z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3">
+                <img src="~/public/logo_text.png" alt="Profolio.space" class="h-8" />
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="#features" class="text-app-textSub hover:text-app-primary transition-colors text-sm font-medium">Features</a>
+                <a href="#about" class="text-app-textSub hover:text-app-primary transition-colors text-sm font-medium">About</a>
+                <a href="@Url.Action("Index", "Register")" class="px-4 py-2 bg-app-primary text-white rounded-lg hover:bg-app-primaryHover transition-colors text-sm font-medium">
+                    Get Started
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+        <!-- Hero Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="~/public/bg.jpg" alt="Hero Background" 
+                 class="w-full h-full object-cover"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="hidden w-full h-full bg-gradient-to-br from-app-dark via-app-dark/95 to-app-primary/20"></div>
+        </div>
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-app-dark/70 z-10"></div>
+        
+        <!-- Hero Content -->
+        <div class="relative z-20 max-w-5xl mx-auto px-6 text-center py-32">
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight">
+                Create Your
+                <span class="text-app-primary">Profolio Space</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto leading-relaxed font-light">
+                Build your professional portfolio in minutes. Showcase your skills, experiences, and achievements with a beautiful, personalized profile page.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="@Url.Action("Index", "Register")" class="px-8 py-4 bg-app-primary text-white rounded-lg hover:bg-app-primaryHover transition-all text-lg font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    <i class="fas fa-rocket mr-2"></i>
+                    Create Your Profolio Space
+                </a>
+                <a href="#features" class="px-8 py-4 bg-white/10 backdrop-blur-md border-2 border-white/30 text-white rounded-lg hover:bg-white/20 transition-all text-lg font-bold">
+                    Learn More
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+            <a href="#features" class="text-white/70 hover:text-white transition-colors">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-app-textMain mb-4">Why Choose Profolio.space?</h2>
+                <p class="text-lg text-app-textSub max-w-2xl mx-auto">
+                    Everything you need to create a stunning professional portfolio
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-app-bg rounded-xl p-8 border border-app-soft hover:border-app-primary transition-all">
+                    <div class="w-16 h-16 bg-app-primary/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-user-circle text-3xl text-app-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-app-textMain mb-4">Personal Profile</h3>
+                    <p class="text-app-textSub leading-relaxed">
+                        Create a unique profile page with your username. Share your professional information, skills, and achievements with the world.
+                    </p>
+                </div>
+
+                <div class="bg-app-bg rounded-xl p-8 border border-app-soft hover:border-app-primary transition-all">
+                    <div class="w-16 h-16 bg-app-primary/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-file-pdf text-3xl text-app-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-app-textMain mb-4">PDF CV Export</h3>
+                    <p class="text-app-textSub leading-relaxed">
+                        Download your professional CV as a PDF with one click. Perfect for job applications and professional networking.
+                    </p>
+                </div>
+
+                <div class="bg-app-bg rounded-xl p-8 border border-app-soft hover:border-app-primary transition-all">
+                    <div class="w-16 h-16 bg-app-primary/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-palette text-3xl text-app-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-app-textMain mb-4">Beautiful Design</h3>
+                    <p class="text-app-textSub leading-relaxed">
+                        Modern, responsive design that looks great on all devices. Your portfolio will stand out with our professional templates.
+                    </p>
+                </div>
+
+                <div class="bg-app-bg rounded-xl p-8 border border-app-soft hover:border-app-primary transition-all">
+                    <div class="w-16 h-16 bg-app-primary/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-briefcase text-3xl text-app-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-app-textMain mb-4">Experience Management</h3>
+                    <p class="text-app-textSub leading-relaxed">
+                        Easily add and manage your work experiences, education, projects, achievements, and interests all in one place.
+                    </p>
+                </div>
+
+                <div class="bg-app-bg rounded-xl p-8 border border-app-soft hover:border-app-primary transition-all">
+                    <div class="w-16 h-16 bg-app-primary/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-link text-3xl text-app-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-app-textMain mb-4">Social Links</h3>
+                    <p class="text-app-textSub leading-relaxed">
+                        Connect your social media profiles, portfolio websites, and professional networks to your profile.
+                    </p>
+                </div>
+
+                <div class="bg-app-bg rounded-xl p-8 border border-app-soft hover:border-app-primary transition-all">
+                    <div class="w-16 h-16 bg-app-primary/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-envelope text-3xl text-app-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-app-textMain mb-4">Contact Form</h3>
+                    <p class="text-app-textSub leading-relaxed">
+                        Let visitors contact you directly through your profile page. Build your professional network effortlessly.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6 bg-app-bg">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-app-textMain mb-4">About Profolio.space</h2>
+                <p class="text-lg text-app-textSub max-w-2xl mx-auto">
+                    Empowering professionals worldwide to showcase their expertise and build their digital presence
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white rounded-xl p-8 border border-app-soft shadow-sm">
+                    <div class="w-14 h-14 bg-app-primary/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-bullseye text-2xl text-app-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-app-textMain mb-4">Our Mission</h3>
+                    <p class="text-app-textSub leading-relaxed">
+                        To democratize professional portfolio creation by providing an accessible, powerful platform that enables individuals from all backgrounds to showcase their skills, experiences, and achievements. We believe everyone deserves a professional digital presence that reflects their true potential.
+                    </p>
+                </div>
+                
+                <div class="bg-white rounded-xl p-8 border border-app-soft shadow-sm">
+                    <div class="w-14 h-14 bg-app-primary/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-eye text-2xl text-app-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-app-textMain mb-4">Our Vision</h3>
+                    <p class="text-app-textSub leading-relaxed">
+                        To become the leading platform for professional portfolio management, recognized for innovation, user-centric design, and commitment to helping professionals build meaningful connections in their careers. We envision a world where every professional has the tools to tell their unique story.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl p-8 md:p-12 border border-app-soft shadow-sm">
+                <h3 class="text-2xl font-bold text-app-textMain mb-6 text-center">What We Offer</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-bold text-app-textMain mb-3 flex items-center gap-2">
+                            <i class="fas fa-check-circle text-app-primary"></i>
+                            Comprehensive Profile Management
+                        </h4>
+                        <p class="text-app-textSub leading-relaxed text-sm">
+                            Create and manage your complete professional profile with sections for personal information, work experiences, education, projects, achievements, and interests. Everything you need in one centralized location.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-app-textMain mb-3 flex items-center gap-2">
+                            <i class="fas fa-check-circle text-app-primary"></i>
+                            Unique Profile URLs
+                        </h4>
+                        <p class="text-app-textSub leading-relaxed text-sm">
+                            Each user receives a unique profile URL based on their username (yourname.profolio.space), making it easy to share your professional profile with employers, clients, and your professional network.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-app-textMain mb-3 flex items-center gap-2">
+                            <i class="fas fa-check-circle text-app-primary"></i>
+                            Professional PDF CV Export
+                        </h4>
+                        <p class="text-app-textSub leading-relaxed text-sm">
+                            Download your professional CV as a beautifully formatted PDF document with a single click. Perfect for job applications, networking events, and professional correspondence.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-app-textMain mb-3 flex items-center gap-2">
+                            <i class="fas fa-check-circle text-app-primary"></i>
+                            Modern, Responsive Design
+                        </h4>
+                        <p class="text-app-textSub leading-relaxed text-sm">
+                            Our platform features a modern, responsive design that looks stunning on all devices - from desktop computers to mobile phones. Your portfolio will always look professional, no matter where it's viewed.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-app-textMain mb-3 flex items-center gap-2">
+                            <i class="fas fa-check-circle text-app-primary"></i>
+                            Social Media Integration
+                        </h4>
+                        <p class="text-app-textSub leading-relaxed text-sm">
+                            Connect your social media profiles, portfolio websites, and professional networks to your profile. Build a comprehensive online presence that showcases all aspects of your professional identity.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-app-textMain mb-3 flex items-center gap-2">
+                            <i class="fas fa-check-circle text-app-primary"></i>
+                            Contact Form Integration
+                        </h4>
+                        <p class="text-app-textSub leading-relaxed text-sm">
+                            Enable visitors to contact you directly through your profile page. Build your professional network effortlessly and never miss an opportunity to connect with potential employers or collaborators.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 bg-gradient-to-r from-app-primary/10 to-app-primary/5 rounded-xl p-8 border border-app-primary/20">
+                <div class="text-center">
+                    <h3 class="text-2xl font-bold text-app-textMain mb-4">Who We Serve</h3>
+                    <p class="text-app-textSub leading-relaxed max-w-3xl mx-auto">
+                        Profolio.space is designed for professionals across all industries - developers, designers, marketers, consultants, freelancers, students, and career changers. Whether you're just starting your career or are an experienced professional, our platform provides the tools you need to create a compelling professional presence that opens doors to new opportunities.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-6 bg-gradient-to-b from-app-bg to-white">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-app-textMain mb-6">
+                Ready to Create Your Profolio Space?
+            </h2>
+            <p class="text-xl text-app-textSub mb-8">
+                Join thousands of professionals who are already showcasing their work on Profolio.space
+            </p>
+            <a href="@Url.Action("Index", "Register")" class="inline-flex items-center gap-3 px-10 py-5 bg-app-primary text-white rounded-xl hover:bg-app-primaryHover transition-all text-xl font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                <i class="fas fa-rocket"></i>
+                Create Your Profolio Space
+            </a>
+        </div>
+    </section>
+
+    <!-- Legal Sections -->
+    <section id="legal" class="py-20 px-6 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <!-- GDPR Section -->
+            <div id="gdpr" class="mb-4 scroll-mt-20">
+                <div class="bg-white rounded-xl border border-app-soft shadow-sm overflow-hidden">
+                    <button onclick="toggleAccordion('gdpr-content', 'gdpr-icon')" class="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-app-bg/50 transition-colors">
+                        <h2 class="text-xl md:text-2xl font-bold text-app-textMain">GDPR Compliance & Data Protection</h2>
+                        <i id="gdpr-icon" class="fas fa-chevron-down text-app-primary text-xl transition-transform duration-300"></i>
+                    </button>
+                    <div id="gdpr-content" class="hidden px-6 md:px-12 pb-8 md:pb-12">
+                        <div class="text-app-textSub leading-relaxed space-y-6 text-base pt-4">
+                        <div>
+                            <p class="mb-4">
+                                Profolio.space is committed to protecting your personal data in accordance with the General Data Protection Regulation (GDPR) (EU) 2026/679 and applicable data protection laws. This document outlines our data protection practices and your rights regarding your personal information.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">Data Controller</h3>
+                            <p>
+                                Profolio.space acts as the data controller responsible for the collection, processing, and storage of your personal data. We are committed to ensuring that your personal information is processed lawfully, fairly, and transparently.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">Personal Data We Collect</h3>
+                            <p class="mb-2">To provide our services, we collect and process the following categories of personal data:</p>
+                            <ul class="list-disc list-inside space-y-2 ml-4">
+                                <li><strong>Identity Data:</strong> Name, surname, username, and profile image</li>
+                                <li><strong>Contact Data:</strong> Email address, phone number, and physical address</li>
+                                <li><strong>Professional Data:</strong> Work experiences, education history, skills, achievements, projects, and professional interests</li>
+                                <li><strong>Technical Data:</strong> IP address, browser type, device information, and usage patterns</li>
+                                <li><strong>Social Media Data:</strong> Links to your social media profiles and professional networks</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">Legal Basis for Processing</h3>
+                            <p>
+                                We process your personal data based on the following legal grounds:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 ml-4 mt-2">
+                                <li><strong>Contractual Necessity:</strong> To fulfill our contractual obligations and provide the services you have requested</li>
+                                <li><strong>Legitimate Interests:</strong> To improve our services, ensure platform security, and prevent fraud</li>
+                                <li><strong>Consent:</strong> Where you have provided explicit consent for specific processing activities</li>
+                                <li><strong>Legal Obligations:</strong> To comply with applicable laws and regulatory requirements</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">Purpose of Data Processing</h3>
+                            <p class="mb-2">Your personal data is processed for the following purposes:</p>
+                            <ul class="list-disc list-inside space-y-2 ml-4">
+                                <li>Creation and management of your professional profile page</li>
+                                <li>Generation and download of your CV in PDF format</li>
+                                <li>Provision of platform services and features</li>
+                                <li>Communication regarding your account and our services</li>
+                                <li>Platform security, fraud prevention, and abuse detection</li>
+                                <li>Compliance with legal and regulatory obligations</li>
+                                <li>Service improvement and analytics (in anonymized form)</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">Data Retention</h3>
+                            <p>
+                                We retain your personal data only for as long as necessary to fulfill the purposes outlined in this policy, unless a longer retention period is required or permitted by law. When you delete your account, we will delete or anonymize your personal data in accordance with our data retention policies.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">Your Rights Under GDPR</h3>
+                            <p class="mb-3">As a data subject, you have the following rights:</p>
+                            <ul class="list-disc list-inside space-y-2 ml-4">
+                                <li><strong>Right of Access:</strong> Request access to your personal data and receive a copy</li>
+                                <li><strong>Right to Rectification:</strong> Request correction of inaccurate or incomplete data</li>
+                                <li><strong>Right to Erasure:</strong> Request deletion of your personal data under certain circumstances</li>
+                                <li><strong>Right to Restrict Processing:</strong> Request limitation of how we process your data</li>
+                                <li><strong>Right to Data Portability:</strong> Receive your data in a structured, machine-readable format</li>
+                                <li><strong>Right to Object:</strong> Object to processing based on legitimate interests</li>
+                                <li><strong>Right to Withdraw Consent:</strong> Withdraw consent at any time where processing is based on consent</li>
+                            </ul>
+                            <p class="mt-4">
+                                To exercise any of these rights, please contact us through your registered account or use the contact information provided in our Privacy Policy.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">Data Security</h3>
+                            <p>
+                                We implement industry-standard technical and organizational security measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction. These measures include encryption, secure servers, access controls, and regular security assessments.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">Data Transfers</h3>
+                            <p>
+                                Your personal data may be transferred to and stored in countries outside the European Economic Area (EEA). We ensure that appropriate safeguards are in place to protect your data in accordance with GDPR requirements, including standard contractual clauses and adequacy decisions.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">Updates to This Policy</h3>
+                            <p>
+                                We may update this GDPR Compliance statement from time to time to reflect changes in our practices or legal requirements. We will notify you of any material changes through our platform or via email.
+                            </p>
+                        </div>
+
+                            <div class="pt-4 border-t border-app-soft">
+                                <p class="text-sm text-app-textSub">
+                                    <strong>Last Updated:</strong> 14 January 2026
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy Policy Section -->
+            <div id="privacy" class="mb-4 scroll-mt-20">
+                <div class="bg-white rounded-xl border border-app-soft shadow-sm overflow-hidden">
+                    <button onclick="toggleAccordion('privacy-content', 'privacy-icon')" class="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-app-bg/50 transition-colors">
+                        <h2 class="text-xl md:text-2xl font-bold text-app-textMain">Privacy Policy</h2>
+                        <i id="privacy-icon" class="fas fa-chevron-down text-app-primary text-xl transition-transform duration-300"></i>
+                    </button>
+                    <div id="privacy-content" class="hidden px-6 md:px-12 pb-8 md:pb-12">
+                        <div class="text-app-textSub leading-relaxed space-y-6 text-base pt-4">
+                        <div>
+                            <p class="mb-4">
+                                At Profolio.space, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform and services.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">1. Information We Collect</h3>
+                            <p class="mb-3">We collect information that you provide directly to us when you:</p>
+                            <ul class="list-disc list-inside space-y-2 ml-4">
+                                <li>Create an account or register for our services</li>
+                                <li>Complete your profile and add professional information</li>
+                                <li>Upload content, including profile images and documents</li>
+                                <li>Contact us for support or inquiries</li>
+                                <li>Use our contact form or communication features</li>
+                            </ul>
+                            <p class="mt-3">
+                                The information we collect includes but is not limited to: name, email address, phone number, physical address, profile photograph, work experience, education history, skills, achievements, projects, interests, and social media links.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">2. How We Use Your Information</h3>
+                            <p class="mb-2">We use the information we collect to:</p>
+                            <ul class="list-disc list-inside space-y-2 ml-4">
+                                <li>Create and maintain your professional profile page</li>
+                                <li>Generate and provide PDF CV downloads</li>
+                                <li>Deliver, maintain, and improve our platform services</li>
+                                <li>Communicate with you about your account, our services, and important updates</li>
+                                <li>Respond to your inquiries, comments, and support requests</li>
+                                <li>Monitor and analyze usage patterns to enhance user experience</li>
+                                <li>Detect, prevent, and address technical issues, security threats, and fraudulent activity</li>
+                                <li>Comply with legal obligations and enforce our Terms of Service</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">3. Information Sharing and Disclosure</h3>
+                            <p class="mb-3">We respect your privacy and do not sell, trade, or rent your personal information to third parties. However, we may share your information in the following circumstances:</p>
+                            <ul class="list-disc list-inside space-y-2 ml-4">
+                                <li><strong>Public Profile:</strong> Your profile page is publicly accessible via your chosen username URL. Information you choose to include in your profile will be visible to anyone who visits your profile page.</li>
+                                <li><strong>Service Providers:</strong> We may share information with trusted third-party service providers who assist us in operating our platform, conducting business, or serving users, provided they agree to keep this information confidential.</li>
+                                <li><strong>Legal Requirements:</strong> We may disclose information if required by law, court order, or governmental authority, or to protect our rights, property, or safety, or that of our users or others.</li>
+                                <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">4. Data Security</h3>
+                            <p>
+                                We implement comprehensive security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. These measures include encryption, secure server infrastructure, access controls, regular security audits, and employee training on data protection. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">5. Your Privacy Rights</h3>
+                            <p class="mb-3">You have the right to:</p>
+                            <ul class="list-disc list-inside space-y-2 ml-4">
+                                <li>Access and review your personal information</li>
+                                <li>Correct inaccurate or incomplete information</li>
+                                <li>Request deletion of your personal data</li>
+                                <li>Object to or restrict certain processing activities</li>
+                                <li>Request data portability</li>
+                                <li>Withdraw consent where processing is based on consent</li>
+                            </ul>
+                            <p class="mt-3">
+                                To exercise these rights, please contact us through your registered account or use the contact methods provided in this policy.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">6. Cookies and Tracking Technologies</h3>
+                            <p>
+                                We use cookies and similar tracking technologies to enhance your experience, analyze platform usage, and improve our services. You can control cookie preferences through your browser settings, though this may affect certain platform functionalities.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">7. Children's Privacy</h3>
+                            <p>
+                                Our services are not intended for individuals under the age of 18. We do not knowingly collect personal information from children. If you believe we have inadvertently collected information from a child, please contact us immediately.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">8. International Data Transfers</h3>
+                            <p>
+                                Your information may be transferred to and processed in countries other than your country of residence. We ensure that appropriate safeguards are in place to protect your data in accordance with applicable data protection laws.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">9. Changes to This Privacy Policy</h3>
+                            <p>
+                                We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. We will notify you of any material changes by posting the updated policy on our platform and updating the "Last Updated" date. Your continued use of our services after such changes constitutes acceptance of the updated policy.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">10. Contact Us</h3>
+                            <p>
+                                If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us through your registered account or via the contact information provided on our platform.
+                            </p>
+                        </div>
+
+                            <div class="pt-4 border-t border-app-soft">
+                                <p class="text-sm text-app-textSub">
+                                    <strong>Last Updated:</strong> 14 January 2026
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terms of Service Section -->
+            <div id="terms" class="mb-4 scroll-mt-20">
+                <div class="bg-white rounded-xl border border-app-soft shadow-sm overflow-hidden">
+                    <button onclick="toggleAccordion('terms-content', 'terms-icon')" class="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-app-bg/50 transition-colors">
+                        <h2 class="text-xl md:text-2xl font-bold text-app-textMain">Terms of Service</h2>
+                        <i id="terms-icon" class="fas fa-chevron-down text-app-primary text-xl transition-transform duration-300"></i>
+                    </button>
+                    <div id="terms-content" class="hidden px-6 md:px-12 pb-8 md:pb-12">
+                        <div class="text-app-textSub leading-relaxed space-y-6 text-base pt-4">
+                        <div>
+                            <p class="mb-4">
+                                Welcome to Profolio.space. These Terms of Service ("Terms") govern your access to and use of our platform, services, and website. By accessing or using Profolio.space, you agree to be bound by these Terms. If you do not agree to these Terms, please do not use our services.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">1. Acceptance of Terms</h3>
+                            <p>
+                                By creating an account, accessing, or using Profolio.space, you acknowledge that you have read, understood, and agree to be bound by these Terms and our Privacy Policy. These Terms constitute a legally binding agreement between you and Profolio.space.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">2. Account Registration and Responsibility</h3>
+                            <p class="mb-3">To use our services, you must:</p>
+                            <ul class="list-disc list-inside space-y-2 ml-4">
+                                <li>Be at least 18 years of age or have parental consent</li>
+                                <li>Provide accurate, current, and complete information during registration</li>
+                                <li>Maintain and promptly update your account information</li>
+                                <li>Maintain the security and confidentiality of your account credentials</li>
+                                <li>Accept responsibility for all activities that occur under your account</li>
+                                <li>Notify us immediately of any unauthorized use of your account</li>
+                            </ul>
+                            <p class="mt-3">
+                                You are solely responsible for maintaining the confidentiality of your password and for all activities and actions that occur under your account, whether authorized by you or not.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">3. User Content and Conduct</h3>
+                            <p class="mb-3">You agree that all content you post, upload, or share on Profolio.space:</p>
+                            <ul class="list-disc list-inside space-y-2 ml-4">
+                                <li>Is accurate, truthful, and not misleading</li>
+                                <li>Does not violate any applicable laws, regulations, or third-party rights</li>
+                                <li>Does not infringe upon intellectual property, privacy, or publicity rights</li>
+                                <li>Is not defamatory, libelous, obscene, pornographic, or offensive</li>
+                                <li>Does not contain viruses, malware, or other harmful code</li>
+                                <li>Does not promote illegal activities, violence, or discrimination</li>
+                            </ul>
+                            <p class="mt-3">
+                                You retain ownership of the content you post, but grant Profolio.space a worldwide, non-exclusive, royalty-free license to use, display, and distribute your content for the purpose of providing our services.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">4. Intellectual Property Rights</h3>
+                            <p>
+                                All content, features, and functionality of Profolio.space, including but not limited to text, graphics, logos, icons, images, software, and the compilation thereof, are the exclusive property of Profolio.space or its licensors and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws. You may not reproduce, distribute, modify, create derivative works of, publicly display, or exploit any content from our platform without our express written permission.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">5. Prohibited Activities</h3>
+                            <p class="mb-3">You agree not to:</p>
+                            <ul class="list-disc list-inside space-y-2 ml-4">
+                                <li>Use the platform for any illegal purpose or in violation of any laws</li>
+                                <li>Impersonate any person or entity or misrepresent your affiliation</li>
+                                <li>Interfere with or disrupt the platform's servers, networks, or security</li>
+                                <li>Attempt to gain unauthorized access to any portion of the platform</li>
+                                <li>Use automated systems (bots, scrapers) to access the platform without permission</li>
+                                <li>Collect or harvest information about other users without their consent</li>
+                                <li>Engage in any activity that could harm, disable, or overburden our services</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">6. Service Modifications and Availability</h3>
+                            <p>
+                                Profolio.space reserves the right to modify, suspend, or discontinue any aspect of our services at any time, with or without notice. We do not guarantee that our services will be available at all times or that they will be free from errors, interruptions, or defects. We are not liable for any loss or damage resulting from service interruptions or modifications.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">7. Termination</h3>
+                            <p class="mb-3">We may terminate or suspend your account and access to our services immediately, without prior notice, if you:</p>
+                            <ul class="list-disc list-inside space-y-2 ml-4">
+                                <li>Violate these Terms of Service</li>
+                                <li>Engage in fraudulent, abusive, or illegal activities</li>
+                                <li>Fail to pay any fees owed (if applicable)</li>
+                                <li>Request account deletion</li>
+                            </ul>
+                            <p class="mt-3">
+                                You may terminate your account at any time by contacting us or using the account deletion feature. Upon termination, your right to use the services will immediately cease, and we may delete your account and data in accordance with our Privacy Policy.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">8. Disclaimers and Limitation of Liability</h3>
+                            <p class="mb-3">
+                                THE PLATFORM AND SERVICES ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+                            </p>
+                            <p class="mb-3">
+                                TO THE MAXIMUM EXTENT PERMITTED BY LAW, PROFOLIO.SPACE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY, OR ANY LOSS OF DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES RESULTING FROM YOUR USE OF OUR SERVICES.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">9. Indemnification</h3>
+                            <p>
+                                You agree to indemnify, defend, and hold harmless Profolio.space, its officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, and expenses, including reasonable attorneys' fees, arising out of or in any way connected with your use of our services, your violation of these Terms, or your violation of any rights of another party.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">10. Governing Law and Dispute Resolution</h3>
+                            <p>
+                                These Terms shall be governed by and construed in accordance with applicable laws. Any disputes arising from or relating to these Terms or our services shall be resolved through binding arbitration or in the appropriate courts, as determined by applicable law.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">11. Changes to Terms</h3>
+                            <p>
+                                We reserve the right to modify these Terms at any time. We will notify users of any material changes by posting the updated Terms on our platform and updating the "Last Updated" date. Your continued use of our services after such changes constitutes acceptance of the modified Terms.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">12. Contact Information</h3>
+                            <p>
+                                If you have questions about these Terms of Service, please contact us through your registered account or via the contact information provided on our platform.
+                            </p>
+                        </div>
+
+                            <div class="pt-4 border-t border-app-soft">
+                                <p class="text-sm text-app-textSub">
+                                    <strong>Last Updated:</strong> 14 January 2026
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Disclaimer Section -->
+            <div id="disclaimer" class="mb-4 scroll-mt-20">
+                <div class="bg-white rounded-xl border border-app-soft shadow-sm overflow-hidden">
+                    <button onclick="toggleAccordion('disclaimer-content', 'disclaimer-icon')" class="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-app-bg/50 transition-colors">
+                        <h2 class="text-xl md:text-2xl font-bold text-app-textMain">Disclaimer</h2>
+                        <i id="disclaimer-icon" class="fas fa-chevron-down text-app-primary text-xl transition-transform duration-300"></i>
+                    </button>
+                    <div id="disclaimer-content" class="hidden px-6 md:px-12 pb-8 md:pb-12">
+                        <div class="text-app-textSub leading-relaxed space-y-6 text-base pt-4">
+                        <div>
+                            <p class="mb-4">
+                                This disclaimer sets forth the general guidelines, disclaimers, and terms of use for the Profolio.space platform. By accessing and using our services, you acknowledge that you have read, understood, and agree to be bound by the terms of this disclaimer.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">1. Service Availability and "As Is" Basis</h3>
+                            <p>
+                                Profolio.space provides its platform and services on an "as is" and "as available" basis. We make no representations or warranties of any kind, express or implied, regarding the operation, availability, accuracy, reliability, or suitability of our services. We do not warrant that our services will be uninterrupted, timely, secure, error-free, or free from viruses or other harmful components.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">2. No Warranty</h3>
+                            <p>
+                                TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, PROFOLIO.SPACE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND ANY WARRANTIES ARISING FROM COURSE OF DEALING, USAGE, OR TRADE PRACTICE. WE DO NOT WARRANT THAT THE PLATFORM WILL MEET YOUR REQUIREMENTS OR EXPECTATIONS, OR THAT ANY ERRORS OR DEFECTS WILL BE CORRECTED.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">3. User Content Responsibility</h3>
+                            <p class="mb-3">
+                                Users are solely responsible for all content they post, upload, or share on the Profolio.space platform. We do not endorse, verify, or guarantee the accuracy, completeness, legality, or quality of any user-generated content. Profolio.space:
+                            </p>
+                            <ul class="list-disc list-inside space-y-2 ml-4">
+                                <li>Does not verify the accuracy or authenticity of user-provided information</li>
+                                <li>Does not guarantee that user content is free from errors, omissions, or inaccuracies</li>
+                                <li>Does not assume responsibility for the consequences of relying on user-generated content</li>
+                                <li>Reserves the right to remove, modify, or refuse to display any content that violates our Terms of Service</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">4. Third-Party Links and Content</h3>
+                            <p>
+                                Our platform may contain links to third-party websites, social media profiles, and external resources provided by users. Profolio.space does not control, endorse, or assume responsibility for the content, privacy practices, or terms of service of any third-party websites or services. Your interactions with third-party sites are solely between you and the third party. We are not liable for any loss or damage resulting from your use of or reliance on third-party content, services, or websites.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">5. Data Loss and Technical Issues</h3>
+                            <p>
+                                While we implement industry-standard security measures and backup procedures, Profolio.space cannot guarantee the prevention of data loss, corruption, or unauthorized access. Technical failures, system errors, cyberattacks, or other unforeseen circumstances may result in temporary or permanent loss of data. Users are encouraged to maintain their own backups of important information. Profolio.space shall not be liable for any loss of data, profits, or other damages resulting from technical issues, system failures, or data loss.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">6. Professional Advice Disclaimer</h3>
+                            <p>
+                                The information and content provided on Profolio.space, including but not limited to CV templates, career advice, and professional guidance, are for informational purposes only. They do not constitute professional, legal, financial, or career advice. Users should consult with qualified professionals for advice tailored to their specific circumstances. Profolio.space is not responsible for any decisions made based on information obtained from our platform.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">7. Limitation of Liability</h3>
+                            <p>
+                                TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, PROFOLIO.SPACE, ITS OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, AND AFFILIATES SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, RESULTING FROM YOUR USE OF OR INABILITY TO USE OUR SERVICES, EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">8. Platform Modifications</h3>
+                            <p>
+                                Profolio.space reserves the right to modify, update, suspend, or discontinue any aspect of our platform or services at any time, with or without notice. We are not obligated to maintain or support any particular feature or functionality. Users acknowledge that the platform may change over time, and we are not liable for any inconvenience or loss resulting from such changes.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">9. Jurisdictional Limitations</h3>
+                            <p>
+                                Some jurisdictions do not allow the exclusion of certain warranties or the limitation or exclusion of liability for incidental or consequential damages. Accordingly, some of the limitations set forth in this disclaimer may not apply to you. In such cases, our liability will be limited to the maximum extent permitted by applicable law.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">10. Updates to Disclaimer</h3>
+                            <p>
+                                Profolio.space reserves the right to update, modify, or change this disclaimer at any time without prior notice. Changes will be effective immediately upon posting on our platform. Your continued use of our services after any changes constitutes acceptance of the updated disclaimer. It is your responsibility to review this disclaimer periodically for any changes.
+                            </p>
+                        </div>
+
+    <div> 
+                            <h3 class="text-xl font-bold text-app-textMain mb-3">11. Acknowledgment</h3>
+                            <p>
+                                By using Profolio.space, you acknowledge that you have read this disclaimer, understand its terms, and agree to be bound by them. If you do not agree with any part of this disclaimer, you must discontinue use of our services immediately.
+                            </p>
+                        </div>
+
+                            <div class="pt-4 border-t border-app-soft">
+                                <p class="text-sm text-app-textSub">
+                                    <strong>Last Updated:</strong> 14 January 2026
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scroll to Top Floating Button -->
+    <div id="scrollButtons" class="fixed bottom-6 right-6 z-50 opacity-0 transition-opacity duration-300">
+        <button onclick="scrollToTop()" class="w-12 h-12 bg-app-primary text-white rounded-full shadow-lg hover:bg-app-primaryHover transition-all flex items-center justify-center hover:scale-110" title="Scroll to Top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <!-- Footer with Legal Sections -->
+    <footer class="bg-app-dark text-white py-12 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Profolio.space</h3>
+                    <p class="text-sm text-gray-400">
+                        Create your professional portfolio and showcase your skills to the world.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#features" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#about" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="@Url.Action("Index", "Register")" class="hover:text-white transition-colors">Register</a></li>
+                        <li><a href="@Url.Action("Index", "Login")" class="hover:text-white transition-colors">Login</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#gdpr" class="hover:text-white transition-colors">GDPR Compliance</a></li>
+                        <li><a href="#privacy" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#terms" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="#disclaimer" class="hover:text-white transition-colors">Disclaimer</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>
+                            <a href="mailto:contact@profolio.space" class="hover:text-white transition-colors flex items-center gap-2">
+                                <i class="fas fa-envelope text-xs"></i>
+                                contact@profolio.space
+                            </a>
+                        </li>
+                        <li class="text-gray-400">
+                            For support and inquiries, please reach out to us via email or through your registered account.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; @DateTime.Now.Year Profolio.space All rights reserved.</p>
+            </div>
+    </div>
+    </footer>
+
+    <script>
+        // Accordion toggle function
+        function toggleAccordion(contentId, iconId) {
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+
+        // Open accordion if hash is present in URL
+        function openAccordionFromHash() {
+            const hash = window.location.hash;
+            if (hash) {
+                const targetId = hash.substring(1); // Remove #
+                const accordionMap = {
+                    'gdpr': { content: 'gdpr-content', icon: 'gdpr-icon' },
+                    'privacy': { content: 'privacy-content', icon: 'privacy-icon' },
+                    'terms': { content: 'terms-content', icon: 'terms-icon' },
+                    'disclaimer': { content: 'disclaimer-content', icon: 'disclaimer-icon' }
+                };
+                
+                if (accordionMap[targetId]) {
+                    const { content, icon } = accordionMap[targetId];
+                    const contentEl = document.getElementById(content);
+                    const iconEl = document.getElementById(icon);
+                    
+                    if (contentEl && contentEl.classList.contains('hidden')) {
+                        contentEl.classList.remove('hidden');
+                        iconEl.classList.remove('fa-chevron-down');
+                        iconEl.classList.add('fa-chevron-up');
+                    }
+                }
+            }
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && href.length > 1) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        // Smooth scroll to target with offset for fixed header
+                        const headerOffset = 80;
+                        const elementPosition = target.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Open accordion if it's a legal section
+                        setTimeout(() => {
+                            openAccordionFromHash();
+                        }, 500);
+                    }
+                }
+            });
+        });
+
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+
+        // Show/hide scroll buttons based on scroll position
+        window.addEventListener('scroll', function() {
+            const scrollButtons = document.getElementById('scrollButtons');
+            if (window.pageYOffset > 300) {
+                scrollButtons.classList.remove('opacity-0');
+                scrollButtons.classList.add('opacity-100');
+            } else {
+                scrollButtons.classList.remove('opacity-100');
+                scrollButtons.classList.add('opacity-0');
+            }
+        });
+
+        // Open accordion on page load if hash is present
+        window.addEventListener('load', function() {
+            openAccordionFromHash();
+        });
+
+        // Also check on hash change
+        window.addEventListener('hashchange', function() {
+            openAccordionFromHash();
+        });
+    </script>
+</body>
+</html>

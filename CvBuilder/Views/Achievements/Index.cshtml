@@ -1,0 +1,106 @@
+﻿@using CvBuilder.Models.Entity
+@model List<achievements>
+@{
+    ViewBag.Title = "Achievements & Awards";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+    <div>
+        <h2 class="text-2xl font-bold text-app-textMain">Achievements & Awards</h2>
+        <p class="text-sm text-app-textSub">Showcase your certifications, awards, and recognitions.</p>
+    </div>
+
+    <a href="/admin/achievements/add" class="inline-flex items-center justify-center px-4 py-2.5 bg-app-primary hover:bg-app-accent text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow group">
+        <i class="fas fa-plus mr-2 group-hover:rotate-90 transition-transform duration-300"></i>
+        Add Achievement
+    </a>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-app-soft overflow-hidden">
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-50/50 border-b border-app-soft">
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-full">Description / Award Name</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right whitespace-nowrap">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @foreach (var item in Model)
+                    {
+                        <tr class="hover:bg-gray-50/80 transition-colors duration-150 group">
+
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 rounded-lg bg-yellow-50 text-yellow-600 border border-yellow-100 flex items-center justify-center mr-4">
+                                        <i class="fas fa-trophy text-lg"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">@item.description</span>
+                                </div>
+                            </td>
+
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <div class="flex items-center justify-end gap-2">
+
+                                    <a href="/admin/achievements/update/@item.id" class="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+
+                                    <button onclick="confirmDelete(@item.id)" class="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="flex flex-col items-center justify-center py-16 px-4 text-center">
+            <div class="h-20 w-20 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+                <i class="fas fa-award text-3xl text-gray-300"></i>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900">No achievements yet</h3>
+            <p class="mt-1 text-sm text-gray-500 max-w-sm">Add awards, certificates or special recognitions to stand out.</p>
+            <div class="mt-6">
+                <a href="/admin/achievements/add" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-app-primary hover:bg-app-accent">
+                    <i class="fas fa-plus -ml-1 mr-2"></i>
+                    Add Achievement
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You are about to delete this achievement.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            background: '#fff',
+            customClass: {
+                popup: 'rounded-xl shadow-xl border border-gray-100',
+                confirmButton: 'px-4 py-2 rounded-lg font-medium text-sm',
+                cancelButton: 'px-4 py-2 rounded-lg font-medium text-sm'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/admin/achievements/delete/${id}`;
+            }
+        });
+    }
+</script>

@@ -1,0 +1,46 @@
+﻿@using CvBuilder.Models.Entity
+@model List<interests>
+
+<section class="scroll-mt-24 py-10 lg:py-20 min-h-[50vh] flex flex-col justify-center relative overflow-hidden" id="interests">
+
+    <div class="absolute inset-0 flex items-center justify-center -z-10 opacity-[0.03] pointer-events-none select-none">
+        <i class="fas fa-heart text-[45vmin] text-app-primary leading-none"></i>
+    </div>
+    <div class="flex items-center gap-3 mb-8 relative z-10">
+        <div class="bg-app-primary/10 p-3 rounded-xl text-app-primary shadow-sm ring-1 ring-app-primary/20">
+            <i class="fas fa-heart text-2xl"></i>
+        </div>
+        <div class="flex flex-col">
+            <h2 class="text-3xl lg:text-4xl font-extrabold text-app-textMain tracking-tight">Interests</h2>
+            <span class="text-app-textSub font-medium text-base">Hobbies & Passions</span>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5 relative z-10">
+        @foreach (var interest in Model)
+        {
+            <div class="group relative bg-white p-5 rounded-2xl border border-app-soft shadow-sm hover:shadow-lg hover:border-app-primary/30 transition-all duration-300 hover:-translate-y-1 flex h-full overflow-hidden hover:bg-gradient-to-br hover:from-white hover:to-app-primary/5">
+
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-app-primary via-app-secondary to-app-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"></div>
+
+                <div class="flex items-start gap-4 relative z-10">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-app-primary/10 text-app-primary border border-app-primary/10 group-hover:bg-app-primary group-hover:text-white group-hover:border-transparent transition-all duration-300">
+                            <i class="fas fa-star text-sm group-hover:rotate-12 transition-transform duration-300"></i>
+                        </div>
+                    </div>
+
+                    <div class="flex-grow pt-1">
+                        <p class="text-app-textSub leading-snug text-[0.95rem] group-hover:text-app-textMain transition-colors duration-300 font-medium">
+                            @interest.description
+                        </p>
+                    </div>
+                </div>
+
+                <div class="absolute bottom-2 right-2 text-app-primary/5 opacity-0 group-hover:opacity-100 group-hover:text-app-primary/10 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                    <i class="fas fa-heart text-3xl"></i>
+                </div>
+            </div>
+        }
+    </div>
+</section>

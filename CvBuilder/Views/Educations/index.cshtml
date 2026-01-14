@@ -1,0 +1,146 @@
+﻿@using CvBuilder.Models.Entity
+@using System.Globalization
+@model List<educations>
+@{
+    ViewBag.Title = "Education History";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+    <div>
+        <h2 class="text-2xl font-bold text-app-textMain">Education History</h2>
+        <p class="text-sm text-app-textSub">Manage your academic background and degrees.</p>
+    </div>
+
+    <a href="/admin/educations/add" class="inline-flex items-center justify-center px-4 py-2.5 bg-app-primary hover:bg-app-accent text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow group">
+        <i class="fas fa-plus mr-2 group-hover:rotate-90 transition-transform duration-300"></i>
+        Add Education
+    </a>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-app-soft overflow-hidden">
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-50/50 border-b border-app-soft">
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-1/3">School / Degree</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">GPA</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-1/4">Description</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Dates</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @foreach (var item in Model)
+                    {
+                        <tr class="hover:bg-gray-50/80 transition-colors duration-150 group">
+
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <div class="h-10 w-10 flex-shrink-0 flex items-center justify-center rounded-lg bg-orange-50 text-orange-600 font-bold text-lg border border-orange-100">
+                                        @(item.school?.Substring(0, 1).ToUpper() ?? "U")
+                                    </div>
+
+                                    <div class="ml-4">
+                                        <div class="text-sm font-bold text-app-textMain">@item.school</div>
+
+                                        <div class="text-xs text-gray-500 mt-0.5 flex items-center">
+                                            <i class="fas fa-graduation-cap text-gray-400 mr-1.5 text-[10px]"></i>
+                                            @item.type
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @if (!string.IsNullOrEmpty(item.gpa_score))
+                                {
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-yellow-50 text-yellow-700 border border-yellow-100">
+                                        @item.gpa_score
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-xs text-gray-400">-</span>
+                                }
+                            </td>
+
+                            <td class="px-6 py-4">
+                                <p class="text-sm text-gray-500 line-clamp-2" title="@item.description">
+                                    @item.description
+                                </p>
+                            </td>
+
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
+                                    <i class="far fa-calendar-alt mr-1.5 opacity-70"></i>
+                                    @(item.start_date?.ToString("MMM yyyy", new CultureInfo("en-US")))
+                                    -
+                                    @(item.end_date?.ToString("MMM yyyy", new CultureInfo("en-US")) ?? "Present")
+                                </div>
+                            </td>
+
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <div class="flex items-center justify-end gap-2">
+
+                                    <a href="/admin/educations/update/@item.id" class="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+
+                                    <button onclick="confirmDelete(@item.id, '@item.school')" class="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="flex flex-col items-center justify-center py-16 px-4 text-center">
+            <div class="h-20 w-20 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+                <i class="fas fa-university text-3xl text-gray-300"></i>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900">No education history added</h3>
+            <p class="mt-1 text-sm text-gray-500 max-w-sm">Add your high school, bachelor's degree, master's degree or other certifications.</p>
+            <div class="mt-6">
+                <a href="/admin/educations/add" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-app-primary hover:bg-app-accent">
+                    <i class="fas fa-plus -ml-1 mr-2"></i>
+                    Add Education
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function confirmDelete(id, schoolName) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `You are about to delete your education at "${schoolName}".`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            background: '#fff',
+            customClass: {
+                popup: 'rounded-xl shadow-xl border border-gray-100',
+                confirmButton: 'px-4 py-2 rounded-lg font-medium text-sm',
+                cancelButton: 'px-4 py-2 rounded-lg font-medium text-sm'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/admin/educations/delete/${id}`;
+            }
+        });
+    }
+</script>

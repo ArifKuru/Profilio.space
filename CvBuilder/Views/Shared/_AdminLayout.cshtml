@@ -1,0 +1,340 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] | Profolio.space</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/public/favicon.png?v=4">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: {
+                        app: {
+                            primary: '#16A34A',      /* Kurumsal Yeşil */
+                            primaryHover: '#15803d', /* Hover */
+                            dark: '#0f172a',         /* Sidebar Arkaplan (Slate 900) */
+                            bg: '#F1F5F9',           /* Sayfa Arkaplan (Slate 100) */
+                            soft: '#E2E8F0',         /* Çizgiler (Slate 200) */
+                            textMain: '#0F172A',     /* Ana Metin */
+                            textSub: '#64748B'       /* Alt Metin */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script>
+        // Sayfa yüklenirken titremeyi önlemek için
+        if (localStorage.getItem('isSidebarCollapsed') === 'true') {
+            document.documentElement.classList.add('is-collapsed');
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        /* --- SCROLLBAR STİLİ (Index.cshtml'den alındı) --- */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0F172A; /* Sidebar rengiyle uyumlu koyu arka plan */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #16A34A; /* Yeşil hover efekti */
+            }
+        /* Geçiş Efektleri */
+        #sidebar, .sidebar-text, #logo-full, #logo-icon, .section-label, .menu-item {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Özel Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+
+        /* --- COLLAPSED (DARALTILMIŞ) MOD --- */
+        html.is-collapsed #sidebar {
+            width: 4.5rem !important;
+        }
+
+        html.is-collapsed .sidebar-text,
+        html.is-collapsed .section-label {
+            display: none !important;
+            opacity: 0;
+        }
+
+        html.is-collapsed #logo-full {
+            display: none !important;
+        }
+
+        html.is-collapsed #logo-icon {
+            display: block !important;
+        }
+
+        html.is-collapsed .menu-item {
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+            html.is-collapsed .menu-item i {
+                margin-right: 0;
+                font-size: 1.1rem;
+            }
+
+        /* --- AKTİF LINK STİLİ --- */
+        /* Sadece arka plan değişir, border YOK */
+        .menu-item.active-link {
+            background-color: rgba(22, 163, 74, 0.15) !important; /* Primary %15 Opacity */
+            color: #F8FAFC !important; /* Primary Color */
+            font-weight: 600;
+        }
+
+            .menu-item.active-link i {
+                color: #F8FAFC !important;
+            }
+        /* Hover durumunda hafif açılma */
+        .menu-item:not(.active-link):hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #F8FAFC;
+        }
+
+        /* --- BUILD CV BUTONU (ÖZEL) --- */
+        #btn-build-cv {
+            background: linear-gradient(135deg, #16A34A 0%, #15803d 100%) !important; /* Primary -> PrimaryHover */
+            color: white !important;
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+            #btn-build-cv:hover {
+                box-shadow: 0 6px 16px rgba(22, 163, 74, 0.6);
+                transform: translateY(-1px);
+            }
+            /* Aktif olsa bile yazı beyaz kalsın */
+            #btn-build-cv.active-link {
+                border: 1px solid #16A34A !important;
+                background: linear-gradient(135deg, #16A34A 0%, #15803d 100%) !important;
+                color: white !important;
+            }
+
+                #btn-build-cv.active-link i {
+                    color: white !important;
+                }
+    </style>
+</head>
+<body class="bg-app-bg text-app-textMain h-screen overflow-hidden flex text-[13px] font-medium">
+
+    <aside id="sidebar" class="w-64 bg-app-dark flex flex-col border-r border-white/5 z-30 shrink-0">
+
+        <div class="h-14 flex items-center justify-center border-b border-white/5 shrink-0 px-4">
+            <a href="/admin/about" class="flex items-center justify-center w-full h-full">
+                <img id="logo-full" src="~/public/logo_text.png" class="h-8 object-contain brightness-0 invert opacity-90" alt="Profolio" />
+                <img id="logo-icon" src="~/public/favicon.png?v=4" class="w-6 h-6 object-contain hidden brightness-0 invert" alt="Icon" />
+            </a>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-6 custom-scrollbar px-3">
+
+            <div class="mb-6">
+                <div class="section-label px-3 mb-2 text-[10px] uppercase tracking-wider text-app-textSub font-bold">Main</div>
+                <ul class="space-y-1">
+                    <li class="mb-2">
+                        <a id="btn-build-cv" href="/admin/buildcv" class="menu-item flex items-center px-3 py-2.5 rounded-md transition-all group">
+                            <i class="fas fa-magic w-5 text-center"></i>
+                            <span class="sidebar-text ml-3 font-bold tracking-wide">Build CV</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/inbox" class="menu-item flex items-center px-3 py-2.5 rounded-md text-app-textSub transition-all group">
+                            <i class="fas fa-envelope w-5 text-center transition-colors"></i>
+                            <span class="sidebar-text ml-3">Inbox</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="section-label px-3 mb-2 text-[10px] uppercase tracking-wider text-app-textSub font-bold">Management</div>
+                <ul class="space-y-1">
+                    <li>
+                        <a href="/admin/about" class="menu-item flex items-center px-3 py-2.5 rounded-md text-app-textSub transition-all group">
+                            <i class="fas fa-user w-5 text-center transition-colors"></i>
+                            <span class="sidebar-text ml-3">About</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/links" class="menu-item flex items-center px-3 py-2.5 rounded-md text-app-textSub transition-all group">
+                            <i class="fas fa-link w-5 text-center transition-colors"></i>
+                            <span class="sidebar-text ml-3">Links</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/experiences" class="menu-item flex items-center px-3 py-2.5 rounded-md text-app-textSub transition-all group">
+                            <i class="fas fa-briefcase w-5 text-center transition-colors"></i>
+                            <span class="sidebar-text ml-3">Experience</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/educations" class="menu-item flex items-center px-3 py-2.5 rounded-md text-app-textSub transition-all group">
+                            <i class="fas fa-graduation-cap w-5 text-center transition-colors"></i>
+                            <span class="sidebar-text ml-3">Education</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/workflows" class="menu-item flex items-center px-3 py-2.5 rounded-md text-app-textSub transition-all group">
+                            <i class="fas fa-code w-5 text-center transition-colors"></i>
+                            <span class="sidebar-text ml-3">Skills</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/interests" class="menu-item flex items-center px-3 py-2.5 rounded-md text-app-textSub transition-all group">
+                            <i class="fas fa-heart w-5 text-center transition-colors"></i>
+                            <span class="sidebar-text ml-3">Interests</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin/achievements" class="menu-item flex items-center px-3 py-2.5 rounded-md text-app-textSub transition-all group">
+                            <i class="fas fa-trophy w-5 text-center transition-colors"></i>
+                            <span class="sidebar-text ml-3">Achievements</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="p-4 text-center border-t border-white/5">
+            <p class="text-[10px] text-gray-500 sidebar-text">
+                &copy; <span id="currentYear"></span> Profolio.space
+            </p>
+        </div>
+    </aside>
+
+    <main class="flex-1 overflow-x-hidden overflow-y-auto flex flex-col relative">
+
+        <header class="h-14 min-h-[56px] max-h-[56px] bg-white/80 backdrop-blur-md border-b border-app-soft flex items-center justify-between px-6 sticky top-0 z-40 shrink-0">
+
+            <div class="flex items-center gap-4">
+                <button id="toggleSidebarBtn" class="text-app-textSub hover:text-app-textMain transition-colors focus:outline-none w-6 h-6 flex items-center justify-center">
+                    <i id="toggleIcon" class="fas fa-outdent text-lg"></i>
+                </button>
+
+                <div class="h-5 w-px bg-app-soft mx-1 hidden sm:block"></div>
+
+                <h1 class="text-app-textMain font-semibold tracking-tight">@ViewData["Title"]</h1>
+            </div>
+
+            <div class="flex items-center gap-4">
+                @Html.Action("HeaderUserProfile", "Layout")
+            </div>
+        </header>
+
+        <div class="flex-1 p-6 lg:p-8 max-w-[1600px] mx-auto w-full">
+            @RenderBody()
+        </div>
+
+    </main>
+
+    <script>
+        const toggleBtn = document.getElementById('toggleSidebarBtn');
+        const toggleIcon = document.getElementById('toggleIcon');
+        const currentYearEl = document.getElementById('currentYear');
+        const userDropdown = document.getElementById('userDropdown');
+
+        if (currentYearEl) currentYearEl.textContent = new Date().getFullYear();
+
+        // --- ICON UPDATE FUNC ---
+        function updateToggleIcon(isCollapsed) {
+            if (isCollapsed) {
+                toggleIcon.classList.remove('fa-outdent');
+                toggleIcon.classList.add('fa-indent');
+            } else {
+                toggleIcon.classList.remove('fa-indent');
+                toggleIcon.classList.add('fa-outdent');
+            }
+        }
+
+        // Init Check
+        if (document.documentElement.classList.contains('is-collapsed')) {
+            updateToggleIcon(true);
+        }
+
+        // --- COLLAPSE CLICK ---
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                const htmlEl = document.documentElement;
+                htmlEl.classList.toggle('is-collapsed');
+
+                const isCollapsed = htmlEl.classList.contains('is-collapsed');
+                localStorage.setItem('isSidebarCollapsed', isCollapsed);
+
+                updateToggleIcon(isCollapsed);
+            });
+        }
+
+        // --- ACTIVE LINK LOGIC ---
+        const currentPath = window.location.pathname.toLowerCase();
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        menuItems.forEach(item => {
+            const href = item.getAttribute('href').toLowerCase();
+            // Tam eşleşme veya alt klasör
+            if (currentPath === href || (href !== '/admin' && currentPath.startsWith(href))) {
+                item.classList.add('active-link');
+                item.classList.remove('text-app-textSub'); // Varsayılan gri rengi sil
+            }
+        });
+
+        // --- DROPDOWN LOGIC ---
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown) dropdown.classList.toggle('hidden');
+        }
+
+        window.addEventListener('click', function (e) {
+            const dropdown = document.getElementById('userDropdown');
+            const button = e.target.closest('button');
+            if (!button && dropdown && !dropdown.classList.contains('hidden')) {
+                if (!e.target.closest('[onclick="toggleDropdown()"]')) {
+                    dropdown.classList.add('hidden');
+                }
+            }
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="74ca26a2a5924d1e8677472423a51d50" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="arifkuru_cvModel.achievements" Width="1.5" PointX="8.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="arifkuru_cvModel.contact_messages" Width="1.5" PointX="11" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="arifkuru_cvModel.educations" Width="1.5" PointX="5.5" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="arifkuru_cvModel.experiences" Width="1.5" PointX="10.875" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="arifkuru_cvModel.interests" Width="1.5" PointX="5.5" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="arifkuru_cvModel.skills" Width="1.5" PointX="4.5" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="arifkuru_cvModel.user_informations" Width="1.5" PointX="8.625" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="arifkuru_cvModel.users" Width="1.5" PointX="8.625" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="arifkuru_cvModel.workflows" Width="1.5" PointX="10.75" PointY="13.25" IsExpanded="true" />
+        <AssociationConnector Association="arifkuru_cvModel.FK_achievements_users" ManuallyRouted="false" />
+        <AssociationConnector Association="arifkuru_cvModel.FK_contact_messages_users" ManuallyRouted="false" />
+        <AssociationConnector Association="arifkuru_cvModel.FK_educations_users" ManuallyRouted="false" />
+        <AssociationConnector Association="arifkuru_cvModel.FK_experiences_users" ManuallyRouted="false" />
+        <AssociationConnector Association="arifkuru_cvModel.FK_interests_users" ManuallyRouted="false" />
+        <AssociationConnector Association="arifkuru_cvModel.FK_skills_users" ManuallyRouted="false" />
+        <AssociationConnector Association="arifkuru_cvModel.FK_user_informations_users" ManuallyRouted="false" />
+        <AssociationConnector Association="arifkuru_cvModel.FK_workflows_users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="arifkuru_cvModel.social_links" Width="1.5" PointX="12.75" PointY="13.625" />
+        <AssociationConnector Association="arifkuru_cvModel.FK_social_links_users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

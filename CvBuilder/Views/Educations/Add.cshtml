@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "Add Education";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="flex items-center justify-between mb-6">
+    <div>
+        <h2 class="text-2xl font-bold text-app-textMain">Add New Education</h2>
+        <p class="text-sm text-app-textSub">Enter details about your academic background.</p>
+    </div>
+    <a href="/admin/educations/index" class="text-app-textSub hover:text-app-primary text-sm font-medium transition-colors">
+        <i class="fas fa-arrow-left mr-1"></i> Back to List
+    </a>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-app-soft overflow-hidden">
+    <div class="p-8">
+
+        <form method="post" class="space-y-6">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700 block">
+                        School / University Name <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-university text-gray-400"></i>
+                        </div>
+                        <input type="text" name="school" required placeholder="e.g. Harvard University"
+                               class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-app-primary/20 focus:border-app-primary block transition-all duration-200 outline-none" />
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700 block">
+                        Degree / Field of Study
+                    </label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-graduation-cap text-gray-400"></i>
+                        </div>
+                        <input type="text" name="type" placeholder="e.g. BSc in Computer Science"
+                               class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-app-primary/20 focus:border-app-primary block transition-all duration-200 outline-none" />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700 block">Start Date</label>
+                    <input type="date" name="start_date"
+                           class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-app-primary/20 focus:border-app-primary block transition-all duration-200 outline-none" />
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700 block">End Date</label>
+                    <input type="date" name="end_date"
+                           class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-app-primary/20 focus:border-app-primary block transition-all duration-200 outline-none" />
+                    <p class="text-xs text-gray-500 mt-1">Leave empty if ongoing.</p>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-gray-700 block">GPA Score</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-chart-bar text-gray-400"></i>
+                        </div>
+                        <input type="text" name="gpa_score" placeholder="e.g. 3.5 / 4.0"
+                               class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-app-primary/20 focus:border-app-primary block transition-all duration-200 outline-none" />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-sm font-semibold text-gray-700 block">Description</label>
+                <textarea name="description" rows="4" placeholder="Briefly describe your thesis, major projects or achievements..."
+                          class="w-full p-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-app-primary/20 focus:border-app-primary block transition-all duration-200 outline-none resize-none"></textarea>
+            </div>
+
+
+            <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
+
+                <a href="/admin/educations" class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 transition-all">
+                    Cancel
+                </a>
+
+                <button type="submit" class="inline-flex items-center px-6 py-2.5 text-sm font-medium text-white bg-app-primary rounded-lg hover:bg-app-accent focus:outline-none focus:ring-4 focus:ring-green-300 shadow-md hover:shadow-lg transition-all duration-200">
+                    <i class="fas fa-save mr-2"></i> Save Education
+                </button>
+
+            </div>
+
+        </form>
+    </div>
+</div>

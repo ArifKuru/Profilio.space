@@ -1,0 +1,33 @@
+﻿@model CvBuilder.Models.LayoutProfileViewModel
+
+<div class="relative ml-3">
+    <button onclick="toggleDropdown()" class="flex items-center gap-3 focus:outline-none group h-full">
+        <div class="text-right hidden md:block">
+            <p class="text-sm font-bold text-app-textMain group-hover:text-app-primary transition">@Model.FullName</p>
+        </div>
+        <img class="h-10 w-10 rounded-full object-cover border-2 border-app-soft group-hover:border-app-primary transition" src="@Model.ProfileImage" alt="Profile">
+        <i class="fas fa-chevron-down text-xs text-gray-400 group-hover:text-app-primary transition"></i>
+    </button>
+
+    <div id="userDropdown" class="hidden absolute top-full right-0 mt-3 w-60 bg-white border border-gray-200 rounded-lg shadow-xl z-50 overflow-hidden transform origin-top-right transition-all" style="right:-10px">
+        <div class="p-3 border-b border-gray-100 bg-gray-50/50">
+            <div class="flex items-center">
+                <img src="@Model.ProfileImage" alt="Profile" class="rounded-full object-cover w-10 h-10 mr-3 border-2 border-white shadow-sm">
+                <div class="flex-1 min-w-0">
+                    <div class="font-bold text-gray-800 text-xs truncate">@Model.FullName</div>
+                    <div class="text-gray-400 text-[10px] truncate mt-0.5">@Model.Email</div>
+                </div>
+            </div>
+        </div>
+        <div class="p-1.5">
+            <a href="/profile" class="flex items-center p-2 text-gray-700 cursor-pointer hover:bg-gray-50 rounded-md transition-colors text-xs font-medium group">
+                <svg class="w-4 h-4 mr-2.5 text-gray-400 group-hover:text-app-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                Profile
+            </a>
+            <a href="/Login/LogOut" class="flex items-center p-2 text-red-600 cursor-pointer hover:bg-red-50 rounded-md transition-colors text-xs font-medium border-t border-gray-100 mt-1">
+                <svg class="w-4 h-4 mr-2.5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                Logout
+            </a>
+        </div>
+    </div>
+</div>

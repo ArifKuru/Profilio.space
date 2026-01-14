@@ -1,0 +1,341 @@
+@model CvBuilder.Models.CvViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        /* --- SCROLLBAR STİLİ (Index.cshtml'den alındı) --- */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0F172A; /* Sidebar rengiyle uyumlu koyu arka plan */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #16A34A; /* Yeşil hover efekti */
+            }
+        body {
+            /* Fontu değiştirdik */
+            font-family: 'Open Sans', Arial, sans-serif !important;
+            line-height: 1.5;
+            color: #333;
+            background: #fff;
+            /* Font boyutunu pt yaptık */
+            font-size: 9pt;
+            -webkit-print-color-adjust: exact; /* Arka plan renklerini zorla */
+        }
+
+        .cv-container {
+            width: 100%;
+            max-width: 190mm;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Düzeltmeleri */
+        .header {
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            /* Float temizleme (Clearfix) */
+            overflow: hidden;
+        }
+
+            .header h1 {
+                font-size: 22pt !important; /* Büyütüldü */
+                color: #2c3e50;
+                margin-bottom: 5px;
+                font-weight: 800;
+                text-transform: uppercase;
+            }
+
+        /* 2. ADIM: Flexbox yerine Inline-Block Yapısı */
+        .contact-info {
+            /* display: flex SİLİNDİ */
+            display: block;
+            margin-top: 5px;
+            font-size: 8pt;
+            color: #555;
+        }
+
+            .contact-info span {
+                display: inline-block; /* Yan yana gelmeleri için */
+                margin-right: 5px;
+                white-space: nowrap; /* Satırın kırılmasını engelle */
+            }
+
+        /* Profil Resmi - Float ile sağa yasla */
+        .profile-wrapper {
+            float: right;
+            width: 90px;
+            height: 90px;
+            margin-left: 15px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #2c3e50;
+        }
+
+            .profile-wrapper img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        /* Bölümler */
+        .section {
+            margin-bottom: 15px;
+            page-break-inside: avoid; /* Bölümün sayfa ortasında bölünmesini engelle */
+        }
+
+        .section-title {
+            font-size: 12pt;
+            color: #2c3e50;
+            border-bottom: 1px solid #3498db;
+            padding-bottom: 3px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .item {
+            margin-bottom: 10px;
+            /* Border sol tarafta hizalama sorunu yaratabilir, padding ile çözelim */
+            border-left: 3px solid #ecf0f1;
+            padding-left: 10px;
+            page-break-inside: avoid;
+        }
+
+        .item-title {
+            font-size: 10pt;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .item-subtitle {
+            font-size: 9pt;
+            color: #7f8c8d;
+            font-style: italic;
+            display: inline-block;
+        }
+
+        .item-date {
+            font-size: 8pt;
+            color: #95a5a6;
+            float: right; /* Tarihi sağa yasla */
+            font-weight: 600;
+        }
+
+        /* Description Justify düzeltmesi */
+        .item-description, .description {
+            font-size: 9pt;
+            color: #555;
+            text-align: justify;
+            margin-top: 3px;
+        }
+
+        /* Linkler */
+        a {
+            text-decoration: none;
+            color: #3498db;
+        }
+
+        /* Print Media Ayarı */
+        @@media print {
+            body {
+                -webkit-print-color-adjust: exact;
+            }
+
+            .section, .item {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cv-container">
+        <!-- Header Section -->
+        <div class="header">
+            @if (Model.UserInformation != null && !string.IsNullOrEmpty(Model.UserInformation.profile_image))
+            {
+                var imagePath = Model.UserInformation.profile_image.StartsWith("/") ? Model.UserInformation.profile_image : "/" + Model.UserInformation.profile_image;
+                var baseUrl = Request.Url != null ? Request.Url.GetLeftPart(UriPartial.Authority) : "";
+                <div style="width: 90px; height: 90px;  overflow: hidden; float: right; margin-left: 10px; margin-bottom: 10px;">
+                    <img src="@(baseUrl + imagePath)" alt="Profile" style="border-radius: 50%;width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; margin: 0; padding: 0;" onerror="this.style.display='none';" />
+                </div>
+            }
+            <h1>@(Model.UserInformation?.name ?? "") @(Model.UserInformation?.surname ?? "")</h1>
+            @if (Model.UserInformation != null && !string.IsNullOrEmpty(Model.UserInformation.description))
+            {
+                <div class="description">@Model.UserInformation.description</div>
+            }
+            <div class="contact-info">
+                @if (Model.User != null && !string.IsNullOrEmpty(Model.User.email))
+                {
+                    <span>Email: @Model.User.email</span>
+                }
+                @if (Model.UserInformation != null && !string.IsNullOrEmpty(Model.UserInformation.phone))
+                {
+                    <span>| Phone: @Model.UserInformation.phone</span>
+                }
+                @if (Model.UserInformation != null && !string.IsNullOrEmpty(Model.UserInformation.address))
+                {
+                    <span>| Address: @Model.UserInformation.address</span>
+                }
+                @if (Model.SocialLinks != null && Model.SocialLinks.Any())
+                {
+                    foreach (var link in Model.SocialLinks)
+                    {
+                        <span>| <a href="@link.link" class="social-link" target="_blank">@link.type: @link.link</a></span>
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- Experiences Section -->
+        @if (Model.Experiences != null && Model.Experiences.Any())
+        {
+            <div class="section">
+                <h2 class="section-title">Work Experience</h2>
+                <div class="section-content">
+                    @foreach (var exp in Model.Experiences)
+                    {
+                        <div class="item">
+                            <div class="item-title">@exp.title</div>
+                            <div class="item-subtitle">@exp.company</div>
+                            <div class="item-date">
+                                @if (exp.start_date.HasValue)
+                                {
+                                    @exp.start_date.Value.ToString("MM.yyyy")
+                                }
+                                @if (exp.start_date.HasValue && exp.end_date.HasValue)
+                                {
+                                    <text> - </text>
+                                }
+                                @if (exp.end_date.HasValue)
+                                {
+                                    @exp.end_date.Value.ToString("MM.yyyy")
+                                }
+                                else if (exp.start_date.HasValue)
+                                {
+                                    <text> - Present</text>
+                                }
+                            </div>
+                            @if (!string.IsNullOrEmpty(exp.description))
+                            {
+                                <div class="item-description">@exp.description</div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- Education Section -->
+        @if (Model.Educations != null && Model.Educations.Any())
+        {
+            <div class="section">
+                <h2 class="section-title">Education</h2>
+                <div class="section-content">
+                    @foreach (var edu in Model.Educations)
+                    {
+                        <div class="item">
+                            <div class="item-title">@edu.school</div>
+                            @if (!string.IsNullOrEmpty(edu.type))
+                            {
+                                <div class="item-subtitle">@edu.type</div>
+                            }
+                            <div class="item-date">
+                                @if (edu.start_date.HasValue)
+                                {
+                                    @edu.start_date.Value.ToString("MM.yyyy")
+                                }
+                                @if (edu.start_date.HasValue && edu.end_date.HasValue)
+                                {
+                                    <text> - </text>
+                                }
+                                @if (edu.end_date.HasValue)
+                                {
+                                    @edu.end_date.Value.ToString("MM.yyyy")
+                                }
+                                @if (!string.IsNullOrEmpty(edu.gpa_score))
+                                {
+                                    <text> | GPA: @edu.gpa_score</text>
+                                }
+                            </div>
+                            @if (!string.IsNullOrEmpty(edu.description))
+                            {
+                                <div class="item-description">@edu.description</div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- Workflows Section -->
+        @if (Model.Workflows != null && Model.Workflows.Any())
+        {
+            <div class="section">
+                <h2 class="section-title">Skills & Workflows</h2>
+                <div class="section-content">
+                    @foreach (var workflow in Model.Workflows)
+                    {
+                        <div class="list-item">@workflow.description</div>
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- Achievements Section -->
+        @if (Model.Achievements != null && Model.Achievements.Any())
+        {
+            <div class="section">
+                <h2 class="section-title">Achievements & Awards</h2>
+                <div class="section-content">
+                    @foreach (var achievement in Model.Achievements)
+                    {
+                        <div class="list-item">@achievement.description</div>
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- Interests Section -->
+        @if (Model.Interests != null && Model.Interests.Any())
+        {
+            <div class="section">
+                <h2 class="section-title">Interests</h2>
+                <div class="section-content">
+                    @foreach (var interest in Model.Interests)
+                    {
+                        <div class="list-item">@interest.description</div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</body>
+</html>
+

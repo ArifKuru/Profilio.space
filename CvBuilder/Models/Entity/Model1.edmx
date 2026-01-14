@@ -1,0 +1,723 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="arifkuru_cvModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="achievements">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="contact_messages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="full_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="created_at" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="educations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="school" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="100" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="gpa_score" Type="nvarchar" MaxLength="20" />
+          <Property Name="start_date" Type="date" />
+          <Property Name="end_date" Type="date" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="experiences">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="company" Type="nvarchar" MaxLength="100" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="start_date" Type="date" />
+          <Property Name="end_date" Type="date" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="interests">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="skills">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="icon_path" Type="nvarchar" MaxLength="255" />
+          <Property Name="icon_type" Type="nvarchar" MaxLength="10" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="social_links">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="50" />
+          <Property Name="link" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user_informations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="55" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="55" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="255" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="profile_image" Type="nvarchar" MaxLength="255" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="character_type" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="password_hash" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="workflows">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_achievements_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="achievements" Type="Self.achievements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="achievements">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_contact_messages_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="contact_messages" Type="Self.contact_messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="contact_messages">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_educations_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="educations" Type="Self.educations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="educations">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_experiences_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="experiences" Type="Self.experiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="experiences">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_interests_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="interests" Type="Self.interests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="interests">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_skills_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="skills" Type="Self.skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="skills">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_social_links_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="social_links" Type="Self.social_links" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="social_links">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_informations_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="user_informations" Type="Self.user_informations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_informations">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_workflows_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="workflows" Type="Self.workflows" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="workflows">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="arifkuru_cvModelStoreContainer">
+          <EntitySet Name="achievements" EntityType="Self.achievements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="contact_messages" EntityType="Self.contact_messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="educations" EntityType="Self.educations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="experiences" EntityType="Self.experiences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="interests" EntityType="Self.interests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="skills" EntityType="Self.skills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="social_links" EntityType="Self.social_links" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_informations" EntityType="Self.user_informations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="workflows" EntityType="Self.workflows" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_achievements_users" Association="Self.FK_achievements_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="achievements" EntitySet="achievements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_contact_messages_users" Association="Self.FK_contact_messages_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="contact_messages" EntitySet="contact_messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_educations_users" Association="Self.FK_educations_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="educations" EntitySet="educations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_experiences_users" Association="Self.FK_experiences_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="experiences" EntitySet="experiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_interests_users" Association="Self.FK_interests_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="interests" EntitySet="interests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_skills_users" Association="Self.FK_skills_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="skills" EntitySet="skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_social_links_users" Association="Self.FK_social_links_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="social_links" EntitySet="social_links" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_informations_users" Association="Self.FK_user_informations_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="user_informations" EntitySet="user_informations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_workflows_users" Association="Self.FK_workflows_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="workflows" EntitySet="workflows" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="arifkuru_cvModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="achievements">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK_achievements_users" FromRole="achievements" ToRole="users" />
+        </EntityType>
+        <EntityType Name="contact_messages">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="full_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK_contact_messages_users" FromRole="contact_messages" ToRole="users" />
+          <Property Name="created_at" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityType Name="educations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="school" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="gpa_score" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="start_date" Type="DateTime" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Precision="0" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK_educations_users" FromRole="educations" ToRole="users" />
+        </EntityType>
+        <EntityType Name="experiences">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="company" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="start_date" Type="DateTime" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Precision="0" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK_experiences_users" FromRole="experiences" ToRole="users" />
+        </EntityType>
+        <EntityType Name="interests">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK_interests_users" FromRole="interests" ToRole="users" />
+        </EntityType>
+        <EntityType Name="skills">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="icon_path" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="icon_type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK_skills_users" FromRole="skills" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user_informations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="55" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="55" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="profile_image" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK_user_informations_users" FromRole="user_informations" ToRole="users" />
+          <Property Name="character_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password_hash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="achievements" Relationship="Self.FK_achievements_users" FromRole="users" ToRole="achievements" />
+          <NavigationProperty Name="contact_messages" Relationship="Self.FK_contact_messages_users" FromRole="users" ToRole="contact_messages" />
+          <NavigationProperty Name="educations" Relationship="Self.FK_educations_users" FromRole="users" ToRole="educations" />
+          <NavigationProperty Name="experiences" Relationship="Self.FK_experiences_users" FromRole="users" ToRole="experiences" />
+          <NavigationProperty Name="interests" Relationship="Self.FK_interests_users" FromRole="users" ToRole="interests" />
+          <NavigationProperty Name="skills" Relationship="Self.FK_skills_users" FromRole="users" ToRole="skills" />
+          <NavigationProperty Name="user_informations" Relationship="Self.FK_user_informations_users" FromRole="users" ToRole="user_informations" />
+          <NavigationProperty Name="workflows" Relationship="Self.FK_workflows_users" FromRole="users" ToRole="workflows" />
+          <NavigationProperty Name="social_links" Relationship="arifkuru_cvModel.FK_social_links_users" FromRole="users" ToRole="social_links" />
+        </EntityType>
+        <EntityType Name="workflows">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK_workflows_users" FromRole="workflows" ToRole="users" />
+        </EntityType>
+        <Association Name="FK_achievements_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="achievements" Type="Self.achievements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="achievements">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_contact_messages_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="contact_messages" Type="Self.contact_messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="contact_messages">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_educations_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="educations" Type="Self.educations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="educations">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_experiences_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="experiences" Type="Self.experiences" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="experiences">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_interests_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="interests" Type="Self.interests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="interests">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_skills_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="skills" Type="Self.skills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="skills">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_informations_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="user_informations" Type="Self.user_informations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_informations">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_workflows_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="workflows" Type="Self.workflows" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="workflows">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="arifkuru_cvEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="achievements" EntityType="Self.achievements" />
+          <EntitySet Name="contact_messages" EntityType="Self.contact_messages" />
+          <EntitySet Name="educations" EntityType="Self.educations" />
+          <EntitySet Name="experiences" EntityType="Self.experiences" />
+          <EntitySet Name="interests" EntityType="Self.interests" />
+          <EntitySet Name="skills" EntityType="Self.skills" />
+          <EntitySet Name="user_informations" EntityType="Self.user_informations" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <EntitySet Name="workflows" EntityType="Self.workflows" />
+          <AssociationSet Name="FK_achievements_users" Association="Self.FK_achievements_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="achievements" EntitySet="achievements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_contact_messages_users" Association="Self.FK_contact_messages_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="contact_messages" EntitySet="contact_messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_educations_users" Association="Self.FK_educations_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="educations" EntitySet="educations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_experiences_users" Association="Self.FK_experiences_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="experiences" EntitySet="experiences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_interests_users" Association="Self.FK_interests_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="interests" EntitySet="interests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_skills_users" Association="Self.FK_skills_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="skills" EntitySet="skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_informations_users" Association="Self.FK_user_informations_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="user_informations" EntitySet="user_informations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_workflows_users" Association="Self.FK_workflows_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="workflows" EntitySet="workflows" />
+          </AssociationSet>
+          <EntitySet Name="social_links" EntityType="arifkuru_cvModel.social_links" />
+          <AssociationSet Name="FK_social_links_users" Association="arifkuru_cvModel.FK_social_links_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="social_links" EntitySet="social_links" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="social_links">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="link" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="arifkuru_cvModel.FK_social_links_users" FromRole="social_links" ToRole="users" />
+        </EntityType>
+        <Association Name="FK_social_links_users">
+          <End Type="arifkuru_cvModel.users" Role="users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="arifkuru_cvModel.social_links" Role="social_links" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="social_links">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="arifkuru_cvModelStoreContainer" CdmEntityContainer="arifkuru_cvEntities1">
+          <EntitySetMapping Name="achievements">
+            <EntityTypeMapping TypeName="arifkuru_cvModel.achievements">
+              <MappingFragment StoreEntitySet="achievements">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="contact_messages">
+            <EntityTypeMapping TypeName="arifkuru_cvModel.contact_messages">
+              <MappingFragment StoreEntitySet="contact_messages">
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="educations">
+            <EntityTypeMapping TypeName="arifkuru_cvModel.educations">
+              <MappingFragment StoreEntitySet="educations">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="school" ColumnName="school" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="gpa_score" ColumnName="gpa_score" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="experiences">
+            <EntityTypeMapping TypeName="arifkuru_cvModel.experiences">
+              <MappingFragment StoreEntitySet="experiences">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="company" ColumnName="company" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="interests">
+            <EntityTypeMapping TypeName="arifkuru_cvModel.interests">
+              <MappingFragment StoreEntitySet="interests">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="skills">
+            <EntityTypeMapping TypeName="arifkuru_cvModel.skills">
+              <MappingFragment StoreEntitySet="skills">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="icon_path" ColumnName="icon_path" />
+                <ScalarProperty Name="icon_type" ColumnName="icon_type" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_informations">
+            <EntityTypeMapping TypeName="arifkuru_cvModel.user_informations">
+              <MappingFragment StoreEntitySet="user_informations">
+                <ScalarProperty Name="character_type" ColumnName="character_type" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="profile_image" ColumnName="profile_image" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="arifkuru_cvModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="workflows">
+            <EntityTypeMapping TypeName="arifkuru_cvModel.workflows">
+              <MappingFragment StoreEntitySet="workflows">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="social_links">
+            <EntityTypeMapping TypeName="arifkuru_cvModel.social_links">
+              <MappingFragment StoreEntitySet="social_links">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

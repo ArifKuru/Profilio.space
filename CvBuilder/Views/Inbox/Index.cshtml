@@ -1,0 +1,116 @@
+﻿@using CvBuilder.Models.Entity
+@using System.Globalization
+@model List<contact_messages>
+@{
+    ViewBag.Title = "Inbox";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="flex items-center justify-between gap-4 mb-6">
+    <div>
+        <h2 class="text-2xl font-bold text-app-textMain">Inbox</h2>
+        <p class="text-sm text-app-textSub">Manage your incoming messages.</p>
+    </div>
+
+    <div class="flex items-center px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg border border-indigo-100 shadow-sm">
+        <i class="fas fa-envelope mr-2"></i>
+        <span class="font-bold">@(Model?.Count ?? 0)</span>
+    </div>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-app-soft overflow-hidden">
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-50/50 border-b border-app-soft">
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-1/4">Sender Details</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-1/2">Message</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Date</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @foreach (var item in Model)
+                    {
+                        <tr class="hover:bg-gray-50/80 transition-colors duration-150 group">
+
+                            <td class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-sm border border-indigo-200">
+                                        @(item.full_name?.Substring(0, 1).ToUpper() ?? "U")
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-bold text-gray-900">@item.full_name</div>
+                                        <a href="mailto:@item.email" class="text-xs text-gray-500 hover:text-indigo-600 hover:underline block mt-0.5">
+                                            @item.email
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td class="px-6 py-4">
+                                <p class="text-sm text-gray-600 line-clamp-2 leading-relaxed" title="@item.message">
+                                    @item.message
+                                </p>
+                            </td>
+
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-xs text-gray-500 font-medium">
+                                    @(item.created_at?.ToString("dd MMM yyyy", new CultureInfo("en-US")))
+                                </div>
+                                <div class="text-[10px] text-gray-400 mt-0.5">
+                                    @(item.created_at?.ToString("HH:mm"))
+                                </div>
+                            </td>
+
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <button onclick="confirmDelete(@item.id, '@item.full_name')" class="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors" title="Delete Message">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="flex flex-col items-center justify-center py-20 px-4 text-center">
+            <div class="h-20 w-20 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+                <i class="fas fa-inbox text-3xl text-gray-300"></i>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900">No messages yet</h3>
+            <p class="mt-1 text-sm text-gray-500 max-w-sm">Your inbox is currently empty.</p>
+        </div>
+    }
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function confirmDelete(id, senderName) {
+        Swal.fire({
+            title: 'Delete Message?',
+            text: `Remove message from ${senderName}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete',
+            background: '#fff',
+            customClass: {
+                popup: 'rounded-xl shadow-xl border border-gray-100',
+                confirmButton: 'px-4 py-2 rounded-lg font-medium text-sm',
+                cancelButton: 'px-4 py-2 rounded-lg font-medium text-sm'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/admin/inbox/delete/${id}`;
+            }
+        });
+    }
+</script>

@@ -1,0 +1,174 @@
+﻿@using CvBuilder.Models.Entity
+@model List<social_links>
+@{
+    ViewBag.Title = "Social Profiles";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="flex items-center justify-between gap-4 mb-6">
+    <div>
+        <h2 class="text-2xl font-bold text-app-textMain">Social Profiles</h2>
+        <p class="text-sm text-app-textSub">Manage your social media links and online presence.</p>
+    </div>
+
+    <a href="/admin/links/add" class="inline-flex items-center justify-center px-4 py-2.5 bg-app-primary hover:bg-app-accent text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow group">
+        <i class="fas fa-plus mr-2 group-hover:rotate-90 transition-transform duration-300"></i>
+        Add Link
+    </a>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-app-soft overflow-hidden">
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-50/50 border-b border-app-soft">
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-1/4">Platform</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Link Actions</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Manage</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @foreach (var item in Model)
+                    {
+                        // Renk ve İkon Ayarları (Değişmedi)
+                        string iconClass = ""; string bgClass = ""; string textClass = ""; string label = item.type;
+                        if (item.type == "linkedin") { iconClass = "fab fa-linkedin-in"; bgClass = "bg-blue-50"; textClass = "text-[#0077b5]"; label = "LinkedIn"; }
+                        else if (item.type == "github") { iconClass = "fab fa-github"; bgClass = "bg-gray-100"; textClass = "text-gray-800"; label = "GitHub"; }
+                        else if (item.type == "twitter") { iconClass = "fab fa-twitter"; bgClass = "bg-sky-50"; textClass = "text-[#1DA1F2]"; label = "Twitter"; }
+                        else if (item.type == "facebook") { iconClass = "fab fa-facebook-f"; bgClass = "bg-blue-50"; textClass = "text-[#4267B2]"; label = "Facebook"; }
+                        else if (item.type == "instagram") { iconClass = "fab fa-instagram"; bgClass = "bg-pink-50"; textClass = "text-[#E1306C]"; label = "Instagram"; }
+                        else if (item.type == "youtube") { iconClass = "fab fa-youtube"; bgClass = "bg-red-50"; textClass = "text-[#FF0000]"; label = "YouTube"; }
+                        else if (item.type == "web") { iconClass = "fas fa-globe"; bgClass = "bg-indigo-50"; textClass = "text-indigo-600"; label = "Website"; }
+                        else { iconClass = "fas fa-link"; bgClass = "bg-gray-50"; textClass = "text-gray-600"; label = item.type; }
+
+                        <tr class="hover:bg-gray-50/80 transition-colors duration-150 group">
+
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-10 w-10 rounded-lg @bgClass @textClass flex items-center justify-center text-lg border border-gray-100/50">
+                                        <i class="@iconClass"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-bold text-gray-900 capitalize">@label</div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td class="px-6 py-4">
+                                <div class="flex items-center max-w-md">
+                                    <div class="flex items-center w-full bg-gray-50 border border-gray-200 rounded-lg overflow-hidden transition-all focus-within:ring-2 focus-within:ring-app-primary/20 focus-within:border-app-primary">
+
+                                        <button onclick="copyToClipboard('@item.link', this)" class="flex-shrink-0 px-3 py-2 bg-gray-100 hover:bg-gray-200 border-r border-gray-200 text-gray-500 hover:text-gray-700 transition-colors" title="Copy to clipboard">
+                                            <i class="far fa-copy text-sm"></i>
+                                        </button>
+
+                                        <div class="flex-1 px-3 py-1.5 truncate font-mono text-sm text-gray-600 select-all">
+                                            @item.link
+                                        </div>
+
+                                        <a href="@item.link" target="_blank" rel="noopener noreferrer" class="flex-shrink-0 px-3 py-2 bg-white hover:bg-gray-50 border-l border-gray-200 text-blue-500 hover:text-blue-700 transition-colors" title="Open in new tab">
+                                            <i class="fas fa-external-link-alt text-sm"></i>
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <div class="flex items-center justify-end gap-2">
+                                    <a href="/admin/links/update/@item.id" class="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+
+                                    <button onclick="confirmDelete(@item.id)" class="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="flex flex-col items-center justify-center py-16 px-4 text-center">
+            <div class="h-20 w-20 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+                <i class="fas fa-share-alt text-3xl text-gray-300"></i>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900">No social profiles added</h3>
+            <p class="mt-1 text-sm text-gray-500 max-w-sm">Connect your LinkedIn, GitHub, or portfolio website.</p>
+            <div class="mt-6">
+                <a href="/admin/links/add" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-app-primary hover:bg-app-accent">
+                    <i class="fas fa-plus -ml-1 mr-2"></i>
+                    Add Link
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // Silme Onayı
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Delete Link?',
+            text: "This will remove the link from your CV.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it',
+            background: '#fff',
+            customClass: {
+                popup: 'rounded-xl shadow-xl border border-gray-100',
+                confirmButton: 'px-4 py-2 rounded-lg font-medium text-sm',
+                cancelButton: 'px-4 py-2 rounded-lg font-medium text-sm'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `/admin/links/delete/${id}`;
+            }
+        });
+    }
+
+    // Panoya Kopyalama Fonksiyonu
+    function copyToClipboard(text, btnElement) {
+        navigator.clipboard.writeText(text).then(() => {
+            // İkonu değiştir (Geri bildirim)
+            const icon = btnElement.querySelector('i');
+            const originalClass = icon.className;
+
+            icon.className = 'fas fa-check text-green-600'; // Tik işareti yap
+
+            // 2 saniye sonra eski haline getir
+            setTimeout(() => {
+                icon.className = 'far fa-copy text-sm';
+            }, 2000);
+
+            // Opsiyonel: Ufak bir toast mesajı
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: false,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+
+            Toast.fire({
+                icon: 'success',
+                title: 'Copied to clipboard'
+            });
+        });
+    }
+</script>

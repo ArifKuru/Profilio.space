@@ -1,0 +1,32 @@
+﻿@using CvBuilder.Models.Entity
+@model List<workflows>
+
+<section class="scroll-mt-24 py-10 lg:py-16 min-h-[40vh] flex flex-col justify-center relative overflow-hidden" id="skills">
+
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 opacity-[0.03] pointer-events-none select-none">
+        <i class="fas fa-code text-[25rem] text-app-primary transform -rotate-12"></i>
+    </div>
+
+    <div class="flex items-center gap-3 mb-8 relative z-10">
+        <div class="bg-app-primary/10 p-2.5 rounded-xl text-app-primary shadow-sm ring-1 ring-app-primary/20">
+            <i class="fas fa-code text-xl"></i>
+        </div>
+        <h2 class="text-3xl font-bold text-app-textMain tracking-tight">Skills & Workflow</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 relative z-10">
+        @foreach (var workflow in Model)
+        {
+            <div class="group flex items-center p-3 bg-white border border-app-soft rounded-xl shadow-sm hover:shadow-md hover:border-app-primary/50 transition-all duration-300 transform hover:-translate-y-1">
+
+                <div class="flex-shrink-0 h-9 w-9 flex items-center justify-center rounded-lg bg-app-bg text-app-textSub group-hover:bg-app-primary group-hover:text-white transition-colors duration-300">
+                    <i class="fas fa-check text-xs"></i>
+                </div>
+
+                <span class="ml-3 text-[0.95rem] font-medium text-app-textMain group-hover:text-app-primary transition-colors leading-tight">
+                    @workflow.description
+                </span>
+            </div>
+        }
+    </div>
+</section>

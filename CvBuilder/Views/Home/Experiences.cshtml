@@ -1,0 +1,49 @@
+﻿@using CvBuilder.Models.Entity
+@using System.Globalization
+@model List<experiences>
+
+<section class="scroll-mt-24 py-10 lg:py-16 min-h-[40vh] flex flex-col justify-center relative overflow-hidden" id="experience">
+
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 opacity-[0.03] pointer-events-none select-none">
+        <i class="fas fa-briefcase text-[25rem] text-app-primary transform rotate-12"></i>
+    </div>
+
+    <div class="flex items-center gap-3 mb-8 relative z-10">
+        <div class="bg-app-primary/10 p-2.5 rounded-xl text-app-primary shadow-sm ring-1 ring-app-primary/20">
+            <i class="fas fa-briefcase text-xl"></i>
+        </div>
+        <h2 class="text-3xl font-bold text-app-textMain tracking-tight">Experience</h2>
+    </div>
+
+    <div class="space-y-8 border-l-2 border-app-soft ml-3 pl-6 md:pl-8 relative z-10">
+        @foreach (var experience in Model)
+        {
+            <div class="relative group">
+                <div class="absolute -left-[35px] md:-left-[43px] top-1.5 h-5 w-5 rounded-full border-[3px] border-white bg-app-soft group-hover:bg-app-primary transition-colors duration-300 shadow-sm flex items-center justify-center"></div>
+
+                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-1 md:gap-4 mb-2">
+                    <div class="flex-grow">
+                        <h3 class="text-xl font-bold text-app-textMain group-hover:text-app-primary transition-colors duration-300 leading-tight">
+                            @experience.title
+                        </h3>
+                        <div class="text-sm font-semibold text-app-textSub mb-1 uppercase tracking-wide">
+                            @experience.company
+                        </div>
+                    </div>
+
+                    <div class="flex-shrink-0 mt-1 md:mt-0">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-app-secondary/20 text-app-primary border border-app-secondary/30 shadow-sm whitespace-nowrap">
+                            @(experience.start_date?.ToString("MMM yyyy", new CultureInfo("en-US")))
+                            <span class="mx-1.5 text-app-accent/50">&rarr;</span>
+                            @(experience.end_date?.ToString("MMM yyyy", new CultureInfo("en-US")) ?? "Present")
+                        </span>
+                    </div>
+                </div>
+
+                <p class="text-app-textSub/90 leading-relaxed text-[0.95rem] max-w-4xl">
+                    @experience.description
+                </p>
+            </div>
+        }
+    </div>
+</section>

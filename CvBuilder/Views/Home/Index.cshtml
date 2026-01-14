@@ -1,0 +1,282 @@
+﻿@using CvBuilder.Models.Entity
+@model List<user_informations>
+@{
+    int currentId = (int)ViewBag.TargetUserId;
+    Layout = null;
+
+}
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    @foreach (var user_information in Model)
+    {
+        <title>@user_information.name @user_information.surname | Profolio.space</title>
+    }
+    <link rel="icon" type="image/x-icon" href="~/public/favicon.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: {
+                        app: {
+                            primary: '#16A34A',   // Green 600
+                            secondary: '#DCFCE7', // Green 100
+                            dark: '#0F172A',      // Slate 900 (Sidebar için)
+                            bg: '#F1F5F9',        // Slate 100 (Daha koyu beyaz/gri)
+                            soft: '#CBD5E1',      // Slate 300
+                            textMain: '#1E293B',  // Slate 800
+                            textSub: '#64748B',   // Slate 500
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0F172A;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #16A34A;
+            }
+    </style>
+</head>
+<body class="bg-app-bg text-app-textMain antialiased leading-relaxed font-medium" id="page-top">
+
+    <div class="lg:hidden fixed top-0 left-0 w-full bg-app-dark/95 backdrop-blur-md text-white z-40 px-6 py-3 flex justify-between items-center shadow-md border-b border-white/5">
+        @foreach (var user_information in Model)
+        {
+            <a href="#page-top" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-app-primary/50 group-hover:border-app-primary transition-colors">
+                    <img src="@user_information.profile_image" alt="Profile" class="w-full h-full object-cover">
+                </div>
+                <span class="font-bold text-lg tracking-tight group-hover:text-app-primary transition-colors">
+                    @user_information.name
+                </span>
+            </a>
+        }
+
+        <div class="flex items-center gap-2">
+            <a href="@Url.Action("DownloadPdf", "BuildCv", new { userId = ViewBag.TargetUserId })"
+               class="flex items-center gap-1.5 px-3 py-1.5 bg-app-primary text-white rounded-full text-[10px] font-bold tracking-wide">
+                <span>CV</span>
+                <i class="fas fa-download text-[9px]"></i>
+            </a>
+
+            <a href="/login" class="w-8 h-8 flex items-center justify-center rounded-full text-white/70 hover:text-app-primary transition-colors" title="Admin Login">
+                <i class="fas fa-sign-in-alt text-sm"></i>
+            </a>
+
+            <button id="mobileMenuBtn" class="text-white hover:text-app-primary transition-colors p-2">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="menuOverlay" class="fixed inset-0 bg-black/60 z-40 hidden lg:hidden backdrop-blur-sm transition-all" onclick="closeMenu()"></div>
+
+    <div class="flex flex-col lg:flex-row min-h-screen">
+
+        <nav id="sidebar" class="bg-app-dark text-white z-50 flex flex-col items-center py-10 shadow-2xl transition-transform duration-300 ease-in-out
+            fixed top-0 h-full overflow-y-auto
+            w-72 right-0 translate-x-full
+            lg:left-0 lg:right-auto lg:translate-x-0 lg:shadow-none border-r border-white/5">
+
+            <button id="closeSidebarBtn" class="absolute top-4 right-6 text-white text-xl lg:hidden hover:text-app-primary">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <a class="js-scroll-trigger block mb-10 px-8" href="#page-top">
+                @foreach (var user_information in Model)
+                {
+                    <div class="relative group cursor-pointer">
+                        <div class="relative w-40 h-40 rounded-full p-1 border-2 border-white/10 group-hover:border-app-primary transition-colors mx-auto overflow-hidden">
+                            <img class="w-full h-full rounded-full object-cover group-hover:scale-110 transition-transform duration-700" src="@user_information.profile_image" alt="Profile" />
+                        </div>
+                        <div class="lg:hidden text-center mt-6">
+                            <span class="font-bold text-2xl block tracking-tight">@user_information.name</span>
+                        </div>
+                    </div>
+                }
+            </a>
+
+            <div class="w-full px-4 space-y-1">
+                <ul class="flex flex-col w-full gap-2">
+                    <li><a class="nav-link block px-6 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl font-semibold text-sm transition-all flex items-center gap-4" href="#about" onclick="closeMenu()"><i class="fas fa-user w-5 text-center opacity-50"></i> About</a></li>
+                    <li><a class="nav-link block px-6 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl font-semibold text-sm transition-all flex items-center gap-4" href="#experience" onclick="closeMenu()"><i class="fas fa-briefcase w-5 text-center opacity-50"></i> Experience</a></li>
+                    <li><a class="nav-link block px-6 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl font-semibold text-sm transition-all flex items-center gap-4" href="#education" onclick="closeMenu()"><i class="fas fa-graduation-cap w-5 text-center opacity-50"></i> Education</a></li>
+                    <li><a class="nav-link block px-6 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl font-semibold text-sm transition-all flex items-center gap-4" href="#skills" onclick="closeMenu()"><i class="fas fa-code w-5 text-center opacity-50"></i> Skills</a></li>
+                    <li><a class="nav-link block px-6 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl font-semibold text-sm transition-all flex items-center gap-4" href="#interests" onclick="closeMenu()"><i class="fas fa-heart w-5 text-center opacity-50"></i> Interests</a></li>
+                    <li><a class="nav-link block px-6 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl font-semibold text-sm transition-all flex items-center gap-4" href="#awards" onclick="closeMenu()"><i class="fas fa-trophy w-5 text-center opacity-50"></i> Achievements</a></li>
+                    <li><a class="nav-link block px-6 py-3 text-slate-400 hover:text-white hover:bg-white/5 rounded-xl font-semibold text-sm transition-all flex items-center gap-4" href="#contact" onclick="closeMenu()"><i class="fas fa-paper-plane w-5 text-center opacity-50"></i> Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="mt-auto pb-6 text-xs text-slate-500 font-medium">
+                &copy; Profolio.space
+            </div>
+        </nav>
+
+        <main class="flex-1 lg:pl-72 w-full pt-20 lg:pt-0 bg-[#F8FAFC] relative overflow-hidden">
+
+            <div class="absolute top-6 right-6 z-30 hidden lg:flex items-center p-1 gap-1 bg-white/60 backdrop-blur-md border border-app-soft/40 rounded-full shadow-sm hover:shadow-md transition-all duration-300">
+
+                <a href="@Url.Action("DownloadPdf", "BuildCv", new { userId = ViewBag.TargetUserId })" class="flex items-center gap-1.5 px-3 py-1.5 bg-app-textMain text-white rounded-full text-[11px] font-bold tracking-wide hover:bg-app-primary transition-colors duration-300">
+                    <span>CV</span>
+                    <i class="fas fa-download text-[10px]"></i>
+                </a>
+
+                <a href="/login" class="w-8 h-8 flex items-center justify-center rounded-full text-app-textMain/70 hover:text-app-primary hover:bg-white/80 transition-all duration-300" title="Admin Login">
+                    <i class="fas fa-sign-in-alt text-sm"></i>
+                </a>
+
+            </div>
+
+            <div class="fixed top-0 right-0 -mt-20 -mr-20 w-[600px] h-[600px] bg-app-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="fixed bottom-0 left-72 -mb-20 -ml-20 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-5xl mx-auto px-6 py-12 lg:px-20 lg:py-24 space-y-28 relative z-10">
+
+                @foreach (var user_information in Model)
+                {
+
+
+<section class="min-h-[75vh] flex flex-col justify-center scroll-mt-24" id="about">
+    @if (@user_information.character_type != null)
+    {
+        <div class="absolute top-0 right-0 pointer-events-none">
+            <img src="~/public/icons/@(user_information.character_type).png"
+                 alt="Character Icon"
+                 class="w-24 h-24 lg:w-48 lg:h-48 object-contain opacity-20 lg:opacity-30" />
+        </div>}
+    <div class="space-y-8">
+        <div>
+            <h1 class="text-6xl lg:text-[7rem] font-black text-app-textMain tracking-tight leading-[1] mb-2">
+                @user_information.name
+                <span class="text-app-primary">@user_information.surname</span>.
+            </h1>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-end gap-8 pt-4">
+            <div class="flex-1">
+                <p class="text-lg text-app-textSub leading-relaxed border-l-4 border-app-primary/20 pl-6 max-w-2xl">
+                    @user_information.description
+                </p>
+
+                <div class="mt-8 pl-6 flex flex-wrap gap-x-8 gap-y-3 text-sm font-bold uppercase tracking-widest text-app-textMain/70">
+                    <span class="flex items-center gap-2"><i class="fas fa-map-marker-alt text-app-primary"></i> @user_information.address</span>
+                    <a href="mailto:@(ViewBag.TargetUserEmail ?? "contact@profolio.space")" class="flex items-center gap-2 hover:text-app-primary transition-colors"><i class="fas fa-envelope text-app-primary"></i>@(ViewBag.TargetUserEmail ?? "contact@profolio.space")</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-8 border-t border-app-soft/50">
+            <span class="text-xs font-bold text-app-textSub uppercase tracking-widest mb-4 block">Find me on</span>
+            @Html.Action("Social_links", "Home", new { id = currentId })
+        </div>
+
+    </div>
+</section>
+                }
+
+                <div class="w-full h-px bg-app-soft"></div>
+                @Html.Action("Experiences", "Home", new { id = currentId })
+
+                <div class="w-full h-px bg-app-soft"></div>
+                @Html.Action("Educations", "Home", new { id = currentId })
+
+                <div class="w-full h-px bg-app-soft"></div>
+                @Html.Action("Workflows", "Home", new { id = currentId })
+
+                <div class="w-full h-px bg-app-soft"></div>
+                @Html.Action("Interests", "Home", new { id = currentId })
+
+                <div class="w-full h-px bg-app-soft"></div>
+                @Html.Action("Achievements", "Home", new { id = currentId })
+
+                <div class="w-full h-px bg-app-soft"></div>
+                @Html.Action("Contact", "Home", new { id = currentId, email = ViewBag.TargetUserEmail })
+
+            </div>
+        </main>
+    </div>
+
+    <button id="scrollTopBtn" onclick="scrollToTop()" class="fixed bottom-8 right-8 bg-app-dark text-white w-12 h-12 rounded-xl shadow-2xl hover:bg-app-primary hover:-translate-y-1 transition-all duration-300 z-30 hidden flex items-center justify-center border border-white/10">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        const mobileBtn = document.getElementById('mobileMenuBtn');
+        const closeBtn = document.getElementById('closeSidebarBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('menuOverlay');
+
+        function openMenu() {
+            sidebar.classList.remove('translate-x-full');
+            overlay.classList.remove('hidden');
+        }
+
+        function closeMenu() {
+            if (window.innerWidth < 1024) {
+                sidebar.classList.add('translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        mobileBtn.addEventListener('click', openMenu);
+        closeBtn.addEventListener('click', closeMenu);
+
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        window.onscroll = function () {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollBtn.classList.remove('hidden');
+            } else {
+                scrollBtn.classList.add('hidden');
+            }
+            updateActiveLink();
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateActiveLink() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 250) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('text-white', 'bg-white/10');
+                link.classList.add('text-slate-400');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('text-white', 'bg-white/10');
+                    link.classList.remove('text-slate-400');
+                }
+            });
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

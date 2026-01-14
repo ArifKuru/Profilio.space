@@ -1,0 +1,54 @@
+﻿@using CvBuilder.Models.Entity
+@model workflows
+@{
+    ViewBag.Title = "Update Skill";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="flex items-center justify-between mb-6">
+    <div>
+        <h2 class="text-2xl font-bold text-app-textMain">Update Skill</h2>
+        <p class="text-sm text-app-textSub">Modify the details of your selected skill or workflow.</p>
+    </div>
+    <a href="/admin/workflows" class="text-app-textSub hover:text-app-primary text-sm font-medium transition-colors">
+        <i class="fas fa-arrow-left mr-1"></i> Back to List
+    </a>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-app-soft overflow-hidden mx-auto md:mx-0">
+    <div class="p-8">
+
+        <form method="post" class="space-y-6">
+
+            <input type="hidden" name="id" value="@Model.id" />
+
+            <div class="space-y-2">
+                <label class="text-sm font-semibold text-gray-700 block">
+                    Skill / Workflow Description <span class="text-red-500">*</span>
+                </label>
+
+                <div class="relative">
+                    <div class="absolute top-3 left-3 flex items-start pointer-events-none">
+                        <i class="fas fa-edit text-gray-400 mt-1"></i>
+                    </div>
+
+                    <textarea name="description" rows="4" required placeholder="e.g. Advanced proficiency in C#"
+                              class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-app-primary/20 focus:border-app-primary block transition-all duration-200 outline-none resize-none">@Model.description</textarea>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
+
+                <a href="/admin/workflows" class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 transition-all">
+                    Cancel
+                </a>
+
+                <button type="submit" class="inline-flex items-center px-6 py-2.5 text-sm font-medium text-white bg-app-primary rounded-lg hover:bg-app-accent focus:outline-none focus:ring-4 focus:ring-green-300 shadow-md hover:shadow-lg transition-all duration-200">
+                    <i class="fas fa-check mr-2"></i> Update Changes
+                </button>
+
+            </div>
+
+        </form>
+    </div>
+</div>

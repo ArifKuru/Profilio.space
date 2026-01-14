@@ -1,0 +1,29 @@
+﻿@using CvBuilder.Models.Entity
+@model List<social_links>
+
+<div class="flex flex-wrap items-center gap-3">
+    @foreach (var item in Model)
+    {
+        <a href="@item.link" target="_blank" rel="noopener noreferrer"
+           class="group relative flex items-center justify-center w-14 h-14 rounded-2xl bg-white border-2 border-app-soft text-app-textSub transition-all duration-300 hover:border-app-primary hover:bg-app-primary hover:text-white hover:-translate-y-1 hover:shadow-lg hover:shadow-app-primary/30">
+
+            @if (item.type == "linkedin")
+            {<i class="fab fa-linkedin-in text-2xl"></i> }
+            else if (item.type == "github")
+            { <i class="fab fa-github text-2xl"></i> }
+            else if (item.type == "twitter")
+            { <i class="fab fa-twitter text-2xl"></i> }
+            else if (item.type == "facebook")
+            { <i class="fab fa-facebook-f text-2xl"></i> }
+            else if (item.type == "instagram")
+            { <i class="fab fa-instagram text-2xl"></i> }
+            else if (item.type == "youtube")
+            { <i class="fab fa-youtube text-2xl"></i> }
+            else if (item.type == "web")
+            { <i class="fas fa-globe text-2xl"></i> }
+            else
+            { <i class="fas fa-link text-2xl"></i>}
+
+        </a>
+    }
+</div>

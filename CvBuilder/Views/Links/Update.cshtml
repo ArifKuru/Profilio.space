@@ -1,0 +1,136 @@
+﻿@using CvBuilder.Models.Entity
+@model social_links
+@{
+    ViewBag.Title = "Update Social Link";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="flex items-center justify-between mb-6">
+    <div>
+        <h2 class="text-2xl font-bold text-app-textMain">Update Social Profile</h2>
+        <p class="text-sm text-app-textSub">Modify your social media link details.</p>
+    </div>
+    <a href="/admin/links" class="text-app-textSub hover:text-app-primary text-sm font-medium transition-colors">
+        <i class="fas fa-arrow-left mr-1"></i> Back to List
+    </a>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-app-soft overflow-hidden mx-auto md:mx-0">
+    <div class="p-8">
+
+        <form method="post" class="space-y-6">
+
+            <input type="hidden" name="id" value="@Model.id" />
+            <div class="space-y-2">
+                <label class="text-sm font-semibold text-gray-700 block">
+                    Platform <span class="text-red-500">*</span>
+                </label>
+
+                <div class="relative">
+                    <div class="absolute top-3.5 left-3 flex items-center pointer-events-none text-gray-500 transition-colors duration-300" id="platformIcon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+
+                    <select name="type" id="typeSelect" required onchange="changeIcon(this)"
+                            class="w-full pl-10 pr-10 py-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-app-primary/20 focus:border-app-primary block appearance-none transition-all duration-200 outline-none cursor-pointer">
+                        <option value="github" @(Model.type == "github" ? "selected" : "")>GitHub</option>
+                        <option value="youtube" @(Model.type == "youtube" ? "selected" : "")>YouTube</option>
+                        <option value="twitter" @(Model.type == "twitter" ? "selected" : "")>X (Twitter)</option>
+                        <option value="linkedin" @(Model.type == "linkedin" ? "selected" : "")>LinkedIn</option>
+                        <option value="instagram" @(Model.type == "instagram" ? "selected" : "")>Instagram</option>
+                        <option value="facebook" @(Model.type == "facebook" ? "selected" : "")>Facebook</option>
+                        <option value="web" @(Model.type == "web" ? "selected" : "")>Personal Website / Portfolio</option>
+                        <option value="other" @(Model.type == "other" ? "selected" : "")>Other</option>
+                    </select>
+
+                    <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                        <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-sm font-semibold text-gray-700 block">
+                    Profile URL <span class="text-red-500">*</span>
+                </label>
+
+                <div class="relative">
+                    <div class="absolute top-3.5 left-3 flex items-center pointer-events-none">
+                        <i class="fas fa-link text-gray-400"></i>
+                    </div>
+
+                    <input name="link" type="url" required value="@Model.link"
+                           class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-app-primary/20 focus:border-app-primary block transition-all duration-200 outline-none" />
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
+
+                <a href="/admin/links" class="px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 transition-all">
+                    Cancel
+                </a>
+
+                <button type="submit" class="inline-flex items-center px-6 py-2.5 text-sm font-medium text-white bg-app-primary rounded-lg hover:bg-app-accent focus:outline-none focus:ring-4 focus:ring-green-300 shadow-md hover:shadow-lg transition-all duration-200">
+                    <i class="fas fa-check mr-2"></i> Update Link
+                </button>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    function changeIcon(selectElement) {
+        const value = selectElement.value;
+        const iconContainer = document.getElementById('platformIcon');
+        let iconClass = 'fas fa-globe';
+        let colorClass = 'text-gray-500';
+
+        switch (value) {
+            case 'github':
+                iconClass = 'fab fa-github';
+                colorClass = 'text-gray-800';
+                break;
+            case 'linkedin':
+                iconClass = 'fab fa-linkedin-in';
+                colorClass = 'text-blue-600';
+                break;
+            case 'twitter':
+                iconClass = 'fab fa-twitter';
+                colorClass = 'text-sky-500';
+                break;
+            case 'youtube':
+                iconClass = 'fab fa-youtube';
+                colorClass = 'text-red-600';
+                break;
+            case 'instagram':
+                iconClass = 'fab fa-instagram';
+                colorClass = 'text-pink-600';
+                break;
+            case 'facebook':
+                iconClass = 'fab fa-facebook-f';
+                colorClass = 'text-blue-700';
+                break;
+            case 'web':
+                iconClass = 'fas fa-globe';
+                colorClass = 'text-indigo-600';
+                break;
+            case 'other':
+                iconClass = 'fas fa-link';
+                colorClass = 'text-gray-600';
+                break;
+        }
+
+        iconContainer.innerHTML = `<i class="${iconClass}"></i>`;
+        iconContainer.className = `absolute top-3.5 left-3 flex items-center pointer-events-none transition-colors duration-300 ${colorClass}`;
+    }
+
+    // Sayfa Yüklendiğinde İkonu Ayarla (Mevcut Veriye Göre)
+    document.addEventListener('DOMContentLoaded', function() {
+        const selectElement = document.getElementById('typeSelect');
+        if(selectElement) {
+            changeIcon(selectElement);
+        }
+    });
+</script>
