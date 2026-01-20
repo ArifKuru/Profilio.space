@@ -1,5 +1,7 @@
 <div align="center">
 
+You Can see my example profile at <a href="https://profilio.space/arifkuru"> https://profilio.space/arifkuru </a>
+
 # 📄 Profilio.space - CV Builder and Portfolio webpage builder at the same time!
 
 **A dynamic multi-user CV building platform.** *Create, manage, and share professional resumes with unique profile pages.*
@@ -13,6 +15,7 @@
 ## 📖 Project Story
 
 This project started as a learning exercise based on the *"MVC5 ile Sıfırdan Admin Panelli Dinamik CV Sitesi"* course by Murat Yücedağ. The initial breakthrough came when I added `user_id` to all tables to ensure data integrity, which enabled the platform to serve multiple users from a single site. The **PDF CV export** feature was my own addition to enhance the platform's functionality.
+
 
 <div align="center">
   <img src="https://www.arifkuru.com.tr/iss/db_model.png" alt="Database Model" width="800">
