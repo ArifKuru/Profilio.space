@@ -1,0 +1,151 @@
+@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    var action = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    var isIndexPage = controller == "Landing" && action == "Index";
+    var baseUrl = isIndexPage ? "" : Url.Action("Index", "Landing");
+
+    // Yılı dinamik alıyoruz
+    var currentYear = DateTime.Now.Year;
+}
+
+<nav id="mainNav" class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-app-soft/50 transition-all duration-300 shadow-sm" style="z-index: 40;">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+
+        <a href="/" class="flex items-center gap-3 group relative">
+            <img src="~/public/favicon.png" alt="Profilio" class="h-8 w-auto md:hidden" />
+
+            <img src="~/public/logo_text.png" alt="Profilio.space" class="hidden md:block h-12 transition-transform duration-300 group-hover:scale-105" />
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+            <a href="@(baseUrl)#features" class="relative text-app-textSub hover:text-app-primary transition-all duration-300 text-sm font-semibold py-2 group">
+                <span class="relative z-10 flex items-center gap-1.5">
+                    <i class="fas fa-star text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="color: #16A34A !important;"></i>
+                    Features
+                </span>
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-app-primary to-[#22c55e] transition-all duration-300 group-hover:w-full rounded-full"></span>
+            </a>
+            <a href="@(baseUrl)#about" class="relative text-app-textSub hover:text-app-primary transition-all duration-300 text-sm font-semibold py-2 group">
+                <span class="relative z-10 flex items-center gap-1.5">
+                    <i class="fas fa-info-circle text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="color: #16A34A;"></i>
+                    About
+                </span>
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-app-primary to-[#22c55e] transition-all duration-300 group-hover:w-full rounded-full"></span>
+            </a>
+            <a href="@Url.Action("Index", "Register")" class="group relative px-6 py-2.5 bg-gradient-to-r from-app-primary to-[#22c55e] text-white rounded-lg shadow-md hover:shadow-xl hover:shadow-app-primary/30 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-app-primary transition-all duration-300 text-sm font-bold overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-[#15803d] to-app-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <span class="relative z-10 flex items-center gap-2">
+                    <i class="fas fa-rocket text-xs"></i>
+                    Get Started
+                </span>
+            </a>
+        </div>
+
+        <button id="mobileMenuBtn" class="md:hidden p-2 text-app-textSub hover:text-app-primary transition-colors duration-200 focus:outline-none rounded-lg z-50">
+            <i class="fas fa-bars text-xl transition-all duration-300"></i>
+        </button>
+    </div>
+</nav>
+
+<div id="mobileBackdrop" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-300 md:hidden" style="z-index: 9998;"></div>
+
+<div id="mobileMenuPanel" class="fixed top-0 right-0 h-[100dvh] w-[280px] bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col" style="z-index: 9999;">
+
+    <div class="flex-shrink-0 flex items-center justify-between p-6 border-b border-gray-100 bg-white">
+        <img src="~/public/logo_text.png" alt="Profilio" class="h-8" />
+
+        <button id="closeMenuBtn" class="p-2 text-gray-400 hover:text-red-500 transition-colors rounded-full hover:bg-red-50">
+            <i class="fas fa-times text-xl"></i>
+        </button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto min-h-0 p-6 space-y-3">
+        <a href="@(baseUrl)#features" class="mobile-link flex items-center gap-4 px-4 py-4 rounded-xl text-app-textSub hover:bg-green-50 hover:text-app-primary transition-all duration-200 font-medium text-base border border-transparent hover:border-green-100 group">
+            <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-app-primary shadow-sm group-hover:scale-110 transition-transform flex-shrink-0">
+                <i class="fas fa-star text-sm"></i>
+            </div>
+            Features
+        </a>
+
+        <a href="@(baseUrl)#about" class="mobile-link flex items-center gap-4 px-4 py-4 rounded-xl text-app-textSub hover:bg-green-50 hover:text-app-primary transition-all duration-200 font-medium text-base border border-transparent hover:border-green-100 group">
+            <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-app-primary shadow-sm group-hover:scale-110 transition-transform flex-shrink-0">
+                <i class="fas fa-info-circle text-sm"></i>
+            </div>
+            About
+        </a>
+
+    </div>
+
+    <div class="flex-shrink-0 p-6 bg-gray-50 border-t border-gray-100 safe-area-bottom">
+        <a href="@Url.Action("Index", "Register")" class="w-full flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-app-primary to-[#22c55e] text-white rounded-xl shadow-lg hover:shadow-app-primary/40 active:scale-95 transition-all duration-200 font-bold text-base">
+            <i class="fas fa-rocket"></i>
+            Get Started Now
+        </a>
+
+        <p class="text-center text-xs text-gray-400 mt-6 font-medium">
+            &copy; @currentYear Profilio.space
+            <br />All rights reserved.
+        </p>
+    </div>
+</div>
+<script>
+    // Header Scroll Effect
+    window.addEventListener('scroll', function () {
+        const nav = document.getElementById('mainNav');
+        if (window.scrollY > 50) {
+            nav.classList.add('shadow-lg', 'border-app-soft');
+            nav.classList.remove('shadow-sm', 'border-app-soft/50');
+        } else {
+            nav.classList.add('shadow-sm', 'border-app-soft/50');
+            nav.classList.remove('shadow-lg', 'border-app-soft');
+        }
+    });
+
+    // NATIVE MENU LOGIC
+    const btnOpen = document.getElementById('mobileMenuBtn');
+    const btnClose = document.getElementById('closeMenuBtn');
+    const backdrop = document.getElementById('mobileBackdrop');
+    const panel = document.getElementById('mobileMenuPanel');
+
+    let isMenuOpen = false;
+
+    function openMenu() {
+        isMenuOpen = true;
+        backdrop.classList.remove('hidden');
+        void backdrop.offsetWidth; // Force reflow
+        backdrop.classList.remove('opacity-0');
+
+        panel.classList.remove('translate-x-full');
+        document.body.style.overflow = 'hidden'; // Scroll Kilitle
+    }
+
+    function closeMenu() {
+        isMenuOpen = false;
+        backdrop.classList.add('opacity-0');
+        panel.classList.add('translate-x-full');
+
+        setTimeout(() => {
+            if (!isMenuOpen) backdrop.classList.add('hidden');
+        }, 300);
+
+        document.body.style.overflow = ''; // Scroll Aç
+    }
+
+    // Event Listeners
+    btnOpen?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openMenu();
+    });
+
+    btnClose?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeMenu();
+    });
+
+    backdrop?.addEventListener('click', closeMenu);
+
+    // Linklere tıklayınca kapat
+    document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+</script>

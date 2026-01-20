@@ -1,28 +1,27 @@
-﻿@using CvBuilder.Models.Entity
-@using System.Globalization
-@model List<contact_messages>
-@{
+﻿@{
     ViewBag.Title = "Inbox";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="flex items-center justify-between gap-4 mb-6">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
     <div>
-        <h2 class="text-2xl font-bold text-app-textMain">Inbox</h2>
-        <p class="text-sm text-app-textSub">Manage your incoming messages.</p>
+        <h2 class="text-xl sm:text-2xl font-bold text-app-textMain">Inbox</h2>
+        <p class="text-xs sm:text-sm text-app-textSub">Manage your incoming messages.</p>
     </div>
 
-    <div class="flex items-center px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg border border-indigo-100 shadow-sm">
+    <div id="messageCount" class="flex items-center px-3 sm:px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg border border-indigo-100 shadow-sm">
         <i class="fas fa-envelope mr-2"></i>
-        <span class="font-bold">@(Model?.Count ?? 0)</span>
+        <span id="messageCountText" class="font-bold text-sm sm:text-base">
+            <span class="inline-block w-8 h-4 bg-indigo-200 rounded animate-pulse"></span>
+        </span>
     </div>
 </div>
 
 <div class="bg-white rounded-xl shadow-sm border border-app-soft overflow-hidden">
-
-    @if (Model != null && Model.Any())
-    {
-        <div class="overflow-x-auto">
+    <!-- Loading State - Skeleton -->
+    <div id="loadingState" class="hidden h-[400px]">
+        <!-- Desktop Skeleton -->
+        <div class="hidden md:block h-[400px]">
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-gray-50/50 border-b border-app-soft">
@@ -33,65 +32,318 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
-                    @foreach (var item in Model)
+                    @for (int i = 0; i < 3; i++)
                     {
-                        <tr class="hover:bg-gray-50/80 transition-colors duration-150 group">
-
+                        <tr>
                             <td class="px-6 py-4">
                                 <div class="flex items-center">
-                                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-sm border border-indigo-200">
-                                        @(item.full_name?.Substring(0, 1).ToUpper() ?? "U")
-                                    </div>
-                                    <div class="ml-4">
-                                        <div class="text-sm font-bold text-gray-900">@item.full_name</div>
-                                        <a href="mailto:@item.email" class="text-xs text-gray-500 hover:text-indigo-600 hover:underline block mt-0.5">
-                                            @item.email
-                                        </a>
+                                    <div class="h-10 w-10 rounded-full bg-gray-200 animate-pulse"></div>
+                                    <div class="ml-4 flex-1">
+                                        <div class="h-4 w-24 bg-gray-200 rounded animate-pulse mb-2"></div>
+                                        <div class="h-3 w-32 bg-gray-200 rounded animate-pulse"></div>
                                     </div>
                                 </div>
                             </td>
-
                             <td class="px-6 py-4">
-                                <p class="text-sm text-gray-600 line-clamp-2 leading-relaxed" title="@item.message">
-                                    @item.message
-                                </p>
+                                <div class="h-4 w-full bg-gray-200 rounded animate-pulse mb-2"></div>
+                                <div class="h-4 w-3/4 bg-gray-200 rounded animate-pulse"></div>
                             </td>
-
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-xs text-gray-500 font-medium">
-                                    @(item.created_at?.ToString("dd MMM yyyy", new CultureInfo("en-US")))
-                                </div>
-                                <div class="text-[10px] text-gray-400 mt-0.5">
-                                    @(item.created_at?.ToString("HH:mm"))
-                                </div>
+                            <td class="px-6 py-4">
+                                <div class="h-3 w-20 bg-gray-200 rounded animate-pulse mb-1"></div>
+                                <div class="h-3 w-16 bg-gray-200 rounded animate-pulse"></div>
                             </td>
-
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <button onclick="confirmDelete(@item.id, '@item.full_name')" class="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors" title="Delete Message">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
+                            <td class="px-6 py-4 text-right">
+                                <div class="h-8 w-8 bg-gray-200 rounded-lg animate-pulse inline-block"></div>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
-    }
-    else
-    {
-        <div class="flex flex-col items-center justify-center py-20 px-4 text-center">
-            <div class="h-20 w-20 bg-gray-50 rounded-full flex items-center justify-center mb-4">
-                <i class="fas fa-inbox text-3xl text-gray-300"></i>
-            </div>
-            <h3 class="text-lg font-medium text-gray-900">No messages yet</h3>
-            <p class="mt-1 text-sm text-gray-500 max-w-sm">Your inbox is currently empty.</p>
+        <!-- Mobile Skeleton -->
+        <div class="md:hidden divide-y divide-gray-100 h-[400px]">
+            @for (int i = 0; i < 3; i++)
+            {
+                <div class="p-4">
+                    <div class="flex items-start justify-between gap-3 mb-3">
+                        <div class="flex items-center gap-3 flex-1">
+                            <div class="h-12 w-12 rounded-full bg-gray-200 animate-pulse"></div>
+                            <div class="flex-1">
+                                <div class="h-4 w-32 bg-gray-200 rounded animate-pulse mb-2"></div>
+                                <div class="h-3 w-40 bg-gray-200 rounded animate-pulse"></div>
+                            </div>
+                        </div>
+                        <div class="h-8 w-8 bg-gray-200 rounded-lg animate-pulse"></div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="h-4 w-full bg-gray-200 rounded animate-pulse mb-2"></div>
+                        <div class="h-4 w-full bg-gray-200 rounded animate-pulse mb-2"></div>
+                        <div class="h-4 w-3/4 bg-gray-200 rounded animate-pulse"></div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="h-3 w-24 bg-gray-200 rounded animate-pulse"></div>
+                        <div class="h-3 w-16 bg-gray-200 rounded animate-pulse"></div>
+                    </div>
+                </div>
+            }
         </div>
-    }
+    </div>
+
+    <!-- Desktop Tablo Görünümü -->
+    <div id="desktopTable" class="hidden md:block overflow-x-auto min-h-[400px]">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-gray-50/50 border-b border-app-soft">
+                    <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-1/4">Sender Details</th>
+                    <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-1/2">Message</th>
+                    <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Date</th>
+                    <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="desktopTableBody" class="divide-y divide-gray-100">
+                <!-- Mesajlar buraya eklenecek -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobil Kart Görünümü -->
+    <div id="mobileCards" class="md:hidden divide-y divide-gray-100 min-h-[400px]">
+        <!-- Mesajlar buraya eklenecek -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="flex flex-col items-center justify-center py-20 px-4 text-center min-h-[400px]" style="display: none;">
+        <div class="h-20 w-20 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-inbox text-3xl text-gray-300"></i>
+        </div>
+        <h3 class="text-lg font-medium text-gray-900">No messages yet</h3>
+        <p class="mt-1 text-sm text-gray-500 max-w-sm">Your inbox is currently empty.</p>
+    </div>
+
+    <!-- Sayfalama -->
+    <div id="pagination" class="px-4 md:px-6 py-4 border-t border-app-soft flex items-center justify-between" style="display: none;">
+        <div class="text-sm text-gray-600">
+            <span id="pageInfo">Page 1 of 1</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <button id="prevPage" class="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>
+                <i class="fas fa-chevron-left mr-1"></i>
+                Previous
+            </button>
+            <button id="nextPage" class="px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled>
+                Next
+                <i class="fas fa-chevron-right ml-1"></i>
+            </button>
+        </div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
+    let currentPage = 1;
+    const limit = 10;
+    let totalPages = 1;
+    let totalCount = 0;
+
+    // Sayfa yüklendiğinde mesajları getir
+    document.addEventListener('DOMContentLoaded', function() {
+        loadMessages(currentPage);
+    });
+
+    // Mesajları yükle
+    function loadMessages(page) {
+        // Skeleton loader göster (inline style kaldır, Tailwind class'larına güven)
+        document.getElementById('loadingState').classList.remove('hidden');
+        // Görünümleri gizle (loading sırasında)
+        document.getElementById('desktopTable').style.display = 'none';
+        document.getElementById('mobileCards').style.display = 'none';
+        document.getElementById('emptyState').style.display = 'none';
+        document.getElementById('pagination').style.display = 'none';
+
+        fetch(`/admin/inbox/GetMessages?page=${page}&limit=${limit}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loadingState').classList.add('hidden');
+
+                if (data.success && data.data.length > 0) {
+                    currentPage = data.pagination.currentPage;
+                    totalPages = data.pagination.totalPages;
+                    totalCount = data.pagination.totalCount;
+
+                    // Toplam mesaj sayısını güncelle
+                    updateMessageCount(totalCount);
+
+                    renderMessages(data.data);
+                    updatePagination();
+                } else {
+                    // Mesaj yoksa sayıyı 0 olarak göster
+                    updateMessageCount(0);
+                    showEmptyState();
+                }
+            })
+            .catch(error => {
+                console.error('Error loading messages:', error);
+                document.getElementById('loadingState').classList.add('hidden');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to load messages. Please try again.',
+                    confirmButtonColor: '#3085d6'
+                });
+            });
+    }
+
+    // Mesajları render et
+    function renderMessages(messages) {
+        const desktopBody = document.getElementById('desktopTableBody');
+        const mobileCards = document.getElementById('mobileCards');
+
+        desktopBody.innerHTML = '';
+        mobileCards.innerHTML = '';
+
+        messages.forEach(message => {
+            // Desktop tablo satırı
+            const desktopRow = createDesktopRow(message);
+            desktopBody.appendChild(desktopRow);
+
+            // Mobil kart
+            const mobileCard = createMobileCard(message);
+            mobileCards.appendChild(mobileCard);
+        });
+
+        // Görünümleri göster (Tailwind responsive class'larına güven)
+        // Inline style'ı kaldır, Tailwind class'ları devreye girsin
+        document.getElementById('desktopTable').style.display = '';
+        document.getElementById('mobileCards').style.display = '';
+        document.getElementById('pagination').style.display = 'flex';
+    }
+
+    // Desktop tablo satırı oluştur
+    function createDesktopRow(message) {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-gray-50/80 transition-colors duration-150 group';
+
+        const initial = (message.full_name?.substring(0, 1).toUpperCase() || 'U');
+        const dateStr = message.created_at ? message.created_at.date : '-';
+        const timeStr = message.created_at ? message.created_at.time : '-';
+
+        tr.innerHTML = `
+            <td class="px-6 py-4">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-sm border border-indigo-200">
+                        ${initial}
+                    </div>
+                    <div class="ml-4">
+                        <div class="text-sm font-bold text-gray-900">${escapeHtml(message.full_name)}</div>
+                        <a href="mailto:${escapeHtml(message.email)}" class="text-xs text-gray-500 hover:text-indigo-600 hover:underline block mt-0.5">
+                            ${escapeHtml(message.email)}
+                        </a>
+                    </div>
+                </div>
+            </td>
+            <td class="px-6 py-4">
+                <p class="text-sm text-gray-600 line-clamp-2 leading-relaxed" title="${escapeHtml(message.message)}">
+                    ${escapeHtml(message.message)}
+                </p>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-xs text-gray-500 font-medium">${dateStr}</div>
+                <div class="text-[10px] text-gray-400 mt-0.5">${timeStr}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <button onclick="confirmDelete(${message.id}, '${escapeHtml(message.full_name)}')" class="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors" title="Delete Message">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+        `;
+
+        return tr;
+    }
+
+    // Mobil kart oluştur
+    function createMobileCard(message) {
+        const div = document.createElement('div');
+        div.className = 'p-4 hover:bg-gray-50/50 transition-colors duration-150';
+
+        const initial = (message.full_name?.substring(0, 1).toUpperCase() || 'U');
+        const dateStr = message.created_at ? message.created_at.date : '-';
+        const timeStr = message.created_at ? message.created_at.time : '-';
+
+        div.innerHTML = `
+            <div class="flex items-start justify-between gap-3 mb-3">
+                <div class="flex items-center gap-3 flex-1 min-w-0">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-base border-2 border-indigo-200">
+                        ${initial}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="text-sm font-bold text-gray-900 truncate">${escapeHtml(message.full_name)}</div>
+                        <a href="mailto:${escapeHtml(message.email)}" class="text-xs text-gray-500 hover:text-indigo-600 hover:underline block mt-0.5 truncate">
+                            ${escapeHtml(message.email)}
+                        </a>
+                    </div>
+                </div>
+                <button onclick="confirmDelete(${message.id}, '${escapeHtml(message.full_name)}')" class="flex-shrink-0 p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors" title="Delete Message">
+                    <i class="fas fa-trash-alt text-sm"></i>
+                </button>
+            </div>
+            <div class="mb-3">
+                <p class="text-sm text-gray-600 leading-relaxed line-clamp-3" title="${escapeHtml(message.message)}">
+                    ${escapeHtml(message.message)}
+                </p>
+            </div>
+            <div class="flex items-center justify-between text-xs text-gray-500">
+                <div class="flex items-center gap-1">
+                    <i class="far fa-clock"></i>
+                    <span class="font-medium">${dateStr}</span>
+                </div>
+                <div class="text-gray-400">${timeStr}</div>
+            </div>
+        `;
+
+        return div;
+    }
+
+    // Sayfalama güncelle
+    function updatePagination() {
+        document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
+        
+        const prevBtn = document.getElementById('prevPage');
+        const nextBtn = document.getElementById('nextPage');
+
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage >= totalPages;
+    }
+
+    // Mesaj sayısını güncelle
+    function updateMessageCount(count) {
+        const countElement = document.getElementById('messageCountText');
+        countElement.innerHTML = count.toString();
+    }
+
+    // Empty state göster
+    function showEmptyState() {
+        document.getElementById('emptyState').style.display = 'flex';
+        document.getElementById('pagination').style.display = 'none';
+    }
+
+    // Önceki sayfa
+    document.getElementById('prevPage').addEventListener('click', function() {
+        if (currentPage > 1) {
+            loadMessages(currentPage - 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+
+    // Sonraki sayfa
+    document.getElementById('nextPage').addEventListener('click', function() {
+        if (currentPage < totalPages) {
+            loadMessages(currentPage + 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+
+    // Mesaj silme
     function confirmDelete(id, senderName) {
         Swal.fire({
             title: 'Delete Message?',
@@ -102,6 +354,7 @@
             cancelButtonColor: '#3085d6',
             confirmButtonText: 'Yes, delete',
             background: '#fff',
+            heightAuto: false,
             customClass: {
                 popup: 'rounded-xl shadow-xl border border-gray-100',
                 confirmButton: 'px-4 py-2 rounded-lg font-medium text-sm',
@@ -109,8 +362,63 @@
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = `/admin/inbox/delete/${id}`;
+                deleteMessage(id);
             }
         });
+    }
+
+    // API ile mesaj sil
+    function deleteMessage(id) {
+        const formData = new FormData();
+        formData.append('id', id);
+
+        fetch('/admin/inbox/DeleteMessage', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Deleted!',
+                    text: 'Message has been deleted.',
+                    confirmButtonColor: '#3085d6',
+                    timer: 1500
+                }).then(() => {
+                    // Mesajları yeniden yükle
+                    loadMessages(currentPage);
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.message || 'Failed to delete message.',
+                    confirmButtonColor: '#3085d6'
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting message:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to delete message. Please try again.',
+                confirmButtonColor: '#3085d6'
+            });
+        });
+    }
+
+    // HTML escape fonksiyonu
+    function escapeHtml(text) {
+        if (!text) return '';
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, m => map[m]);
     }
 </script>

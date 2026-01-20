@@ -26,12 +26,16 @@ namespace CvBuilder.Models.Entity
             this.user_informations = new HashSet<user_informations>();
             this.workflows = new HashSet<workflows>();
             this.social_links = new HashSet<social_links>();
+            this.profile_visits = new HashSet<profile_visits>();
         }
     
         public int id { get; set; }
         public string username { get; set; }
         public string email { get; set; }
         public string password_hash { get; set; }
+        public bool isPublished { get; set; }
+        public string password_reset_token { get; set; }
+        public Nullable<System.DateTime> password_reset_expiry { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<achievements> achievements { get; set; }
@@ -51,5 +55,7 @@ namespace CvBuilder.Models.Entity
         public virtual ICollection<workflows> workflows { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<social_links> social_links { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<profile_visits> profile_visits { get; set; }
     }
 }

@@ -1,0 +1,125 @@
+@{
+    // Sayfa içi linkler için base URL belirleme
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    var action = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    var isIndexPage = controller == "Landing" && action == "Index";
+    var baseUrl = isIndexPage ? "" : Url.Action("Index", "Landing");
+}
+
+<!-- Footer with Legal Sections -->
+<footer class="bg-app-dark text-white py-16 px-6 relative overflow-hidden">
+    <!-- Decorative Background Elements -->
+    <div class="absolute top-0 left-0 w-full h-full opacity-5">
+        <div class="absolute top-10 right-10 w-64 h-64 bg-app-primary rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 left-10 w-96 h-96 bg-app-primary rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="grid md:grid-cols-4 gap-8 mb-12">
+            <!-- Brand Column -->
+            <div class="md:col-span-1">
+                <a href="/" class="inline-flex items-center gap-3 mb-4 group">
+                    <img src="~/public/logo.png" alt="Profilio.space" class="h-10 w-auto brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
+                    <span class="text-white font-bold text-lg">Profilio.space</span>
+                </a>
+                <p class="text-sm text-gray-400 leading-relaxed mb-4">
+                    Create your professional portfolio and showcase your skills to the world.
+                </p>
+                <!-- Social Links (Optional - can be added later) -->
+            </div>
+            
+            <!-- Quick Links -->
+            <div>
+                <h4 class="font-bold text-white mb-5 text-sm uppercase tracking-wider">Quick Links</h4>
+                <ul class="space-y-3 text-sm">
+                    <li>
+                        <a href="@(baseUrl)#features" class="text-gray-400 hover:text-app-primary transition-colors duration-200 flex items-center gap-2 group">
+                            <i class="fas fa-chevron-right text-xs text-app-primary"></i>
+                            <span>Features</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@(baseUrl)#about" class="text-gray-400 hover:text-app-primary transition-colors duration-200 flex items-center gap-2 group">
+                            <i class="fas fa-chevron-right text-xs text-app-primary"></i>
+                            <span>About</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "Register")" class="text-gray-400 hover:text-app-primary transition-colors duration-200 flex items-center gap-2 group">
+                            <i class="fas fa-chevron-right text-xs text-app-primary"></i>
+                            <span>Register</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "Login")" class="text-gray-400 hover:text-app-primary transition-colors duration-200 flex items-center gap-2 group">
+                            <i class="fas fa-chevron-right text-xs text-app-primary"></i>
+                            <span>Login</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Legal -->
+            <div>
+                <h4 class="font-bold text-white mb-5 text-sm uppercase tracking-wider">Legal</h4>
+                <ul class="space-y-3 text-sm">
+                    <li>
+                        <a href="@Url.Action("gdpr", "Landing")" class="text-gray-400 hover:text-app-primary transition-colors duration-200 flex items-center gap-2 group">
+                            <i class="fas fa-chevron-right text-xs text-app-primary"></i>
+                            <span>GDPR Compliance</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("privacy", "Landing")" class="text-gray-400 hover:text-app-primary transition-colors duration-200 flex items-center gap-2 group">
+                            <i class="fas fa-chevron-right text-xs text-app-primary"></i>
+                            <span>Privacy Policy</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("terms", "Landing")" class="text-gray-400 hover:text-app-primary transition-colors duration-200 flex items-center gap-2 group">
+                            <i class="fas fa-chevron-right text-xs text-app-primary"></i>
+                            <span>Terms of Service</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("disclaimer", "Landing")" class="text-gray-400 hover:text-app-primary transition-colors duration-200 flex items-center gap-2 group">
+                            <i class="fas fa-chevron-right text-xs text-app-primary"></i>
+                            <span>Disclaimer</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Contact -->
+            <div>
+                <h4 class="font-bold text-white mb-5 text-sm uppercase tracking-wider">Contact</h4>
+                <ul class="space-y-3 text-sm">
+                    <li>
+                        <a href="mailto:contact@profilio.space" class="text-gray-400 hover:text-app-primary transition-colors duration-200 flex items-center gap-2 group">
+                            <i class="fas fa-envelope text-app-primary"></i>
+                            <span>contact@profilio.space</span>
+                        </a>
+                    </li>
+                    <li class="text-gray-400 leading-relaxed text-xs pt-2">
+                        For support and inquiries, please reach out to us via email or through your registered account.
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Bottom Bar -->
+        <div class="border-t border-gray-700/50 pt-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-400">
+                    &copy; @DateTime.Now.Year <span class="text-white font-semibold">Profilio.space</span> All rights reserved.
+                </p>
+                <div class="flex items-center gap-6 text-xs text-gray-500">
+                    <span>Made with</span>
+                    <i class="fas fa-heart text-app-primary animate-pulse"></i>
+                    <span>for professionals</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+

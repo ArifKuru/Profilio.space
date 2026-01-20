@@ -180,10 +180,14 @@
             @if (Model.UserInformation != null && !string.IsNullOrEmpty(Model.UserInformation.profile_image))
             {
                 var imagePath = Model.UserInformation.profile_image.StartsWith("/") ? Model.UserInformation.profile_image : "/" + Model.UserInformation.profile_image;
-                var baseUrl = Request.Url != null ? Request.Url.GetLeftPart(UriPartial.Authority) : "";
-                <div style="width: 90px; height: 90px;  overflow: hidden; float: right; margin-left: 10px; margin-bottom: 10px;">
-                    <img src="@(baseUrl + imagePath)" alt="Profile" style="border-radius: 50%;width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; margin: 0; padding: 0;" onerror="this.style.display='none';" />
-                </div>
+                // Eğer resim default.png ise gösterme
+                if (!imagePath.Equals("/Content/images/profiles/default.png", StringComparison.OrdinalIgnoreCase))
+                {
+                    var baseUrl = Request.Url != null ? Request.Url.GetLeftPart(UriPartial.Authority) : "";
+                    <div style="width: 90px; height: 90px;  overflow: hidden; float: right; margin-left: 10px; margin-bottom: 10px;">
+                        <img src="@(baseUrl + imagePath)" alt="Profile" style="border-radius: 50%;width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; margin: 0; padding: 0;" onerror="this.style.display='none';" />
+                    </div>
+                }
             }
             <h1>@(Model.UserInformation?.name ?? "") @(Model.UserInformation?.surname ?? "")</h1>
             @if (Model.UserInformation != null && !string.IsNullOrEmpty(Model.UserInformation.description))
@@ -202,6 +206,10 @@
                 @if (Model.UserInformation != null && !string.IsNullOrEmpty(Model.UserInformation.address))
                 {
                     <span>| Address: @Model.UserInformation.address</span>
+                }
+                @if (Model.User != null && !string.IsNullOrEmpty(Model.User.username))
+                {
+                    <span>| <a href="https://profilio.space/@Model.User.username" class="social-link" target="_blank">https://profilio.space/@Model.User.username</a></span>
                 }
                 @if (Model.SocialLinks != null && Model.SocialLinks.Any())
                 {

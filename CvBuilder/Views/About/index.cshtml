@@ -26,99 +26,93 @@
     };
 }
 
-<div class="mb-8">
-    <h2 class="text-2xl font-bold text-app-textMain">Personal Information</h2>
-    <p class="text-sm text-app-textSub">Update your personal details and profile picture.</p>
+<div class="mb-4 sm:mb-6 md:mb-8">
+    <h2 class="text-xl sm:text-2xl font-bold text-app-textMain">Personal Information</h2>
+    <p class="text-xs sm:text-sm text-app-textSub">Update your personal details and profile picture.</p>
 </div>
 
 <div class="bg-white rounded-xl shadow-sm border border-app-soft overflow-hidden relative">
 
-
-    <form method="post" action="/admin/about/update/" enctype="multipart/form-data" class="p-8 relative z-10 bg-transparent">
+    <form method="post" action="/admin/about/update/" enctype="multipart/form-data" class="p-4 sm:p-6 md:p-8 relative z-10 bg-transparent">
 
         <input type="hidden" name="id" value="@Model.id" />
         <input type="hidden" name="isImageRemoved" id="isImageRemoved_Custom" value="false" />
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
 
-            <div class="col-span-1 flex flex-col items-center space-y-6">
+            <div class="col-span-1 flex flex-col items-center space-y-4 sm:space-y-6">
 
                 <div class="relative inline-block shrink-0" id="photoContainer_Custom">
 
-                    <!-- Profil Foto -->
-                    <div class="w-40 h-40 rounded-full border-4 border-white shadow-md
-                overflow-hidden bg-gray-50 ring-2 ring-gray-100 relative">
+                    <div class="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full border-4 border-white shadow-md overflow-hidden bg-gray-50 ring-2 ring-gray-100 relative">
                         <img id="profilePreview_Custom"
                              src="@currentImg"
                              alt="Profile Preview"
                              class="w-full h-full object-cover" />
                     </div>
 
-                    <!-- Character Icon (SAĞ ÜST) -->
                     <img id="bgCharacterIcon"
                          src="@(string.IsNullOrEmpty(Model.character_type) ? "" : Url.Content($"~/public/icons/{Model.character_type}.png"))"
                          alt=""
                          @(string.IsNullOrEmpty(Model.character_type) ? "hidden" : "")
                          class="pointer-events-none absolute
-            -top-6 -right-6
-            w-16 h-16
-            opacity-40" />
+                                -top-4 -right-4 sm:-top-5 sm:-right-5 md:-top-6 md:-right-6
+                                w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16
+                                opacity-40 transition-opacity duration-200" />
 
 
-                    <!-- Edit Button (SAĞ ALT) -->
                     <button type="button"
                             id="btnPhotoAction_Custom"
                             onclick="togglePhotoActionMenu(event)"
-                            class="absolute bottom-2 right-2 bg-white w-10 h-10 rounded-full
-                   shadow-lg border border-gray-200 flex items-center justify-center
-                   text-gray-600 hover:text-app-primary hover:bg-gray-50
-                   transition-all active:scale-95 z-20">
-                        <i class="fas fa-pen text-sm"></i>
+                            class="absolute bottom-2 right-2 bg-white w-9 h-9 sm:w-10 sm:h-10 rounded-full
+                                   shadow-lg border border-gray-200 flex items-center justify-center
+                                   text-gray-600 hover:text-app-primary hover:bg-gray-50
+                                   transition-all active:scale-95 z-20">
+                        <i class="fas fa-pen text-xs sm:text-sm"></i>
                     </button>
 
-                    <!-- Dropdown -->
                     <div id="dropdownPhotoMenu_Custom"
                          class="hidden absolute top-full left-1/2 -translate-x-1/2 mt-2
-                w-48 bg-white rounded-lg shadow-xl border border-gray-100
-                z-30 overflow-hidden text-left">
+                                w-40 sm:w-48 bg-white rounded-lg shadow-xl border border-gray-100
+                                z-30 overflow-hidden text-left">
                         <div class="py-1">
                             <label for="imageUpload_Custom"
-                                   class="block px-4 py-2.5 text-sm text-gray-700
-                          hover:bg-gray-50 cursor-pointer flex items-center gap-2">
-                                <i class="fas fa-cloud-upload-alt text-blue-500 w-5"></i>
+                                   class="block px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm text-gray-700
+                                          hover:bg-gray-50 cursor-pointer flex items-center gap-2">
+                                <i class="fas fa-cloud-upload-alt text-blue-500 w-4 sm:w-5"></i>
                                 Upload a photo
                             </label>
+                            <input type="file" id="imageUpload_Custom" name="profileImageFile" accept="image/*" onchange="previewPhotoCustom(this)" class="hidden" />
                             <button type="button"
                                     onclick="removePhotoCustom()"
-                                    class="w-full text-left px-4 py-2.5 text-sm text-red-600
-                           hover:bg-red-50 flex items-center gap-2">
-                                <i class="fas fa-trash-alt w-5"></i>
+                                    class="w-full text-left px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm text-red-600
+                                           hover:bg-red-50 flex items-center gap-2">
+                                <i class="fas fa-trash-alt w-4 sm:w-5"></i>
                                 Remove photo
                             </button>
                         </div>
                     </div>
                 </div>
 
-
                 <hr class="w-full border-gray-100" />
 
-                <div class="w-full px-2">
-                    <div class="mb-4 text-center md:text-left">
-                        <label class="text-sm font-bold text-gray-700 flex items-center justify-center md:justify-start gap-2">
-                            <i class="fas fa-chess-knight text-app-primary"></i>
+                <div class="w-full px-1 sm:px-2">
+                    <div class="mb-2 sm:mb-3 md:mb-4 text-center md:text-left">
+                        <label class="text-xs sm:text-sm font-bold text-gray-700 flex items-center justify-center md:justify-start gap-1.5 sm:gap-2">
+                            <i class="fas fa-chess-knight text-app-primary text-xs sm:text-sm"></i>
                             Archetype
                         </label>
-                        <p class="text-xs text-gray-400 mt-1">Select your spirit symbol.</p>
+                        <p class="text-xs text-gray-400 mt-0.5 sm:mt-1">Select your spirit symbol.</p>
                     </div>
 
-                    <div class="grid grid-cols-4 gap-2">
+                    <div class="grid grid-cols-5 sm:grid-cols-4 gap-1 sm:gap-1.5 md:gap-2">
 
                         <label class="cursor-pointer group relative">
                             <input type="radio" name="character_type" value="" class="peer sr-only" @(string.IsNullOrEmpty(Model.character_type) ? "checked" : "") />
-                            <div class="w-full aspect-square flex items-center justify-center rounded-lg border border-gray-200 bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-500 hover:border-red-200 peer-checked:bg-red-50 peer-checked:border-red-500 peer-checked:text-red-600 peer-checked:ring-2 peer-checked:ring-red-100 transition-all">
-                                <i class="fas fa-ban text-lg"></i>
+                            <div class="w-full aspect-square flex items-center justify-center rounded-md sm:rounded-lg border border-gray-200 bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-500 hover:border-red-200 peer-checked:bg-red-50 peer-checked:border-red-500 peer-checked:text-red-600 peer-checked:ring-1 sm:peer-checked:ring-2 peer-checked:ring-red-100 transition-all">
+                                <i class="fas fa-ban text-xs sm:text-base md:text-lg"></i>
                             </div>
-                            <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max hidden group-hover:block px-2 py-1 bg-gray-800 text-white text-xs rounded shadow-lg z-50">
+                            <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 sm:mb-2 w-max hidden group-hover:block px-2 py-1 bg-gray-800 text-white text-xs rounded shadow-lg z-50">
                                 No Icon
                             </div>
                         </label>
@@ -128,12 +122,12 @@
                             bool isSelected = (Model.character_type == item.Key);
                             <label class="cursor-pointer group relative">
                                 <input type="radio" name="character_type" value="@item.Key" class="peer sr-only" @(isSelected ? "checked" : "") />
-                                <div class="w-full aspect-square flex items-center justify-center text-2xl rounded-lg border border-gray-200 bg-white shadow-sm hover:scale-105 hover:border-blue-300 peer-checked:bg-blue-50 peer-checked:border-blue-500 peer-checked:ring-2 peer-checked:ring-blue-100 peer-checked:scale-105 grayscale peer-checked:grayscale-0 transition-all duration-200">
+                                <div class="w-full aspect-square flex items-center justify-center text-base sm:text-xl md:text-2xl rounded-md sm:rounded-lg border border-gray-200 bg-white shadow-sm hover:scale-105 hover:border-blue-300 peer-checked:bg-blue-50 peer-checked:border-blue-500 peer-checked:ring-1 sm:peer-checked:ring-2 peer-checked:ring-blue-100 peer-checked:scale-105 grayscale peer-checked:grayscale-0 transition-all duration-200">
                                     @item.Icon
                                 </div>
-                                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-40 hidden group-hover:block p-2 bg-gray-900 text-white text-xs rounded-lg shadow-xl z-50 pointer-events-none">
-                                    <div class="font-bold text-yellow-400 mb-1">@item.Name</div>
-                                    <div class="text-gray-300 leading-tight">@item.Desc</div>
+                                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 sm:mb-2 w-32 sm:w-36 md:w-40 hidden group-hover:block p-1.5 sm:p-2 bg-gray-900 text-white text-xs rounded-lg shadow-xl z-50 pointer-events-none">
+                                    <div class="font-bold text-yellow-400 mb-0.5 sm:mb-1 text-xs">@item.Name</div>
+                                    <div class="text-gray-300 leading-tight text-xs">@item.Desc</div>
                                     <div class="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900"></div>
                                 </div>
                             </label>
@@ -142,36 +136,37 @@
                 </div>
             </div>
 
-            <div class="col-span-1 md:col-span-2 space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="col-span-1 md:col-span-2 space-y-4 sm:space-y-6">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     <div class="space-y-2">
-                        <label class="text-sm font-semibold text-gray-700 block">First Name</label>
-                        <input type="text" name="name" value="@Model.name" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-app-primary/20 outline-none text-sm" />
+                        <label class="text-xs sm:text-sm font-semibold text-gray-700 block">First Name</label>
+                        <input type="text" name="name" value="@Model.name" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-app-primary/20 outline-none text-sm" />
                     </div>
                     <div class="space-y-2">
-                        <label class="text-sm font-semibold text-gray-700 block">Last Name</label>
-                        <input type="text" name="surname" value="@Model.surname" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-app-primary/20 outline-none text-sm" />
+                        <label class="text-xs sm:text-sm font-semibold text-gray-700 block">Last Name</label>
+                        <input type="text" name="surname" value="@Model.surname" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-app-primary/20 outline-none text-sm" />
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     <div class="space-y-2">
-                        <label class="text-sm font-semibold text-gray-700 block">Phone</label>
-                        <input type="text" name="phone" value="@Model.phone" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-app-primary/20 outline-none text-sm" />
+                        <label class="text-xs sm:text-sm font-semibold text-gray-700 block">Phone</label>
+                        <input type="text" name="phone" value="@Model.phone" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-app-primary/20 outline-none text-sm" />
                     </div>
                     <div class="space-y-2">
-                        <label class="text-sm font-semibold text-gray-700 block">Address</label>
-                        <input type="text" name="address" value="@Model.address" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-app-primary/20 outline-none text-sm" />
+                        <label class="text-xs sm:text-sm font-semibold text-gray-700 block">Address</label>
+                        <input type="text" name="address" value="@Model.address" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-app-primary/20 outline-none text-sm" />
                     </div>
                 </div>
 
                 <div class="space-y-2">
-                    <label class="text-sm font-semibold text-gray-700 block">Summary</label>
-                    <textarea name="description" rows="4" required class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-app-primary/20 outline-none text-sm resize-none">@Model.description</textarea>
+                    <label class="text-xs sm:text-sm font-semibold text-gray-700 block">Summary</label>
+                    <textarea name="description" rows="4" required class="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-50 border border-gray-300 rounded-lg focus:ring-2 focus:ring-app-primary/20 outline-none text-sm resize-none">@Model.description</textarea>
                 </div>
 
-                <div class="pt-4 border-t border-gray-100 flex justify-end">
-                    <button type="submit" class="inline-flex items-center px-8 py-3 bg-app-primary text-white text-sm font-semibold rounded-lg hover:bg-app-accent shadow-md hover:shadow-lg transition-all duration-200">
+                <div class="pt-4 border-t border-gray-100 flex justify-center sm:justify-end">
+                    <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-2.5 sm:py-3 bg-app-primary text-white text-xs sm:text-sm font-semibold rounded-lg hover:bg-app-accent shadow-md hover:shadow-lg transition-all duration-200">
                         <i class="fas fa-save mr-2"></i> Save Changes
                     </button>
                 </div>
@@ -185,11 +180,13 @@
     const dropdownMenu_Custom = document.getElementById('dropdownPhotoMenu_Custom');
     const photoBtn_Custom = document.getElementById('btnPhotoAction_Custom');
 
+    // Dropdown açma/kapama
     function togglePhotoActionMenu(event) {
         event.stopPropagation();
         dropdownMenu_Custom.classList.toggle('hidden');
     }
 
+    // Dışarı tıklayınca dropdown kapatma
     document.addEventListener('click', function (event) {
         if (!dropdownMenu_Custom.contains(event.target) && !photoBtn_Custom.contains(event.target)) {
             if (!dropdownMenu_Custom.classList.contains('hidden')) {
@@ -198,6 +195,7 @@
         }
     });
 
+    // Fotoğraf yükleme önizleme
     function previewPhotoCustom(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -210,6 +208,7 @@
         }
     }
 
+    // Fotoğraf kaldırma
     function removePhotoCustom() {
         document.getElementById('profilePreview_Custom').src = defaultImageSrc_Custom;
         document.getElementById('imageUpload_Custom').value = "";
@@ -217,27 +216,46 @@
         dropdownMenu_Custom.classList.add('hidden');
     }
 
-    // --- Karakter İkonu Dinamik Değişim Scripti ---
+    // --- GÜNCELLEME: Karakter İkonu Preloading ve Hızlı Değişim ---
+
+    // 1. İkonları sayfa açılır açılmaz önbelleğe al (Network isteğini baştan yapar)
+    function preloadCharacterIcons() {
+        const inputs = document.querySelectorAll('input[name="character_type"]');
+        inputs.forEach(input => {
+            const key = input.value;
+            if (key) { // Boş değer değilse
+                const img = new Image();
+                img.src = `/public/icons/${key}.png`;
+            }
+        });
+    }
+
+    // Sayfa DOM içeriği yüklendiğinde preload'u başlat
+    window.addEventListener('DOMContentLoaded', preloadCharacterIcons);
+
+    // 2. Radyo buton değişimi (Gecikmesiz)
     document.querySelectorAll('input[name="character_type"]').forEach(radio => {
         radio.addEventListener('change', function () {
             const iconImg = document.getElementById('bgCharacterIcon');
             const selectedKey = this.value;
 
             if (selectedKey) {
-                iconImg.src = `/public/icons/${selectedKey}.png`;
+                const newSrc = `/public/icons/${selectedKey}.png`;
+
+                // Gereksiz tekrar yüklemeyi önle
+                if (iconImg.getAttribute('src') !== newSrc) {
+                    iconImg.src = newSrc;
+                }
+
                 iconImg.hidden = false;
 
-                // Küçük belirme efekti
-                iconImg.style.opacity = '0.4';
+                // Mobil / Masaüstü için opaklık ayarı (setTimeout olmadan direkt uygulanır)
+                iconImg.style.opacity = window.innerWidth < 1024 ? '0.3' : '0.4';
 
-                setTimeout(() => {
-                    iconImg.style.opacity = window.innerWidth < 1024 ? '0.3' : '0.4';
-                }, 50);
             } else {
                 iconImg.hidden = true;
-                iconImg.removeAttribute('src'); // ⚠️ önemli
+                iconImg.removeAttribute('src');
             }
         });
-
     });
 </script>

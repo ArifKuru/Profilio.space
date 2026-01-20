@@ -14,5 +14,27 @@ namespace CvBuilder.Controllers
         {
             return View();
         }
+
+        public ActionResult gdpr()
+        {
+            return View();
+        }
+
+        public ActionResult privacy()
+        {
+            return View();
+        }
+
+
+        public ActionResult terms()
+        {
+            return View();
+        }
+
+        public ActionResult disclaimer()
+        {
+            return View();
+        }
+
     }
 }

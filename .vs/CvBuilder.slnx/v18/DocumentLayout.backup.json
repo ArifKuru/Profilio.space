@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\90551\\source\\repos\\CvBuilder\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6A65351B-20E0-4870-BBF0-419365D0D01A}|CvBuilder\\CvBuilder.csproj|c:\\users\\90551\\source\\repos\\cvbuilder\\cvbuilder\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6A65351B-20E0-4870-BBF0-419365D0D01A}|CvBuilder\\CvBuilder.csproj|solutionrelative:cvbuilder\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\90551\\source\\repos\\CvBuilder\\CvBuilder\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "CvBuilder\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\90551\\source\\repos\\CvBuilder\\CvBuilder\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "CvBuilder\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAFgAAAAAAAAAAAAQwGsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-01-20T19:26:27.899Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

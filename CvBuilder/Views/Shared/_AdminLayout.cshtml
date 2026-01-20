@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] | Profolio.space</title>
+    <title>@ViewData["Title"] | Profilio.space</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -44,6 +44,7 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
+            font-variant-ligatures: none;
         }
         /* --- SCROLLBAR STİLİ (Index.cshtml'den alındı) --- */
         ::-webkit-scrollbar {
@@ -85,35 +86,127 @@
             background: #475569;
         }
 
-        /* --- COLLAPSED (DARALTILMIŞ) MOD --- */
-        html.is-collapsed #sidebar {
-            width: 4.5rem !important;
-        }
+        /* --- MOBİL UYUMLULUK --- */
+        /* Mobilde sidebar varsayılan olarak gizli */
+        @@media (max-width: 768px) {
+            #sidebar {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                height: 100vh;
+                z-index: 50;
+                transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
 
-        html.is-collapsed .sidebar-text,
-        html.is-collapsed .section-label {
-            display: none !important;
-            opacity: 0;
-        }
+            #sidebar.mobile-open {
+                left: 0;
+            }
 
-        html.is-collapsed #logo-full {
-            display: none !important;
-        }
+            /* Mobil overlay */
+            #mobile-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 40;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
 
-        html.is-collapsed #logo-icon {
-            display: block !important;
-        }
+            #mobile-overlay.active {
+                display: block;
+                opacity: 1;
+            }
 
-        html.is-collapsed .menu-item {
-            justify-content: center;
-            padding-left: 0;
-            padding-right: 0;
-        }
+            /* Mobilde collapsed mod devre dışı */
+            html.is-collapsed #sidebar {
+                width: 16rem !important;
+            }
+
+            html.is-collapsed .sidebar-text,
+            html.is-collapsed .section-label {
+                display: block !important;
+                opacity: 1 !important;
+            }
+
+            html.is-collapsed #logo-full {
+                display: block !important;
+            }
+
+            html.is-collapsed #logo-icon {
+                display: none !important;
+            }
+
+            html.is-collapsed .menu-item {
+                justify-content: flex-start;
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
 
             html.is-collapsed .menu-item i {
-                margin-right: 0;
-                font-size: 1.1rem;
+                margin-right: 0.75rem;
+                font-size: inherit;
             }
+
+            /* Header padding mobilde küçült */
+            header {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }
+
+            /* İçerik padding mobilde küçült */
+            main > div {
+                padding: 1rem !important;
+            }
+        }
+
+        /* Tablet ve üzeri için normal davranış */
+        @@media (min-width: 769px) {
+            #mobile-overlay {
+                display: none !important;
+            }
+
+            #sidebar {
+                position: relative !important;
+                left: 0 !important;
+                height: 100vh !important;
+            }
+        }
+
+        /* --- COLLAPSED (DARALTILMIŞ) MOD (Sadece desktop) --- */
+        @@media (min-width: 769px) {
+            html.is-collapsed #sidebar {
+                width: 4.5rem !important;
+            }
+
+            html.is-collapsed .sidebar-text,
+            html.is-collapsed .section-label {
+                display: none !important;
+                opacity: 0;
+            }
+
+            html.is-collapsed #logo-full {
+                display: none !important;
+            }
+
+            html.is-collapsed #logo-icon {
+                display: block !important;
+            }
+
+            html.is-collapsed .menu-item {
+                justify-content: center;
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+                html.is-collapsed .menu-item i {
+                    margin-right: 0;
+                    font-size: 1.1rem;
+                }
+        }
 
         /* --- AKTİF LINK STİLİ --- */
         /* Sadece arka plan değişir, border YOK */
@@ -154,15 +247,29 @@
                 #btn-build-cv.active-link i {
                     color: white !important;
                 }
+
+        /* --- SWEETALERT BODY OVERFLOW FIX --- */
+        /* SweetAlert açıldığında body overflow'unu koru */
+        body.swal2-shown {
+            overflow: hidden !important;
+            height: 100vh !important;
+        }
+
+        body.swal2-shown #sidebar {
+            height: 100vh !important;
+        }
     </style>
 </head>
 <body class="bg-app-bg text-app-textMain h-screen overflow-hidden flex text-[13px] font-medium">
 
+    <!-- Mobil Overlay -->
+    <div id="mobile-overlay"></div>
+
     <aside id="sidebar" class="w-64 bg-app-dark flex flex-col border-r border-white/5 z-30 shrink-0">
 
         <div class="h-14 flex items-center justify-center border-b border-white/5 shrink-0 px-4">
-            <a href="/admin/about" class="flex items-center justify-center w-full h-full">
-                <img id="logo-full" src="~/public/logo_text.png" class="h-8 object-contain brightness-0 invert opacity-90" alt="Profolio" />
+            <a href="/admin/dashboard" class="flex items-center justify-center w-full h-full">
+                <img id="logo-full" src="~/public/logo_text.png" class="h-8 object-contain brightness-0 invert opacity-90" alt="Profilio" />
                 <img id="logo-icon" src="~/public/favicon.png?v=4" class="w-6 h-6 object-contain hidden brightness-0 invert" alt="Icon" />
             </a>
         </div>
@@ -176,6 +283,12 @@
                         <a id="btn-build-cv" href="/admin/buildcv" class="menu-item flex items-center px-3 py-2.5 rounded-md transition-all group">
                             <i class="fas fa-magic w-5 text-center"></i>
                             <span class="sidebar-text ml-3 font-bold tracking-wide">Build CV</span>
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="/admin/dashboard" class="menu-item flex items-center px-3 py-2.5 rounded-md text-app-textSub transition-all group">
+                            <i class="fas fa-chart-line w-5 text-center transition-colors"></i>
+                            <span class="sidebar-text ml-3">Dashboard</span>
                         </a>
                     </li>
                     <li>
@@ -238,23 +351,29 @@
 
         <div class="p-4 text-center border-t border-white/5">
             <p class="text-[10px] text-gray-500 sidebar-text">
-                &copy; <span id="currentYear"></span> Profolio.space
+                &copy; <span id="currentYear"></span> Profilio.space
             </p>
         </div>
     </aside>
 
     <main class="flex-1 overflow-x-hidden overflow-y-auto flex flex-col relative">
 
-        <header class="h-14 min-h-[56px] max-h-[56px] bg-white/80 backdrop-blur-md border-b border-app-soft flex items-center justify-between px-6 sticky top-0 z-40 shrink-0">
+        <header class="h-14 min-h-[56px] max-h-[56px] bg-white/80 backdrop-blur-md border-b border-app-soft flex items-center justify-between px-4 md:px-6 sticky top-0 z-40 shrink-0">
 
-            <div class="flex items-center gap-4">
-                <button id="toggleSidebarBtn" class="text-app-textSub hover:text-app-textMain transition-colors focus:outline-none w-6 h-6 flex items-center justify-center">
+            <div class="flex items-center gap-3 md:gap-4">
+                <!-- Mobil Hamburger Menü -->
+                <button id="mobileMenuBtn" class="md:hidden text-app-textSub hover:text-app-textMain transition-colors focus:outline-none w-6 h-6 flex items-center justify-center">
+                    <i id="mobileMenuIcon" class="fas fa-bars text-lg"></i>
+                </button>
+
+                <!-- Desktop Toggle Butonu -->
+                <button id="toggleSidebarBtn" class="hidden md:flex text-app-textSub hover:text-app-textMain transition-colors focus:outline-none w-6 h-6 items-center justify-center">
                     <i id="toggleIcon" class="fas fa-outdent text-lg"></i>
                 </button>
 
                 <div class="h-5 w-px bg-app-soft mx-1 hidden sm:block"></div>
 
-                <h1 class="text-app-textMain font-semibold tracking-tight">@ViewData["Title"]</h1>
+                <h1 class="text-app-textMain font-semibold tracking-tight text-sm md:text-base">@ViewData["Title"]</h1>
             </div>
 
             <div class="flex items-center gap-4">
@@ -266,35 +385,123 @@
             @RenderBody()
         </div>
 
+        <footer class="mt-auto w-full border-t border-app-soft bg-white/50 py-6 px-6 text-center md:text-left shrink-0">
+            <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium text-app-textSub">
+
+                <div class="flex items-center gap-2">
+                    <span>&copy; <span id="footerYear"></span> Profilio.space</span>
+                    <span class="hidden md:inline text-app-soft">|</span>
+                    <span class="hidden md:inline">All rights reserved.</span>
+                </div>
+
+                <div class="flex items-center gap-4 md:gap-6">
+                    <a href="/privacy" class="hover:text-app-primary transition-colors">Privacy Policy</a>
+                    <a href="/terms" class="hover:text-app-primary transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            // Auto-update year
+            document.getElementById('footerYear').textContent = new Date().getFullYear();
+        </script>
     </main>
 
     <script>
         const toggleBtn = document.getElementById('toggleSidebarBtn');
         const toggleIcon = document.getElementById('toggleIcon');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+        const sidebar = document.getElementById('sidebar');
+        const mobileOverlay = document.getElementById('mobile-overlay');
         const currentYearEl = document.getElementById('currentYear');
         const userDropdown = document.getElementById('userDropdown');
 
         if (currentYearEl) currentYearEl.textContent = new Date().getFullYear();
 
-        // --- ICON UPDATE FUNC ---
-        function updateToggleIcon(isCollapsed) {
-            if (isCollapsed) {
-                toggleIcon.classList.remove('fa-outdent');
-                toggleIcon.classList.add('fa-indent');
-            } else {
-                toggleIcon.classList.remove('fa-indent');
-                toggleIcon.classList.add('fa-outdent');
+        // --- MOBİL MENÜ FONKSİYONLARI ---
+        function openMobileMenu() {
+            sidebar.classList.add('mobile-open');
+            mobileOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            if (mobileMenuIcon) {
+                mobileMenuIcon.classList.remove('fa-bars');
+                mobileMenuIcon.classList.add('fa-times');
             }
         }
 
-        // Init Check
+        function closeMobileMenu() {
+            sidebar.classList.remove('mobile-open');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+            if (mobileMenuIcon) {
+                mobileMenuIcon.classList.remove('fa-times');
+                mobileMenuIcon.classList.add('fa-bars');
+            }
+        }
+
+        // Mobil menü toggle
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (sidebar.classList.contains('mobile-open')) {
+                    closeMobileMenu();
+                } else {
+                    openMobileMenu();
+                }
+            });
+        }
+
+        // Overlay'e tıklandığında menüyü kapat
+        if (mobileOverlay) {
+            mobileOverlay.addEventListener('click', () => {
+                closeMobileMenu();
+            });
+        }
+
+        // Sidebar dışına tıklandığında menüyü kapat (mobil)
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                if (sidebar && mobileOverlay && 
+                    !sidebar.contains(e.target) && 
+                    !mobileMenuBtn.contains(e.target) &&
+                    sidebar.classList.contains('mobile-open')) {
+                    closeMobileMenu();
+                }
+            }
+        });
+
+        // Ekran boyutu değiştiğinde mobil menüyü kapat
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                closeMobileMenu();
+            }
+        });
+
+        // --- ICON UPDATE FUNC (Desktop) ---
+        function updateToggleIcon(isCollapsed) {
+            if (toggleIcon) {
+                if (isCollapsed) {
+                    toggleIcon.classList.remove('fa-outdent');
+                    toggleIcon.classList.add('fa-indent');
+                } else {
+                    toggleIcon.classList.remove('fa-indent');
+                    toggleIcon.classList.add('fa-outdent');
+                }
+            }
+        }
+
+        // Init Check (Desktop)
         if (document.documentElement.classList.contains('is-collapsed')) {
             updateToggleIcon(true);
         }
 
-        // --- COLLAPSE CLICK ---
+        // --- COLLAPSE CLICK (Desktop) ---
         if (toggleBtn) {
             toggleBtn.addEventListener('click', () => {
+                // Mobilde çalışmasın
+                if (window.innerWidth <= 768) return;
+
                 const htmlEl = document.documentElement;
                 htmlEl.classList.toggle('is-collapsed');
 

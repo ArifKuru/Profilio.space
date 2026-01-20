@@ -1,0 +1,171 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Disclaimer - Profilio.space</title>
+    <link rel="icon" type="image/x-icon" href="~/public/favicon.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: {
+                        app: {
+                            primary: '#16A34A',
+                            secondary: '#DCFCE7',
+                            dark: '#0F172A',
+                            bg: '#F1F5F9',
+                            soft: '#CBD5E1',
+                            textMain: '#1E293B',
+                            textSub: '#64748B',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-variant-ligatures: none;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0F172A;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #16A34A;
+        }
+    </style>
+</head>
+<body class="bg-app-bg text-app-textMain antialiased leading-relaxed font-normal">
+    @Html.Partial("_Header")
+
+    <!-- Disclaimer Content -->
+    <section class="pt-24 pb-16 px-6 bg-white min-h-screen">
+        <div class="max-w-4xl mx-auto">
+            <div class="mb-6">
+                <h1 class="text-2xl md:text-3xl font-semibold text-app-textMain mb-2">Disclaimer</h1>
+                <p class="text-sm text-app-textSub">Last Updated: 14 January 2026</p>
+            </div>
+
+            <div class="bg-white rounded-xl border border-app-soft shadow-sm p-6 md:p-8">
+                <div class="text-app-textSub leading-relaxed space-y-5 text-sm md:text-base">
+                    <div>
+                        <p class="mb-4">
+                            This disclaimer sets forth the general guidelines, disclaimers, and terms of use for the Profilio.space platform. By accessing and using our services, you acknowledge that you have read, understood, and agree to be bound by the terms of this disclaimer.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">1. Service Availability and "As Is" Basis</h3>
+                        <p>
+                            Profilio.space provides its platform and services on an "as is" and "as available" basis. We make no representations or warranties of any kind, express or implied, regarding the operation, availability, accuracy, reliability, or suitability of our services. We do not warrant that our services will be uninterrupted, timely, secure, error-free, or free from viruses or other harmful components.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">2. No Warranty</h3>
+                        <p>
+                            TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, PROFILIO.SPACE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND ANY WARRANTIES ARISING FROM COURSE OF DEALING, USAGE, OR TRADE PRACTICE. WE DO NOT WARRANT THAT THE PLATFORM WILL MEET YOUR REQUIREMENTS OR EXPECTATIONS, OR THAT ANY ERRORS OR DEFECTS WILL BE CORRECTED.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">3. User Content Responsibility</h3>
+                        <p class="mb-3">
+                            Users are solely responsible for all content they post, upload, or share on the Profilio.space platform. We do not endorse, verify, or guarantee the accuracy, completeness, legality, or quality of any user-generated content. Profilio.space:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li>Does not verify the accuracy or authenticity of user-provided information</li>
+                            <li>Does not guarantee that user content is free from errors, omissions, or inaccuracies</li>
+                            <li>Does not assume responsibility for the consequences of relying on user-generated content</li>
+                            <li>Reserves the right to remove, modify, or refuse to display any content that violates our Terms of Service</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">4. Third-Party Links and Content</h3>
+                        <p>
+                            Our platform may contain links to third-party websites, social media profiles, and external resources provided by users. Profilio.space does not control, endorse, or assume responsibility for the content, privacy practices, or terms of service of any third-party websites or services. Your interactions with third-party sites are solely between you and the third party. We are not liable for any loss or damage resulting from your use of or reliance on third-party content, services, or websites.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">5. Data Loss and Technical Issues</h3>
+                        <p>
+                            While we implement industry-standard security measures and backup procedures, Profilio.space cannot guarantee the prevention of data loss, corruption, or unauthorized access. Technical failures, system errors, cyberattacks, or other unforeseen circumstances may result in temporary or permanent loss of data. Users are encouraged to maintain their own backups of important information. Profilio.space shall not be liable for any loss of data, profits, or other damages resulting from technical issues, system failures, or data loss.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">6. Professional Advice Disclaimer</h3>
+                        <p>
+                            The information and content provided on Profilio.space, including but not limited to CV templates, career advice, and professional guidance, are for informational purposes only. They do not constitute professional, legal, financial, or career advice. Users should consult with qualified professionals for advice tailored to their specific circumstances. Profilio.space is not responsible for any decisions made based on information obtained from our platform.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">7. Limitation of Liability</h3>
+                        <p>
+                            TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, PROFILIO.SPACE, ITS OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, AND AFFILIATES SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, RESULTING FROM YOUR USE OF OR INABILITY TO USE OUR SERVICES, EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">8. Platform Modifications</h3>
+                        <p>
+                            Profilio.space reserves the right to modify, update, suspend, or discontinue any aspect of our platform or services at any time, with or without notice. We are not obligated to maintain or support any particular feature or functionality. Users acknowledge that the platform may change over time, and we are not liable for any inconvenience or loss resulting from such changes.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">9. Jurisdictional Limitations</h3>
+                        <p>
+                            Some jurisdictions do not allow the exclusion of certain warranties or the limitation or exclusion of liability for incidental or consequential damages. Accordingly, some of the limitations set forth in this disclaimer may not apply to you. In such cases, our liability will be limited to the maximum extent permitted by applicable law.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">10. Updates to Disclaimer</h3>
+                        <p>
+                            Profilio.space reserves the right to update, modify, or change this disclaimer at any time without prior notice. Changes will be effective immediately upon posting on our platform. Your continued use of our services after any changes constitutes acceptance of the updated disclaimer. It is your responsibility to review this disclaimer periodically for any changes.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">11. Acknowledgment</h3>
+                        <p>
+                            By using Profilio.space, you acknowledge that you have read this disclaimer, understand its terms, and agree to be bound by them. If you do not agree with any part of this disclaimer, you must discontinue use of our services immediately.
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-app-soft">
+                        <p class="text-sm text-app-textSub">
+                            <strong>Last Updated:</strong> 14 January 2026
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @Html.Partial("_Footer")
+</body>
+</html>

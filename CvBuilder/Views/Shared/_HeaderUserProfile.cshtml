@@ -1,15 +1,29 @@
 ﻿@model CvBuilder.Models.LayoutProfileViewModel
 
-<div class="relative ml-3">
-    <button onclick="toggleDropdown()" class="flex items-center gap-3 focus:outline-none group h-full">
-        <div class="text-right hidden md:block">
-            <p class="text-sm font-bold text-app-textMain group-hover:text-app-primary transition">@Model.FullName</p>
-        </div>
-        <img class="h-10 w-10 rounded-full object-cover border-2 border-app-soft group-hover:border-app-primary transition" src="@Model.ProfileImage" alt="Profile">
-        <i class="fas fa-chevron-down text-xs text-gray-400 group-hover:text-app-primary transition"></i>
-    </button>
+<div class="flex items-center gap-3">
+    <!-- Publish Toggle Switch -->
+    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-app-soft bg-white/50 hover:bg-white transition-colors">
+        <span id="publishStatusText" class="text-[11px] font-semibold hidden sm:inline @(Model.IsPublished ? "text-app-primary" : "text-gray-500")">
+            @(Model.IsPublished ? "Published" : "Unpublished")
+        </span>
+        <label class="relative inline-flex items-center cursor-pointer" for="publishToggle">
+            <input type="checkbox" id="publishToggle" class="sr-only" @(Model.IsPublished ? "checked" : "") onchange="togglePublishStatus()">
+            <div id="toggleSwitch" class="relative w-11 h-6 rounded-full transition-colors duration-200 ease-in-out @(Model.IsPublished ? "bg-app-primary" : "bg-gray-200")">
+                <div id="toggleThumb" class="absolute top-[2px] left-[2px] w-5 h-5 bg-white rounded-full border border-gray-300 transition-transform duration-200 ease-in-out @(Model.IsPublished ? "translate-x-5" : "")"></div>
+            </div>
+        </label>
+    </div>
 
-    <div id="userDropdown" class="hidden absolute top-full right-0 mt-3 w-60 bg-white border border-gray-200 rounded-lg shadow-xl z-50 overflow-hidden transform origin-top-right transition-all" style="right:-10px">
+    <div class="relative ml-3">
+        <button onclick="toggleDropdown()" class="flex items-center gap-3 focus:outline-none group h-full">
+            <div class="text-right hidden md:block">
+                <p class="text-sm font-bold text-app-textMain group-hover:text-app-primary transition">@Model.FullName</p>
+            </div>
+            <img class="h-10 w-10 rounded-full object-cover border-2 border-app-soft group-hover:border-app-primary transition" src="@Model.ProfileImage" alt="Profile">
+            <i class="fas fa-chevron-down text-xs text-gray-400 group-hover:text-app-primary transition"></i>
+        </button>
+
+        <div id="userDropdown" class="hidden absolute top-full right-0 mt-3 w-60 bg-white border border-gray-200 rounded-lg shadow-xl z-50 overflow-hidden transform origin-top-right transition-all" style="right:-10px">
         <div class="p-3 border-b border-gray-100 bg-gray-50/50">
             <div class="flex items-center">
                 <img src="@Model.ProfileImage" alt="Profile" class="rounded-full object-cover w-10 h-10 mr-3 border-2 border-white shadow-sm">
@@ -29,5 +43,101 @@
                 Logout
             </a>
         </div>
+        </div>
     </div>
 </div>
+
+<script>
+    function togglePublishStatus() {
+        const toggle = document.getElementById('publishToggle');
+        const toggleSwitch = document.getElementById('toggleSwitch');
+        const toggleThumb = document.getElementById('toggleThumb');
+        const statusText = document.getElementById('publishStatusText');
+        const originalState = toggle.checked;
+        
+        // Optimistic UI update - hemen görseli güncelle
+        if (toggle.checked) {
+            toggleSwitch.classList.remove('bg-gray-200');
+            toggleSwitch.classList.add('bg-app-primary');
+            toggleThumb.classList.add('translate-x-5');
+            if (statusText) {
+                statusText.textContent = 'Published';
+                statusText.classList.remove('text-gray-500');
+                statusText.classList.add('text-app-primary');
+            }
+        } else {
+            toggleSwitch.classList.remove('bg-app-primary');
+            toggleSwitch.classList.add('bg-gray-200');
+            toggleThumb.classList.remove('translate-x-5');
+            if (statusText) {
+                statusText.textContent = 'Unpublished';
+                statusText.classList.remove('text-app-primary');
+                statusText.classList.add('text-gray-500');
+            }
+        }
+        
+        // AJAX çağrısı
+        fetch('/Layout/TogglePublishStatus', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Başarılı - toggle zaten doğru durumda
+            } else {
+                // Hata durumunda toggle'ı geri al
+                toggle.checked = !originalState;
+                if (!originalState) {
+                    toggleSwitch.classList.remove('bg-app-primary');
+                    toggleSwitch.classList.add('bg-gray-200');
+                    toggleThumb.classList.remove('translate-x-5');
+                    if (statusText) {
+                        statusText.textContent = 'Unpublished';
+                        statusText.classList.remove('text-app-primary');
+                        statusText.classList.add('text-gray-500');
+                    }
+                } else {
+                    toggleSwitch.classList.remove('bg-gray-200');
+                    toggleSwitch.classList.add('bg-app-primary');
+                    toggleThumb.classList.add('translate-x-5');
+                    if (statusText) {
+                        statusText.textContent = 'Published';
+                        statusText.classList.remove('text-gray-500');
+                        statusText.classList.add('text-app-primary');
+                    }
+                }
+                alert(data.message || 'An error occurred');
+            }
+        })
+        .catch(error => {
+            // Hata durumunda toggle'ı geri al
+            toggle.checked = !originalState;
+            if (!originalState) {
+                toggleSwitch.classList.remove('bg-app-primary');
+                toggleSwitch.classList.add('bg-gray-200');
+                toggleThumb.classList.remove('translate-x-5');
+                if (statusText) {
+                    statusText.textContent = 'Unpublished';
+                    statusText.classList.remove('text-app-primary');
+                    statusText.classList.add('text-gray-500');
+                }
+            } else {
+                toggleSwitch.classList.remove('bg-gray-200');
+                toggleSwitch.classList.add('bg-app-primary');
+                toggleThumb.classList.add('translate-x-5');
+                if (statusText) {
+                    statusText.textContent = 'Published';
+                    statusText.classList.remove('text-gray-500');
+                    statusText.classList.add('text-app-primary');
+                }
+            }
+            console.error('Error:', error);
+            alert('Connection error occurred');
+        });
+    }
+</script>

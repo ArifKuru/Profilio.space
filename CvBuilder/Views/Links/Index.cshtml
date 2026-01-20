@@ -5,15 +5,16 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="flex items-center justify-between gap-4 mb-6">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
     <div>
-        <h2 class="text-2xl font-bold text-app-textMain">Social Profiles</h2>
-        <p class="text-sm text-app-textSub">Manage your social media links and online presence.</p>
+        <h2 class="text-xl sm:text-2xl font-bold text-app-textMain">Social Profiles</h2>
+        <p class="text-xs sm:text-sm text-app-textSub">Manage your social media links and online presence.</p>
     </div>
 
-    <a href="/admin/links/add" class="inline-flex items-center justify-center px-4 py-2.5 bg-app-primary hover:bg-app-accent text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow group">
+    <a href="/admin/links/add" class="inline-flex items-center justify-center px-3 sm:px-4 py-2 sm:py-2.5 bg-app-primary hover:bg-app-accent text-white text-xs sm:text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow group w-full sm:w-auto">
         <i class="fas fa-plus mr-2 group-hover:rotate-90 transition-transform duration-300"></i>
-        Add Link
+        <span class="hidden sm:inline">Add Link</span>
+        <span class="sm:hidden">Add</span>
     </a>
 </div>
 
@@ -21,7 +22,8 @@
 
     @if (Model != null && Model.Any())
     {
-        <div class="overflow-x-auto">
+        @* --- DESKTOP VIEW (TABLE) --- *@
+        <div class="hidden md:block overflow-x-auto">
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-gray-50/50 border-b border-app-soft">
@@ -33,8 +35,9 @@
                 <tbody class="divide-y divide-gray-100">
                     @foreach (var item in Model)
                     {
-                        // Renk ve İkon Ayarları (Değişmedi)
-                        string iconClass = ""; string bgClass = ""; string textClass = ""; string label = item.type;
+                        // Renk ve İkon Ayarları
+                        string iconClass = "";
+                        string bgClass = ""; string textClass = ""; string label = item.type;
                         if (item.type == "linkedin") { iconClass = "fab fa-linkedin-in"; bgClass = "bg-blue-50"; textClass = "text-[#0077b5]"; label = "LinkedIn"; }
                         else if (item.type == "github") { iconClass = "fab fa-github"; bgClass = "bg-gray-100"; textClass = "text-gray-800"; label = "GitHub"; }
                         else if (item.type == "twitter") { iconClass = "fab fa-twitter"; bgClass = "bg-sky-50"; textClass = "text-[#1DA1F2]"; label = "Twitter"; }
@@ -45,7 +48,6 @@
                         else { iconClass = "fas fa-link"; bgClass = "bg-gray-50"; textClass = "text-gray-600"; label = item.type; }
 
                         <tr class="hover:bg-gray-50/80 transition-colors duration-150 group">
-
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 h-10 w-10 rounded-lg @bgClass @textClass flex items-center justify-center text-lg border border-gray-100/50">
@@ -56,33 +58,24 @@
                                     </div>
                                 </div>
                             </td>
-
                             <td class="px-6 py-4">
-                                <div class="flex items-center max-w-md">
-                                    <div class="flex items-center w-full bg-gray-50 border border-gray-200 rounded-lg overflow-hidden transition-all focus-within:ring-2 focus-within:ring-app-primary/20 focus-within:border-app-primary">
-
-                                        <button onclick="copyToClipboard('@item.link', this)" class="flex-shrink-0 px-3 py-2 bg-gray-100 hover:bg-gray-200 border-r border-gray-200 text-gray-500 hover:text-gray-700 transition-colors" title="Copy to clipboard">
-                                            <i class="far fa-copy text-sm"></i>
-                                        </button>
-
-                                        <div class="flex-1 px-3 py-1.5 truncate font-mono text-sm text-gray-600 select-all">
-                                            @item.link
-                                        </div>
-
-                                        <a href="@item.link" target="_blank" rel="noopener noreferrer" class="flex-shrink-0 px-3 py-2 bg-white hover:bg-gray-50 border-l border-gray-200 text-blue-500 hover:text-blue-700 transition-colors" title="Open in new tab">
-                                            <i class="fas fa-external-link-alt text-sm"></i>
-                                        </a>
-
+                                <div class="flex items-center w-full bg-gray-50 border border-gray-200 rounded-lg overflow-hidden transition-all focus-within:ring-2 focus-within:ring-app-primary/20 focus-within:border-app-primary max-w-md">
+                                    <button onclick="copyToClipboard('@item.link', this)" class="flex-shrink-0 px-3 py-2 bg-gray-100 hover:bg-gray-200 border-r border-gray-200 text-gray-500 hover:text-gray-700 transition-colors" title="Copy to clipboard">
+                                        <i class="far fa-copy text-sm"></i>
+                                    </button>
+                                    <div class="flex-1 px-3 py-1.5 truncate font-mono text-sm text-gray-600 select-all">
+                                        @item.link
                                     </div>
+                                    <a href="@item.link" target="_blank" rel="noopener noreferrer" class="flex-shrink-0 px-3 py-2 bg-white hover:bg-gray-50 border-l border-gray-200 text-blue-500 hover:text-blue-700 transition-colors" title="Open in new tab">
+                                        <i class="fas fa-external-link-alt text-sm"></i>
+                                    </a>
                                 </div>
                             </td>
-
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="/admin/links/update/@item.id" class="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </a>
-
                                     <button onclick="confirmDelete(@item.id)" class="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors" title="Delete">
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
@@ -92,6 +85,59 @@
                     }
                 </tbody>
             </table>
+        </div>
+
+        @* --- MOBILE VIEW (CARDS) --- *@
+        <div class="md:hidden p-4 space-y-4 bg-gray-50/30">
+            @foreach (var item in Model)
+            {
+                // Logic Tekrarı (Mobil için)
+                string iconClass = "";
+                string bgClass = ""; string textClass = ""; string label = item.type;
+                if (item.type == "linkedin") { iconClass = "fab fa-linkedin-in"; bgClass = "bg-blue-50"; textClass = "text-[#0077b5]"; label = "LinkedIn"; }
+                else if (item.type == "github") { iconClass = "fab fa-github"; bgClass = "bg-gray-100"; textClass = "text-gray-800"; label = "GitHub"; }
+                else if (item.type == "twitter") { iconClass = "fab fa-twitter"; bgClass = "bg-sky-50"; textClass = "text-[#1DA1F2]"; label = "Twitter"; }
+                else if (item.type == "facebook") { iconClass = "fab fa-facebook-f"; bgClass = "bg-blue-50"; textClass = "text-[#4267B2]"; label = "Facebook"; }
+                else if (item.type == "instagram") { iconClass = "fab fa-instagram"; bgClass = "bg-pink-50"; textClass = "text-[#E1306C]"; label = "Instagram"; }
+                else if (item.type == "youtube") { iconClass = "fab fa-youtube"; bgClass = "bg-red-50"; textClass = "text-[#FF0000]"; label = "YouTube"; }
+                else if (item.type == "web") { iconClass = "fas fa-globe"; bgClass = "bg-indigo-50"; textClass = "text-indigo-600"; label = "Website"; }
+                else { iconClass = "fas fa-link"; bgClass = "bg-gray-50"; textClass = "text-gray-600"; label = item.type; }
+
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-4 hover:shadow-md transition-shadow">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="h-10 w-10 rounded-lg @bgClass @textClass flex items-center justify-center text-lg border border-gray-100/50">
+                                <i class="@iconClass"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-900 text-sm">@label</h3>
+                                <p class="text-xs text-gray-500">Social Link</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-1">
+                            <a href="/admin/links/update/@item.id" class="p-2 text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
+                                <i class="fas fa-edit text-sm"></i>
+                            </a>
+                            <button onclick="confirmDelete(@item.id)" class="p-2 text-red-500 bg-red-50 hover:bg-red-100 rounded-lg transition-colors">
+                                <i class="fas fa-trash-alt text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="relative group">
+                        <div class="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg p-2.5">
+                            <a href="@item.link" target="_blank" class="flex-1 text-xs font-mono text-blue-600 hover:text-blue-800 break-all hover:underline leading-relaxed">
+                                @item.link
+                            </a>
+
+                            <button onclick="copyToClipboard('@item.link', this)" class="flex-shrink-0 p-1.5 text-gray-400 hover:text-gray-600 transition-colors" title="Copy">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     }
     else
@@ -149,7 +195,12 @@
 
             // 2 saniye sonra eski haline getir
             setTimeout(() => {
-                icon.className = 'far fa-copy text-sm';
+                icon.className = 'far fa-copy text-sm'; // Eski sınıfı geri yükle (veya orijinal değişkenden)
+                if (originalClass.includes('far fa-copy')) { // Basit kontrol
+                    icon.className = originalClass;
+                } else {
+                    icon.className = 'far fa-copy text-sm';
+                }
             }, 2000);
 
             // Opsiyonel: Ufak bir toast mesajı
@@ -164,7 +215,6 @@
                     toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
             });
-
             Toast.fire({
                 icon: 'success',
                 title: 'Copied to clipboard'

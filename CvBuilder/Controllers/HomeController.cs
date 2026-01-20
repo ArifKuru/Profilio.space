@@ -28,7 +28,8 @@ namespace CvBuilder.Controllers
             // Simülasyon: Kullanıcı tablosunu bilmediğim için user_informations içinde username var mı diye bakıyorum. 
             // Eğer ayrı bir Users tablon varsa oradan sorgula.
             // ÖRNEK SENARYO:
-            var foundUser = db.users.FirstOrDefault(x => x.username == username);
+            // Sadece isPublished=1 olan kullanıcıları ara
+            var foundUser = db.users.FirstOrDefault(x => x.username == username && x.isPublished == true);
 
             if (foundUser == null)
             {
@@ -40,6 +41,25 @@ namespace CvBuilder.Controllers
             // ID'yi bulduk
             int targetUserId = foundUser.id;
             string targetUserEmail = foundUser.email; // <--- YENİ EKLENDİ
+
+            // Ziyaret kaydı oluştur (profile_visits tablosuna)
+            try
+            {
+                var visit = new profile_visits
+                {
+                    user_id = targetUserId,
+                    visited_at = DateTime.Now,
+                    ip_address = Request.UserHostAddress,
+                    user_agent = Request.UserAgent,
+                    referrer = Request.UrlReferrer?.ToString()
+                };
+                db.profile_visits.Add(visit);
+                db.SaveChanges();
+            }
+            catch
+            {
+                // Tablo henüz oluşturulmamışsa sessizce devam et
+            }
 
             // View'a gönderilecek veriyi çek
             var user_informations = db.user_informations.Where(x => x.user_id == targetUserId).ToList();

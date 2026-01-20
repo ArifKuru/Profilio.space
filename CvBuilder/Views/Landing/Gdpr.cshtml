@@ -1,0 +1,179 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>GDPR Compliance & Data Protection - Profilio.space</title>
+    <link rel="icon" type="image/x-icon" href="~/public/favicon.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: {
+                        app: {
+                            primary: '#16A34A',
+                            secondary: '#DCFCE7',
+                            dark: '#0F172A',
+                            bg: '#F1F5F9',
+                            soft: '#CBD5E1',
+                            textMain: '#1E293B',
+                            textSub: '#64748B',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-variant-ligatures: none;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0F172A;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #16A34A;
+        }
+    </style>
+</head>
+<body class="bg-app-bg text-app-textMain antialiased leading-relaxed font-normal">
+    @Html.Partial("_Header")
+
+    <!-- GDPR Content -->
+    <section class="pt-24 pb-16 px-6 bg-white min-h-screen">
+        <div class="max-w-4xl mx-auto">
+            <div class="mb-6">
+                <h1 class="text-2xl md:text-3xl font-semibold text-app-textMain mb-2">GDPR Compliance & Data Protection</h1>
+                <p class="text-sm text-app-textSub">Last Updated: 14 January 2026</p>
+            </div>
+
+            <div class="bg-white rounded-xl border border-app-soft shadow-sm p-6 md:p-8">
+                <div class="text-app-textSub leading-relaxed space-y-5 text-sm md:text-base">
+                    <div>
+                        <p class="mb-4">
+                            Profilio.space is committed to protecting your personal data in accordance with the General Data Protection Regulation (GDPR) (EU) 2026/679 and applicable data protection laws. This document outlines our data protection practices and your rights regarding your personal information.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">Data Controller</h3>
+                        <p>
+                            Profilio.space acts as the data controller responsible for the collection, processing, and storage of your personal data. We are committed to ensuring that your personal information is processed lawfully, fairly, and transparently.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">Personal Data We Collect</h3>
+                        <p class="mb-2">To provide our services, we collect and process the following categories of personal data:</p>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li><strong>Identity Data:</strong> Name, surname, username, and profile image</li>
+                            <li><strong>Contact Data:</strong> Email address, phone number, and physical address</li>
+                            <li><strong>Professional Data:</strong> Work experiences, education history, skills, achievements, projects, and professional interests</li>
+                            <li><strong>Technical Data:</strong> IP address, browser type, device information, and usage patterns</li>
+                            <li><strong>Social Media Data:</strong> Links to your social media profiles and professional networks</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">Legal Basis for Processing</h3>
+                        <p>
+                            We process your personal data based on the following legal grounds:
+                        </p>
+                        <ul class="list-disc list-inside space-y-2 ml-4 mt-2">
+                            <li><strong>Contractual Necessity:</strong> To fulfill our contractual obligations and provide the services you have requested</li>
+                            <li><strong>Legitimate Interests:</strong> To improve our services, ensure platform security, and prevent fraud</li>
+                            <li><strong>Consent:</strong> Where you have provided explicit consent for specific processing activities</li>
+                            <li><strong>Legal Obligations:</strong> To comply with applicable laws and regulatory requirements</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">Purpose of Data Processing</h3>
+                        <p class="mb-2">Your personal data is processed for the following purposes:</p>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li>Creation and management of your professional profile page</li>
+                            <li>Generation and download of your CV in PDF format</li>
+                            <li>Provision of platform services and features</li>
+                            <li>Communication regarding your account and our services</li>
+                            <li>Platform security, fraud prevention, and abuse detection</li>
+                            <li>Compliance with legal and regulatory obligations</li>
+                            <li>Service improvement and analytics (in anonymized form)</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">Data Retention</h3>
+                        <p>
+                            We retain your personal data only for as long as necessary to fulfill the purposes outlined in this policy, unless a longer retention period is required or permitted by law. When you delete your account, we will delete or anonymize your personal data in accordance with our data retention policies.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">Your Rights Under GDPR</h3>
+                        <p class="mb-3">As a data subject, you have the following rights:</p>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li><strong>Right of Access:</strong> Request access to your personal data and receive a copy</li>
+                            <li><strong>Right to Rectification:</strong> Request correction of inaccurate or incomplete data</li>
+                            <li><strong>Right to Erasure:</strong> Request deletion of your personal data under certain circumstances</li>
+                            <li><strong>Right to Restrict Processing:</strong> Request limitation of how we process your data</li>
+                            <li><strong>Right to Data Portability:</strong> Receive your data in a structured, machine-readable format</li>
+                            <li><strong>Right to Object:</strong> Object to processing based on legitimate interests</li>
+                            <li><strong>Right to Withdraw Consent:</strong> Withdraw consent at any time where processing is based on consent</li>
+                        </ul>
+                        <p class="mt-4">
+                            To exercise any of these rights, please contact us through your registered account or use the contact information provided in our Privacy Policy.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">Data Security</h3>
+                        <p>
+                            We implement industry-standard technical and organizational security measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction. These measures include encryption, secure servers, access controls, and regular security assessments.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">Data Transfers</h3>
+                        <p>
+                            Your personal data may be transferred to and stored in countries outside the European Economic Area (EEA). We ensure that appropriate safeguards are in place to protect your data in accordance with GDPR requirements, including standard contractual clauses and adequacy decisions.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">Updates to This Policy</h3>
+                        <p>
+                            We may update this GDPR Compliance statement from time to time to reflect changes in our practices or legal requirements. We will notify you of any material changes through our platform or via email.
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-app-soft">
+                        <p class="text-sm text-app-textSub">
+                            <strong>Last Updated:</strong> 14 January 2026
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @Html.Partial("_Footer")
+</body>
+</html>

@@ -1,0 +1,187 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Privacy Policy - Profilio.space</title>
+    <link rel="icon" type="image/x-icon" href="~/public/favicon.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: {
+                        app: {
+                            primary: '#16A34A',
+                            secondary: '#DCFCE7',
+                            dark: '#0F172A',
+                            bg: '#F1F5F9',
+                            soft: '#CBD5E1',
+                            textMain: '#1E293B',
+                            textSub: '#64748B',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-variant-ligatures: none;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0F172A;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #16A34A;
+        }
+    </style>
+</head>
+<body class="bg-app-bg text-app-textMain antialiased leading-relaxed font-normal">
+    @Html.Partial("_Header")
+
+    <!-- Privacy Policy Content -->
+    <section class="pt-24 pb-16 px-6 bg-white min-h-screen">
+        <div class="max-w-4xl mx-auto">
+            <div class="mb-6">
+                <h1 class="text-2xl md:text-3xl font-semibold text-app-textMain mb-2">Privacy Policy</h1>
+                <p class="text-sm text-app-textSub">Last Updated: 14 January 2026</p>
+            </div>
+
+            <div class="bg-white rounded-xl border border-app-soft shadow-sm p-6 md:p-8">
+                <div class="text-app-textSub leading-relaxed space-y-5 text-sm md:text-base">
+                    <div>
+                        <p class="mb-4">
+                            At Profilio.space, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform and services.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">1. Information We Collect</h3>
+                        <p class="mb-3">We collect information that you provide directly to us when you:</p>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li>Create an account or register for our services</li>
+                            <li>Complete your profile and add professional information</li>
+                            <li>Upload content, including profile images and documents</li>
+                            <li>Contact us for support or inquiries</li>
+                            <li>Use our contact form or communication features</li>
+                        </ul>
+                        <p class="mt-3">
+                            The information we collect includes but is not limited to: name, email address, phone number, physical address, profile photograph, work experience, education history, skills, achievements, projects, interests, and social media links.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">2. How We Use Your Information</h3>
+                        <p class="mb-2">We use the information we collect to:</p>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li>Create and maintain your professional profile page</li>
+                            <li>Generate and provide PDF CV downloads</li>
+                            <li>Deliver, maintain, and improve our platform services</li>
+                            <li>Communicate with you about your account, our services, and important updates</li>
+                            <li>Respond to your inquiries, comments, and support requests</li>
+                            <li>Monitor and analyze usage patterns to enhance user experience</li>
+                            <li>Detect, prevent, and address technical issues, security threats, and fraudulent activity</li>
+                            <li>Comply with legal obligations and enforce our Terms of Service</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">3. Information Sharing and Disclosure</h3>
+                        <p class="mb-3">We respect your privacy and do not sell, trade, or rent your personal information to third parties. However, we may share your information in the following circumstances:</p>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li><strong>Public Profile:</strong> Your profile page is publicly accessible via your chosen username URL. Information you choose to include in your profile will be visible to anyone who visits your profile page.</li>
+                            <li><strong>Service Providers:</strong> We may share information with trusted third-party service providers who assist us in operating our platform, conducting business, or serving users, provided they agree to keep this information confidential.</li>
+                            <li><strong>Legal Requirements:</strong> We may disclose information if required by law, court order, or governmental authority, or to protect our rights, property, or safety, or that of our users or others.</li>
+                            <li><strong>Business Transfers:</strong> In the event of a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">4. Data Security</h3>
+                        <p>
+                            We implement comprehensive security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. These measures include encryption, secure server infrastructure, access controls, regular security audits, and employee training on data protection. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">5. Your Privacy Rights</h3>
+                        <p class="mb-3">You have the right to:</p>
+                        <ul class="list-disc list-inside space-y-2 ml-4">
+                            <li>Access and review your personal information</li>
+                            <li>Correct inaccurate or incomplete information</li>
+                            <li>Request deletion of your personal data</li>
+                            <li>Object to or restrict certain processing activities</li>
+                            <li>Request data portability</li>
+                            <li>Withdraw consent where processing is based on consent</li>
+                        </ul>
+                        <p class="mt-3">
+                            To exercise these rights, please contact us through your registered account or use the contact methods provided in this policy.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">6. Cookies and Tracking Technologies</h3>
+                        <p>
+                            We use cookies and similar tracking technologies to enhance your experience, analyze platform usage, and improve our services. You can control cookie preferences through your browser settings, though this may affect certain platform functionalities.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">7. Children's Privacy</h3>
+                        <p>
+                            Our services are not intended for individuals under the age of 18. We do not knowingly collect personal information from children. If you believe we have inadvertently collected information from a child, please contact us immediately.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">8. International Data Transfers</h3>
+                        <p>
+                            Your information may be transferred to and processed in countries other than your country of residence. We ensure that appropriate safeguards are in place to protect your data in accordance with applicable data protection laws.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">9. Changes to This Privacy Policy</h3>
+                        <p>
+                            We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or other factors. We will notify you of any material changes by posting the updated policy on our platform and updating the "Last Updated" date. Your continued use of our services after such changes constitutes acceptance of the updated policy.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg md:text-xl font-semibold text-app-textMain mb-2">10. Contact Us</h3>
+                        <p>
+                            If you have questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us through your registered account or via the contact information provided on our platform.
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-app-soft">
+                        <p class="text-sm text-app-textSub">
+                            <strong>Last Updated:</strong> 14 January 2026
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @Html.Partial("_Footer")
+</body>
+</html>

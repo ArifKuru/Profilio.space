@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     @foreach (var user_information in Model)
     {
-        <title>@user_information.name @user_information.surname | Profolio.space</title>
+        <title>@user_information.name @user_information.surname | Profilio.space</title>
     }
     <link rel="icon" type="image/x-icon" href="~/public/favicon.png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -40,6 +40,9 @@
         }
     </script>
     <style>
+        body {
+            font-variant-ligatures: none;
+        }
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -95,9 +98,9 @@
     <div class="flex flex-col lg:flex-row min-h-screen">
 
         <nav id="sidebar" class="bg-app-dark text-white z-50 flex flex-col items-center py-10 shadow-2xl transition-transform duration-300 ease-in-out
-            fixed top-0 h-full overflow-y-auto
-            w-72 right-0 translate-x-full
-            lg:left-0 lg:right-auto lg:translate-x-0 lg:shadow-none border-r border-white/5">
+    fixed top-0 bottom-0 h-[100dvh] overflow-y-auto
+    w-72 right-0 translate-x-full
+    lg:left-0 lg:right-auto lg:translate-x-0 lg:shadow-none border-r border-white/5">
 
             <button id="closeSidebarBtn" class="absolute top-4 right-6 text-white text-xl lg:hidden hover:text-app-primary">
                 <i class="fas fa-times"></i>
@@ -130,7 +133,7 @@
             </div>
 
             <div class="mt-auto pb-6 text-xs text-slate-500 font-medium">
-                &copy; Profolio.space
+                &copy; Profilio.space
             </div>
         </nav>
 
@@ -182,7 +185,7 @@
 
                 <div class="mt-8 pl-6 flex flex-wrap gap-x-8 gap-y-3 text-sm font-bold uppercase tracking-widest text-app-textMain/70">
                     <span class="flex items-center gap-2"><i class="fas fa-map-marker-alt text-app-primary"></i> @user_information.address</span>
-                    <a href="mailto:@(ViewBag.TargetUserEmail ?? "contact@profolio.space")" class="flex items-center gap-2 hover:text-app-primary transition-colors"><i class="fas fa-envelope text-app-primary"></i>@(ViewBag.TargetUserEmail ?? "contact@profolio.space")</a>
+                    <a href="mailto:@(ViewBag.TargetUserEmail ?? "contact@profilio.space")" class="flex items-center gap-2 hover:text-app-primary transition-colors"><i class="fas fa-envelope text-app-primary"></i>@(ViewBag.TargetUserEmail ?? "contact@profilio.space")</a>
                 </div>
             </div>
         </div>

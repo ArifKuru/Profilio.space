@@ -19,6 +19,35 @@ namespace CvBuilder
     url: "",
     defaults: new { controller = "Landing", action = "Index" }
 );
+            // Legal sayfaları için route'lar (username rotasından önce olmalı)
+
+            routes.MapRoute(
+               name: "LandingGdpr",
+               url: "gdpr",
+               defaults: new { controller = "Landing", action = "Gdpr" }
+           );
+            routes.MapRoute(
+                name: "LandingPrivacy",
+                url: "privacy",
+                defaults: new { controller = "Landing", action = "Privacy" }
+            );
+            routes.MapRoute(
+                name: "LandingTerms",
+                url: "terms",
+                defaults: new { controller = "Landing", action = "Terms" }
+            );
+            routes.MapRoute(
+                name: "LandingDisclaimer",
+                url: "disclaimer",
+                defaults: new { controller = "Landing", action = "Disclaimer" }
+            );
+
+
+            routes.MapRoute(
+             name: "AdminDashboard",
+             url: "admin/dashboard/{action}/{id}",
+             defaults: new { controller = "dashboard", action = "Index", id = UrlParameter.Optional }
+         );
 
             routes.MapRoute(
              name: "AdminAbout",
@@ -81,6 +110,12 @@ defaults: new { controller = "inbox", action = "Index", id = UrlParameter.Option
 );
 
             routes.MapRoute(
+                name: "PsAdmin",
+                url: "ps-admin/{action}/{id}",
+                defaults: new { controller = "PsAdmin", action = "Login", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
         name: "LoginRoute",
         url: "login",
         defaults: new { controller = "Login", action = "Index" } // Controller ve Action adını projene göre düzenle
@@ -92,11 +127,12 @@ defaults: new { controller = "inbox", action = "Index", id = UrlParameter.Option
     );
             // ... Login ve Register rotalarının hemen altına ekle ...
 
+           
             // "/admin" yazıldığında About sayfasına gitsin (Geçici)
             routes.MapRoute(
                 name: "AdminTemp",
                 url: "admin",
-                defaults: new { controller = "About", action = "Index" }
+                defaults: new { controller = "dashboard", action = "Index" }
             );
 
             routes.MapRoute(

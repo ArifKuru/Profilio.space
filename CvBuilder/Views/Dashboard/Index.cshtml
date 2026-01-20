@@ -1,0 +1,459 @@
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="mb-4 sm:mb-6">
+    <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-app-textMain">Dashboard</h2>
+    <p class="text-xs sm:text-sm text-app-textSub">View your profile visit statistics.</p>
+</div>
+
+<!-- Statistics Cards -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4 mb-4 sm:mb-6">
+    <!-- Total Visits -->
+    <div class="bg-white rounded-xl shadow-sm border border-app-soft p-3 sm:p-4 md:p-6">
+        <div class="flex items-center justify-between">
+            <div class="min-w-0 flex-1">
+                <p class="text-[10px] sm:text-xs text-app-textSub uppercase tracking-wider mb-0.5 sm:mb-1">Total Visits</p>
+                <p class="text-lg sm:text-xl md:text-2xl font-bold text-app-textMain truncate">@ViewBag.TotalVisits</p>
+            </div>
+            <div class="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-blue-100 rounded-lg flex items-center justify-center shrink-0 ml-1.5 sm:ml-2">
+                <i class="fas fa-eye text-blue-600 text-base sm:text-lg md:text-xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Today's Visits -->
+    <div class="bg-white rounded-xl shadow-sm border border-app-soft p-3 sm:p-4 md:p-6">
+        <div class="flex items-center justify-between">
+            <div class="min-w-0 flex-1">
+                <p class="text-[10px] sm:text-xs text-app-textSub uppercase tracking-wider mb-0.5 sm:mb-1">Today</p>
+                <p class="text-lg sm:text-xl md:text-2xl font-bold text-app-textMain truncate">@ViewBag.TodayVisits</p>
+            </div>
+            <div class="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-green-100 rounded-lg flex items-center justify-center shrink-0 ml-1.5 sm:ml-2">
+                <i class="fas fa-calendar-day text-green-600 text-base sm:text-lg md:text-xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- This Week -->
+    <div class="bg-white rounded-xl shadow-sm border border-app-soft p-3 sm:p-4 md:p-6">
+        <div class="flex items-center justify-between">
+            <div class="min-w-0 flex-1">
+                <p class="text-[10px] sm:text-xs text-app-textSub uppercase tracking-wider mb-0.5 sm:mb-1">This Week</p>
+                <p class="text-lg sm:text-xl md:text-2xl font-bold text-app-textMain truncate">@ViewBag.ThisWeekVisits</p>
+            </div>
+            <div class="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-purple-100 rounded-lg flex items-center justify-center shrink-0 ml-1.5 sm:ml-2">
+                <i class="fas fa-calendar-week text-purple-600 text-base sm:text-lg md:text-xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- This Month -->
+    <div class="bg-white rounded-xl shadow-sm border border-app-soft p-3 sm:p-4 md:p-6">
+        <div class="flex items-center justify-between">
+            <div class="min-w-0 flex-1">
+                <p class="text-[10px] sm:text-xs text-app-textSub uppercase tracking-wider mb-0.5 sm:mb-1">This Month</p>
+                <p class="text-lg sm:text-xl md:text-2xl font-bold text-app-textMain truncate">@ViewBag.ThisMonthVisits</p>
+            </div>
+            <div class="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-orange-100 rounded-lg flex items-center justify-center shrink-0 ml-1.5 sm:ml-2">
+                <i class="fas fa-calendar-alt text-orange-600 text-base sm:text-lg md:text-xl"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
+    <!-- Last 7 Days Visit Chart -->
+    <div class="bg-white rounded-xl shadow-sm border border-app-soft p-4 sm:p-6">
+        <h3 class="text-base sm:text-lg font-semibold text-app-textMain mb-3 sm:mb-4">Last 7 Days Visit Chart</h3>
+        <div class="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+            <div id="last7DaysChart" class="h-48 sm:h-64 flex items-end justify-between gap-1 sm:gap-2 min-w-[280px]">
+                <!-- Chart will be rendered here by JavaScript -->
+                <div class="flex-1 flex flex-col items-center">
+                    <div class="w-full bg-gray-200 rounded-t animate-pulse" style="height: 0%;"></div>
+                    <p class="text-[10px] sm:text-xs text-app-textSub mt-2">-</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hourly Visit Distribution -->
+    <div class="bg-white rounded-xl shadow-sm border border-app-soft p-4 sm:p-6">
+        <h3 class="text-base sm:text-lg font-semibold text-app-textMain mb-3 sm:mb-4">Hourly Visit Distribution</h3>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+            <div class="w-full sm:w-auto flex justify-center">
+                <canvas id="hourlyChart" class="max-w-full" style="max-width: 280px; max-height: 280px;"></canvas>
+            </div>
+            <div id="hourlyChartLegend" class="w-full sm:w-auto flex flex-wrap justify-center sm:justify-start gap-3 sm:gap-4">
+                <!-- Legend will be rendered here by JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CV Summary Cards -->
+<div class="mb-4 sm:mb-6">
+    <h3 class="text-base sm:text-lg font-semibold text-app-textMain mb-3 sm:mb-4">CV Summary</h3>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3 md:gap-4">
+        <div class="bg-white rounded-lg border border-app-soft p-2.5 sm:p-3 md:p-4">
+            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-2 md:gap-3">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-blue-100 rounded-lg flex items-center justify-center shrink-0">
+                    <i class="fas fa-briefcase text-blue-600 text-xs sm:text-sm"></i>
+                </div>
+                <div class="min-w-0 text-center sm:text-left flex-1">
+                    <p class="text-lg sm:text-xl md:text-2xl font-bold text-app-textMain">@(ViewBag.ExperiencesCount ?? 0)</p>
+                    <p class="text-[10px] sm:text-xs text-app-textSub truncate">Experiences</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg border border-app-soft p-2.5 sm:p-3 md:p-4">
+            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-2 md:gap-3">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-green-100 rounded-lg flex items-center justify-center shrink-0">
+                    <i class="fas fa-graduation-cap text-green-600 text-xs sm:text-sm"></i>
+                </div>
+                <div class="min-w-0 text-center sm:text-left flex-1">
+                    <p class="text-lg sm:text-xl md:text-2xl font-bold text-app-textMain">@(ViewBag.EducationsCount ?? 0)</p>
+                    <p class="text-[10px] sm:text-xs text-app-textSub truncate">Educations</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg border border-app-soft p-2.5 sm:p-3 md:p-4">
+            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-2 md:gap-3">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-purple-100 rounded-lg flex items-center justify-center shrink-0">
+                    <i class="fas fa-code text-purple-600 text-xs sm:text-sm"></i>
+                </div>
+                <div class="min-w-0 text-center sm:text-left flex-1">
+                    <p class="text-lg sm:text-xl md:text-2xl font-bold text-app-textMain">@(ViewBag.WorkflowsCount ?? 0)</p>
+                    <p class="text-[10px] sm:text-xs text-app-textSub truncate">Projects</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg border border-app-soft p-2.5 sm:p-3 md:p-4">
+            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-2 md:gap-3">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-yellow-100 rounded-lg flex items-center justify-center shrink-0">
+                    <i class="fas fa-trophy text-yellow-600 text-xs sm:text-sm"></i>
+                </div>
+                <div class="min-w-0 text-center sm:text-left flex-1">
+                    <p class="text-lg sm:text-xl md:text-2xl font-bold text-app-textMain">@(ViewBag.AchievementsCount ?? 0)</p>
+                    <p class="text-[10px] sm:text-xs text-app-textSub truncate">Achievements</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg border border-app-soft p-2.5 sm:p-3 md:p-4">
+            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-2 md:gap-3">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 bg-pink-100 rounded-lg flex items-center justify-center shrink-0">
+                    <i class="fas fa-heart text-pink-600 text-xs sm:text-sm"></i>
+                </div>
+                <div class="min-w-0 text-center sm:text-left flex-1">
+                    <p class="text-lg sm:text-xl md:text-2xl font-bold text-app-textMain">@(ViewBag.InterestsCount ?? 0)</p>
+                    <p class="text-[10px] sm:text-xs text-app-textSub truncate">Interests</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="text-[10px] sm:text-xs text-app-textSub text-center italic px-2 mt-2 sm:mt-3">Note: At least 2 items are recommended for each section!</p>
+</div>
+
+<!-- Recommendations -->
+@{
+    var recommendations = ViewBag.Recommendations as System.Collections.Generic.IEnumerable<string>;
+}
+@if (recommendations != null && recommendations.Any())
+{
+    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-3 sm:p-4 md:p-6 mb-4 sm:mb-6">
+        <div class="flex items-start gap-2 sm:gap-3">
+            <div class="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-yellow-100 rounded-lg flex items-center justify-center shrink-0 mt-0.5">
+                <i class="fas fa-lightbulb text-yellow-600 text-sm sm:text-base md:text-lg"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+                <h3 class="text-sm sm:text-base md:text-lg font-semibold text-yellow-900 mb-1.5 sm:mb-2">Recommendations</h3>
+                <p class="text-xs sm:text-sm text-yellow-800 mb-2 sm:mb-3">To improve your CV, consider adding more items to the following sections:</p>
+                <div class="flex flex-wrap gap-1.5 sm:gap-2">
+                    @foreach (var rec in recommendations)
+                    {
+                        <a href="@GetRecommendationUrl(rec)" class="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-yellow-100 hover:bg-yellow-200 text-yellow-900 rounded-lg text-xs sm:text-sm font-medium transition-colors">
+                            <i class="fas fa-plus-circle text-[10px] sm:text-xs"></i>
+                            <span>Add @rec</span>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@functions {
+    public string GetRecommendationUrl(string section)
+    {
+        switch (section)
+        {
+            case "Experiences":
+                return "/admin/experiences/add";
+            case "Educations":
+                return "/admin/educations/add";
+            case "Projects":
+                return "/admin/workflows/add";
+            case "Achievements":
+                return "/admin/achievements/add";
+            case "Interests":
+                return "/admin/interests/add";
+            default:
+                return "#";
+        }
+    }
+}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+    let hourlyChartInstance = null;
+
+    // Load Last 7 Days Chart
+    function loadLast7DaysChart() {
+        fetch('/admin/dashboard/GetLast7DaysVisits')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Last 7 Days Data:', data);
+                if (data.success && data.data && data.data.length > 0) {
+                    renderLast7DaysChart(data.data);
+                } else {
+                    console.log('No data or empty data, rendering empty chart');
+                    renderEmptyLast7DaysChart();
+                }
+            })
+            .catch(error => {
+                console.error('Error loading last 7 days chart:', error);
+                renderEmptyLast7DaysChart();
+            });
+    }
+
+    function renderLast7DaysChart(data) {
+        const container = document.getElementById('last7DaysChart');
+        container.innerHTML = '';
+        
+        // Filter out invalid dates and get max count
+        const validData = data.filter(d => d.Date && d.Count !== undefined);
+        const maxCount = validData.length > 0 ? Math.max(...validData.map(d => parseInt(d.Count) || 0), 1) : 1;
+        
+        console.log('Rendering chart with data:', validData, 'Max count:', maxCount);
+        
+        validData.forEach(day => {
+            // Parse date (format: yyyy-MM-dd)
+            const dateParts = day.Date.split('-');
+            const dayDate = new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1, parseInt(dateParts[2]));
+            const dayCount = parseInt(day.Count) || 0;
+            const height = maxCount > 0 ? (dayCount * 100.0 / maxCount) : 0;
+            
+            const dayDiv = document.createElement('div');
+            dayDiv.className = 'flex-1 flex flex-col items-center min-w-0';
+            dayDiv.innerHTML = `
+                <div class="w-full bg-blue-500 rounded-t transition-all hover:bg-blue-600" 
+                     style="height: ${height}%; min-height: ${dayCount > 0 ? '4px' : '0px'};"
+                     title="${dayDate.toLocaleDateString('en-US', { day: '2-digit', month: 'short' })} - ${dayCount} visits">
+                </div>
+                <p class="text-[10px] sm:text-xs text-app-textSub mt-1.5 sm:mt-2">${dayDate.getDate().toString().padStart(2, '0')}</p>
+            `;
+            container.appendChild(dayDiv);
+        });
+    }
+
+    function renderEmptyLast7DaysChart() {
+        const container = document.getElementById('last7DaysChart');
+        container.innerHTML = '';
+        
+        for (let i = 0; i < 7; i++) {
+            const date = new Date();
+            date.setDate(date.getDate() - 6 + i);
+            
+            const dayDiv = document.createElement('div');
+            dayDiv.className = 'flex-1 flex flex-col items-center min-w-0';
+            dayDiv.innerHTML = `
+                <div class="w-full bg-blue-500 rounded-t" style="height: 0%;"></div>
+                <p class="text-[10px] sm:text-xs text-app-textSub mt-1.5 sm:mt-2">${date.getDate().toString().padStart(2, '0')}</p>
+            `;
+            container.appendChild(dayDiv);
+        }
+    }
+
+    // Load Hourly Chart
+    function loadHourlyChart() {
+        fetch('/admin/dashboard/GetHourlyVisits')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.data) {
+                    renderHourlyChart(data.data);
+                } else {
+                    renderEmptyHourlyChart();
+                }
+            })
+            .catch(error => {
+                console.error('Error loading hourly chart:', error);
+                renderEmptyHourlyChart();
+            });
+    }
+
+    function renderHourlyChart(data) {
+        // Destroy existing chart if any
+        if (hourlyChartInstance) {
+            hourlyChartInstance.destroy();
+        }
+
+        // Group hours into time periods
+        const timeGroups = {
+            'Night (0-6)': { hours: [0, 1, 2, 3, 4, 5], count: 0, color: '#6366f1' },
+            'Morning (6-12)': { hours: [6, 7, 8, 9, 10, 11], count: 0, color: '#10b981' },
+            'Afternoon (12-18)': { hours: [12, 13, 14, 15, 16, 17], count: 0, color: '#f59e0b' },
+            'Evening (18-24)': { hours: [18, 19, 20, 21, 22, 23], count: 0, color: '#ef4444' }
+        };
+
+        // Calculate counts for each time group
+        data.forEach(hourData => {
+            const hour = hourData.Hour || 0;
+            const count = hourData.Count || 0;
+            
+            for (const [groupName, group] of Object.entries(timeGroups)) {
+                if (group.hours.includes(hour)) {
+                    group.count += count;
+                    break;
+                }
+            }
+        });
+
+        // Filter out groups with zero visits
+        const chartData = Object.entries(timeGroups)
+            .filter(([_, group]) => group.count > 0)
+            .map(([label, group]) => ({
+                label: label,
+                count: group.count,
+                color: group.color
+            }));
+
+        const canvas = document.getElementById('hourlyChart');
+        const ctx = canvas.getContext('2d');
+
+        if (chartData.length === 0) {
+            renderEmptyHourlyChart();
+            return;
+        }
+
+        // Calculate total for percentages
+        const total = chartData.reduce((sum, item) => sum + item.count, 0);
+
+        // Create pie chart
+        hourlyChartInstance = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: chartData.map(item => item.label),
+                datasets: [{
+                    data: chartData.map(item => item.count),
+                    backgroundColor: chartData.map(item => item.color),
+                    borderColor: '#ffffff',
+                    borderWidth: 2,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                return `${label}: ${value} visits (${percentage}%)`;
+                            }
+                        },
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 12,
+                        titleFont: {
+                            size: 14,
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            size: 13
+                        }
+                    }
+                }
+            }
+        });
+
+        // Render custom legend
+        renderHourlyChartLegend(chartData, total);
+    }
+
+    function renderHourlyChartLegend(chartData, total) {
+        const legendContainer = document.getElementById('hourlyChartLegend');
+        legendContainer.innerHTML = '';
+
+        chartData.forEach(item => {
+            const percentage = total > 0 ? ((item.count / total) * 100).toFixed(1) : 0;
+            const legendItem = document.createElement('div');
+            legendItem.className = 'flex items-center gap-2 sm:gap-3';
+            legendItem.innerHTML = `
+                <div class="w-4 h-4 rounded" style="background-color: ${item.color};"></div>
+                <div class="flex flex-col">
+                    <span class="text-xs sm:text-sm font-medium text-app-textMain">${item.label}</span>
+                    <span class="text-[10px] sm:text-xs text-app-textSub">${item.count} visits (${percentage}%)</span>
+                </div>
+            `;
+            legendContainer.appendChild(legendItem);
+        });
+    }
+
+    function renderEmptyHourlyChart() {
+        // Destroy existing chart if any
+        if (hourlyChartInstance) {
+            hourlyChartInstance.destroy();
+            hourlyChartInstance = null;
+        }
+
+        const canvas = document.getElementById('hourlyChart');
+        const ctx = canvas.getContext('2d');
+
+        // Show empty state
+        hourlyChartInstance = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['No Data'],
+                datasets: [{
+                    data: [1],
+                    backgroundColor: ['#e5e7eb'],
+                    borderColor: '#ffffff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: false
+                    }
+                }
+            }
+        });
+
+        const legendContainer = document.getElementById('hourlyChartLegend');
+        legendContainer.innerHTML = '<p class="text-xs sm:text-sm text-app-textSub italic">No visit data available</p>';
+    }
+
+    // Load charts when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        loadLast7DaysChart();
+        loadHourlyChart();
+    });
+</script>
+

@@ -35,5 +35,8 @@ namespace CvBuilder.Models.Entity
         public virtual DbSet<users> users { get; set; }
         public virtual DbSet<workflows> workflows { get; set; }
         public virtual DbSet<social_links> social_links { get; set; }
+        public virtual DbSet<profile_visits> profile_visits { get; set; }
+        public virtual DbSet<admin_users> admin_users { get; set; }
+        public virtual DbSet<smtp_settings> smtp_settings { get; set; }
     }
 }

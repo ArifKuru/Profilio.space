@@ -10,7 +10,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login | Profolio.space</title>
+    <title>Login | Profilio.space</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -45,6 +45,10 @@
     </script>
 
     <style>
+        body {
+            font-variant-ligatures: none;
+        }
+
         .swiper-pagination-bullet {
             background: white;
             opacity: 0.4;
@@ -97,15 +101,14 @@
         }
     </style>
 </head>
-<body class="h-screen overflow-hidden antialiased text-slate-800">
+<body class="h-screen antialiased text-slate-800 bg-white overflow-hidden">
 
     <div class="flex h-full w-full">
 
         <div class="hidden lg:block w-[40%] bg-brand-dark relative h-full border-r border-slate-900 group">
-
-            <div class="absolute top-8 left-8 z-30">
-                <img src="~/public/logo_tide.png" alt="Logo" class="h-6 w-auto brightness-0 invert opacity-90">
-            </div>
+            <a class="absolute top-8 left-8 z-30" href='/' style="cursor:pointer">
+                <img src="~/public/logo.png" alt="Logo" class="h-10 w-auto brightness-0 invert opacity-90">
+            </a>
 
             <div class="swiper mySwiper h-full w-full">
                 <div class="swiper-wrapper">
@@ -113,7 +116,7 @@
                         <img src="~/public/carousel/register1.png" class="absolute inset-0 h-full w-full object-cover">
                         <div class="absolute inset-0 bg-slate-900/60 mix-blend-multiply"></div>
                         <div class="relative z-10 h-full flex flex-col justify-end p-10 pb-28">
-                            <h2 class="text-2xl font-bold text-white mb-2">Create Your Profolio Space</h2>
+                            <h2 class="text-2xl font-bold text-white mb-2">Create Your Profilio Space</h2>
                             <p class="text-white/80 text-base font-light leading-relaxed">"Build your professional portfolio in minutes. Showcase your skills, experiences, and achievements with a beautiful, personalized profile page."</p>
                         </div>
                     </div>
@@ -136,102 +139,101 @@
                 </div>
 
                 <div class="absolute bottom-10 left-10 z-20 flex items-center gap-3">
-                    <div class="nav-btn custom-prev" title="Previous Slide">
-                        <i class="fas fa-chevron-left"></i>
-                    </div>
-                    <div id="autoplayToggle" class="nav-btn" onclick="toggleAutoplay()" title="Pause Autoplay">
-                        <i class="fas fa-pause" id="autoplayIcon"></i>
-                    </div>
+                    <div class="nav-btn custom-prev" title="Previous Slide"><i class="fas fa-chevron-left"></i></div>
+                    <div id="autoplayToggle" class="nav-btn" onclick="toggleAutoplay()" title="Pause Autoplay"><i class="fas fa-pause" id="autoplayIcon"></i></div>
                     <div class="swiper-pagination !static !w-auto flex items-center mx-1"></div>
-                    <div class="nav-btn custom-next" title="Next Slide">
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
+                    <div class="nav-btn custom-next" title="Next Slide"><i class="fas fa-chevron-right"></i></div>
                 </div>
             </div>
         </div>
 
-        <div class="w-full lg:w-[60%] bg-white h-full flex flex-col justify-center items-center relative">
+        <div class="w-full lg:w-[60%] bg-white h-full relative overflow-y-auto">
+            
+            <div class="min-h-full flex flex-col justify-center items-center py-10 relative">
 
-            <div class="absolute top-8 left-8 z-20">
-                <div class="relative">
-                    <button onclick="toggleLang()" class="flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-slate-900 transition-colors focus:outline-none bg-transparent py-2 rounded">
-                        <i class="fas fa-globe"></i> English <i class="fas fa-chevron-down text-[9px]"></i>
-                    </button>
-                    <div id="langMenu" class="hidden absolute top-full left-0 mt-2 w-36 bg-slate-900 text-white text-[10px] rounded py-2 px-3 shadow-xl z-50 animate-fade-in-down">
-                        Others coming soon...
-                        <div class="absolute -top-1 left-3 w-2 h-2 bg-slate-900 rotate-45"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="absolute top-8 right-8 z-20">
-                <div class="flex items-center gap-3">
-                    <span class="text-xs text-slate-500 font-medium hidden sm:inline">New here?</span>
-                    <a href="/register" class="flex items-center justify-center px-5 py-2 text-xs font-bold text-slate-700 bg-white border border-brand-border rounded hover:bg-slate-50 hover:text-slate-900 transition-all shadow-sm">
-                        Create Account
-                    </a>
-                </div>
-            </div>
-
-            <div class="w-full max-w-[460px] px-6">
-
-                <div class="text-center mb-6">
-                    <img src="~/public/logo_text.png" alt="Profolio" class="h-10 mx-auto mb-5 object-contain">
-                    <h1 class="text-xl font-bold tracking-tight text-slate-900">Welcome back</h1>
-                    <p class="mt-1 text-xs text-slate-500">Please enter your details to sign in.</p>
-                </div>
-
-                @if (ViewBag.Error != null)
-                {
-                    <div class="mb-4 bg-red-50 border border-red-100 rounded p-2.5 flex gap-2 items-center justify-center">
-                        <i class="fas fa-circle-exclamation text-red-500 text-xs"></i>
-                        <span class="text-xs text-red-700 font-medium">@ViewBag.Error</span>
-                    </div>
-                }
-
-                <form action="/Login/Index" method="post" class="space-y-4">
-
-                    <div>
-                        <label class="block text-[10px] font-bold text-slate-600 uppercase tracking-widest mb-1">Work Email</label>
-                        <input name="email" type="email" required placeholder="name@company.com"
-                               value="@(Model != null ? Model.email : "")"
-                               class="w-full px-3 py-2.5 bg-white border border-brand-border rounded text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition-all text-sm">
-                    </div>
-
-                    <div>
-                        <div class="flex items-center justify-between mb-1">
-                            <label class="block text-[10px] font-bold text-slate-600 uppercase tracking-widest">Password</label>
-                            <!--<a href="#" class="text-[10px] font-bold text-slate-500 hover:text-brand-primary transition-colors">Forgot Password?</a>-->
-                        </div>
-                        <div class="relative">
-                            <input id="passwordInput" name="password_hash" type="password" required placeholder="••••••••"
-                                   class="w-full pl-3 pr-10 py-2.5 bg-white border border-brand-border rounded text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition-all text-sm">
-
-                            <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-slate-400 hover:text-slate-600 transition-colors">
-                                <i class="fas fa-eye text-xs" id="toggleIcon"></i>
-                            </button>
+                <div class="absolute top-8 left-8 z-20">
+                    <div class="relative">
+                        <button onclick="toggleLang()" class="flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-slate-900 transition-colors focus:outline-none bg-transparent py-2 rounded">
+                            <i class="fas fa-globe"></i> English <i class="fas fa-chevron-down text-[9px]"></i>
+                        </button>
+                        <div id="langMenu" class="hidden absolute top-full left-0 mt-2 w-36 bg-slate-900 text-white text-[10px] rounded py-2 px-3 shadow-xl z-50 animate-fade-in-down">
+                            Others coming soon...
+                            <div class="absolute -top-1 left-3 w-2 h-2 bg-slate-900 rotate-45"></div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="flex items-center pt-1">
-                        <input id="remember" name="remember" type="checkbox"
-                               class="h-3.5 w-3.5 text-slate-900 border-slate-300 rounded focus:ring-slate-900 cursor-pointer accent-slate-900">
-                        <label for="remember" class="ml-2 block text-xs text-slate-500 cursor-pointer select-none">
-                            Keep me logged in
-                        </label>
+                <div class="absolute top-8 right-8 z-20">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs text-slate-500 font-medium hidden sm:inline">New here?</span>
+                        <a href="/register" class="flex items-center justify-center px-5 py-2 text-xs font-bold text-slate-700 bg-white border border-brand-border rounded hover:bg-slate-50 hover:text-slate-900 transition-all shadow-sm">
+                            Create Account
+                        </a>
+                    </div>
+                </div>
+
+                <div class="w-full max-w-[460px] px-6 mt-16 lg:mt-0 mb-auto lg:mb-0"> 
+                    <div class="text-center mb-6">
+                        <img src="~/public/logo_text.png" alt="Profilio" class="h-10 mx-auto mb-5 object-contain">
+                        <h1 class="text-xl font-bold tracking-tight text-slate-900">Welcome back</h1>
+                        <p class="mt-1 text-xs text-slate-500">Please enter your details to sign in.</p>
                     </div>
 
-                    <button type="submit"
-                            class="w-full flex justify-center py-3 px-4 border border-transparent rounded shadow-sm text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 transition-all duration-200 mt-2">
-                        Sign In
-                    </button>
-                </form>
-            </div>
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="mb-4 bg-red-50 border border-red-100 rounded p-2.5 flex gap-2 items-center justify-center">
+                            <i class="fas fa-circle-exclamation text-red-500 text-xs"></i>
+                            <span class="text-xs text-red-700 font-medium">@ViewBag.Error</span>
+                        </div>
+                    }
 
-            <div class="absolute bottom-4 w-full text-center">
-                <p class="text-[10px] text-slate-300 uppercase tracking-widest">
-                    © <span id="year"></span> profolio.space
-                </p>
+                    <form action="/Login/Index" method="post" class="space-y-4">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-600 uppercase tracking-widest mb-1">Work Email</label>
+                            <input name="email" type="email" required placeholder="name@company.com"
+                                   value="@(Model != null ? Model.email : "")"
+                                   class="w-full px-3 py-2.5 bg-white border border-brand-border rounded text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition-all text-sm">
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="block text-[10px] font-bold text-slate-600 uppercase tracking-widest">Password</label>
+                                <a href="/login/forgotpassword" class="text-[10px] font-bold text-slate-500 hover:text-brand-primary transition-colors flex items-center gap-1">
+                                    <i class="fas fa-exclamation-circle text-[9px]"></i>
+                                    Forgot Password?
+                                </a>
+                            </div>
+                            <div class="relative">
+                                <input id="passwordInput" name="password_hash" type="password" required placeholder="••••••••"
+                                       class="w-full pl-3 pr-10 py-2.5 bg-white border border-brand-border rounded text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-800 focus:ring-1 focus:ring-slate-800 transition-all text-sm">
+
+                                <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-slate-400 hover:text-slate-600 transition-colors">
+                                    <i class="fas fa-eye text-xs" id="toggleIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center pt-1">
+                            <input id="remember" name="remember" type="checkbox"
+                                   class="h-3.5 w-3.5 text-slate-900 border-slate-300 rounded focus:ring-slate-900 cursor-pointer accent-slate-900">
+                            <label for="remember" class="ml-2 block text-xs text-slate-500 cursor-pointer select-none">
+                                Keep me logged in
+                            </label>
+                        </div>
+
+                        <button type="submit"
+                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded shadow-sm text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 transition-all duration-200 mt-2">
+                            Sign In
+                        </button>
+                    </form>
+                </div>
+
+                <div class="w-full text-center mt-8 lg:absolute lg:bottom-4 lg:mt-0">
+                    <p class="text-[10px] text-slate-300 uppercase tracking-widest">
+                        © <span id="year"></span> profilio.space
+                    </p>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -239,49 +241,36 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script>
         document.getElementById("year").textContent = new Date().getFullYear();
-
+        // ... Diğer scriptleriniz ...
         var swiper = new Swiper(".mySwiper", {
-            spaceBetween: 0,
-            effect: "fade",
-            speed: 1000,
-            autoplay: {
-                delay: 5000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".custom-next",
-                prevEl: ".custom-prev",
-            },
-            allowTouchMove: false,
-            loop: true
+            spaceBetween: 0, effect: "fade", speed: 1000,
+            autoplay: { delay: 5000, disableOnInteraction: false },
+            pagination: { el: ".swiper-pagination", clickable: true },
+            navigation: { nextEl: ".custom-next", prevEl: ".custom-prev" },
+            allowTouchMove: false, loop: true
         });
-
+        
+        // ... (Kalan script kodları aynen)
         let isAutoplayRunning = true;
         function toggleAutoplay() {
-            const btn = document.getElementById('autoplayToggle');
-            const icon = document.getElementById('autoplayIcon');
-
-            if (isAutoplayRunning) {
-                swiper.autoplay.stop();
-                icon.classList.remove('fa-pause');
-                icon.classList.add('fa-play');
-                btn.classList.add('paused');
-                btn.title = "Start Autoplay";
-                isAutoplayRunning = false;
-            } else {
-                swiper.autoplay.start();
-                icon.classList.remove('fa-play');
-                icon.classList.add('fa-pause');
-                btn.classList.remove('paused');
-                btn.title = "Pause Autoplay";
-                isAutoplayRunning = true;
-            }
+             const btn = document.getElementById('autoplayToggle');
+             const icon = document.getElementById('autoplayIcon');
+             if (isAutoplayRunning) {
+                 swiper.autoplay.stop();
+                 icon.classList.remove('fa-pause');
+                 icon.classList.add('fa-play');
+                 btn.classList.add('paused');
+                 btn.title = "Start Autoplay";
+                 isAutoplayRunning = false;
+             } else {
+                 swiper.autoplay.start();
+                 icon.classList.remove('fa-play');
+                 icon.classList.add('fa-pause');
+                 btn.classList.remove('paused');
+                 btn.title = "Pause Autoplay";
+                 isAutoplayRunning = true;
+             }
         }
-
         function togglePassword() {
             const passwordInput = document.getElementById('passwordInput');
             const icon = document.getElementById('toggleIcon');
@@ -295,14 +284,11 @@
                 icon.classList.add('fa-eye');
             }
         }
-
         function toggleLang() {
             const menu = document.getElementById('langMenu');
             menu.classList.toggle('hidden');
             if (!menu.classList.contains('hidden')) {
-                setTimeout(() => {
-                    menu.classList.add('hidden');
-                }, 3000);
+                setTimeout(() => { menu.classList.add('hidden'); }, 3000);
             }
         }
     </script>

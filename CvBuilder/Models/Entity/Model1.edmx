@@ -13,6 +13,15 @@
           <Property Name="description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="admin_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="password_hash" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="contact_messages">
           <Key>
             <PropertyRef Name="id" />
@@ -57,6 +66,17 @@
           <Property Name="description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="profile_visits">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="visited_at" Type="datetime" Nullable="false" />
+          <Property Name="ip_address" Type="nvarchar" MaxLength="50" />
+          <Property Name="user_agent" Type="nvarchar" MaxLength="500" />
+          <Property Name="referrer" Type="nvarchar" MaxLength="500" />
+        </EntityType>
         <EntityType Name="skills">
           <Key>
             <PropertyRef Name="id" />
@@ -66,6 +86,22 @@
           <Property Name="icon_path" Type="nvarchar" MaxLength="255" />
           <Property Name="icon_type" Type="nvarchar" MaxLength="10" />
           <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="smtp_settings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="smtp_server" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="smtp_port" Type="int" Nullable="false" />
+          <Property Name="smtp_username" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="smtp_password" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="from_email" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="from_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="enable_ssl" Type="bit" Nullable="false" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="updated_at" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="social_links">
           <Key>
@@ -98,6 +134,9 @@
           <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="password_hash" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="isPublished" Type="bit" Nullable="false" />
+          <Property Name="password_reset_token" Type="nvarchar" MaxLength="255" />
+          <Property Name="password_reset_expiry" Type="datetime" />
         </EntityType>
         <EntityType Name="workflows">
           <Key>
@@ -177,6 +216,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_profile_visits_users">
+          <End Role="users" Type="Self.users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="profile_visits" Type="Self.profile_visits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="profile_visits">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_skills_users">
           <End Role="users" Type="Self.users" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -235,11 +288,14 @@
         </Association>
         <EntityContainer Name="arifkuru_cvModelStoreContainer">
           <EntitySet Name="achievements" EntityType="Self.achievements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="admin_users" EntityType="Self.admin_users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="contact_messages" EntityType="Self.contact_messages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="educations" EntityType="Self.educations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="experiences" EntityType="Self.experiences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="interests" EntityType="Self.interests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="profile_visits" EntityType="Self.profile_visits" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="skills" EntityType="Self.skills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="smtp_settings" EntityType="Self.smtp_settings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="social_links" EntityType="Self.social_links" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user_informations" EntityType="Self.user_informations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
@@ -263,6 +319,10 @@
           <AssociationSet Name="FK_interests_users" Association="Self.FK_interests_users">
             <End Role="users" EntitySet="users" />
             <End Role="interests" EntitySet="interests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_profile_visits_users" Association="Self.FK_profile_visits_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="profile_visits" EntitySet="profile_visits" />
           </AssociationSet>
           <AssociationSet Name="FK_skills_users" Association="Self.FK_skills_users">
             <End Role="users" EntitySet="users" />
@@ -385,6 +445,10 @@
           <NavigationProperty Name="user_informations" Relationship="Self.FK_user_informations_users" FromRole="users" ToRole="user_informations" />
           <NavigationProperty Name="workflows" Relationship="Self.FK_workflows_users" FromRole="users" ToRole="workflows" />
           <NavigationProperty Name="social_links" Relationship="arifkuru_cvModel.FK_social_links_users" FromRole="users" ToRole="social_links" />
+          <Property Name="isPublished" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="profile_visits" Relationship="arifkuru_cvModel.FK_profile_visits_users" FromRole="users" ToRole="profile_visits" />
+          <Property Name="password_reset_token" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="password_reset_expiry" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="workflows">
           <Key>
@@ -554,6 +618,13 @@
             <End Role="users" EntitySet="users" />
             <End Role="social_links" EntitySet="social_links" />
           </AssociationSet>
+          <EntitySet Name="profile_visits" EntityType="arifkuru_cvModel.profile_visits" />
+          <AssociationSet Name="FK_profile_visits_users" Association="arifkuru_cvModel.FK_profile_visits_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="profile_visits" EntitySet="profile_visits" />
+          </AssociationSet>
+          <EntitySet Name="admin_users" EntityType="arifkuru_cvModel.admin_users" />
+          <EntitySet Name="smtp_settings" EntityType="arifkuru_cvModel.smtp_settings" />
         </EntityContainer>
         <EntityType Name="social_links">
           <Key>
@@ -579,6 +650,57 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="profile_visits">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="visited_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ip_address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_agent" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="referrer" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="users" Relationship="arifkuru_cvModel.FK_profile_visits_users" FromRole="profile_visits" ToRole="users" />
+        </EntityType>
+        <Association Name="FK_profile_visits_users">
+          <End Type="arifkuru_cvModel.users" Role="users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="arifkuru_cvModel.profile_visits" Role="profile_visits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="profile_visits">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="admin_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="password_hash" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="smtp_settings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="smtp_server" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="smtp_port" Type="Int32" Nullable="false" />
+          <Property Name="smtp_username" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="smtp_password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="from_email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="from_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="enable_ssl" Type="Boolean" Nullable="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -671,6 +793,9 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="arifkuru_cvModel.users">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="password_reset_expiry" ColumnName="password_reset_expiry" />
+                <ScalarProperty Name="password_reset_token" ColumnName="password_reset_token" />
+                <ScalarProperty Name="isPublished" ColumnName="isPublished" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="email" ColumnName="email" />
@@ -693,6 +818,45 @@
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="link" ColumnName="link" />
                 <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="profile_visits">
+            <EntityTypeMapping TypeName="arifkuru_cvModel.profile_visits">
+              <MappingFragment StoreEntitySet="profile_visits">
+                <ScalarProperty Name="referrer" ColumnName="referrer" />
+                <ScalarProperty Name="user_agent" ColumnName="user_agent" />
+                <ScalarProperty Name="ip_address" ColumnName="ip_address" />
+                <ScalarProperty Name="visited_at" ColumnName="visited_at" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="admin_users">
+            <EntityTypeMapping TypeName="arifkuru_cvModel.admin_users">
+              <MappingFragment StoreEntitySet="admin_users">
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="smtp_settings">
+            <EntityTypeMapping TypeName="arifkuru_cvModel.smtp_settings">
+              <MappingFragment StoreEntitySet="smtp_settings">
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="enable_ssl" ColumnName="enable_ssl" />
+                <ScalarProperty Name="from_name" ColumnName="from_name" />
+                <ScalarProperty Name="from_email" ColumnName="from_email" />
+                <ScalarProperty Name="smtp_password" ColumnName="smtp_password" />
+                <ScalarProperty Name="smtp_username" ColumnName="smtp_username" />
+                <ScalarProperty Name="smtp_port" ColumnName="smtp_port" />
+                <ScalarProperty Name="smtp_server" ColumnName="smtp_server" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

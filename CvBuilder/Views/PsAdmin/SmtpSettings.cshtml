@@ -1,0 +1,240 @@
+@model CvBuilder.Models.SmtpSettingsViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-50">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel - SMTP Settings | Profilio.space</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/public/favicon.png?v=4">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="min-h-screen bg-gray-50 antialiased">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <div class="mb-6 flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">SMTP Settings</h1>
+                <p class="text-sm text-gray-600 mt-1">Configure email server settings for sending emails.</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="/ps-admin" class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm font-bold rounded-lg transition-colors">
+                    <i class="fas fa-arrow-left mr-1"></i> Back to Panel
+                </a>
+                <span class="text-sm text-gray-600">Admin: @Session["admin_username"]</span>
+                <a href="/ps-admin/logout" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm font-bold rounded-lg transition-colors">
+                    <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <!-- Success/Error Messages -->
+        @if (ViewBag.Success != null)
+        {
+            <div class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                    <span class="text-green-800 text-sm">@ViewBag.Success</span>
+                </div>
+            </div>
+        }
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-circle text-red-600 mr-2"></i>
+                    <span class="text-red-800 text-sm">@ViewBag.Error</span>
+                </div>
+            </div>
+        }
+
+        <!-- SMTP Settings Form -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-6">
+                @using (Html.BeginForm("smtp-settings", "PsAdmin", FormMethod.Post, new { @class = "space-y-6" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.Id)
+
+                    <!-- SMTP Server -->
+                    <div>
+                        <label for="SmtpServer" class="block text-sm font-medium text-gray-700 mb-2">
+                            SMTP Server <span class="text-red-500">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.SmtpServer, new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500", placeholder = "e.g., smtp.gmail.com" })
+                        @Html.ValidationMessageFor(m => m.SmtpServer, "", new { @class = "text-red-500 text-xs mt-1" })
+                    </div>
+
+                    <!-- SMTP Port -->
+                    <div>
+                        <label for="SmtpPort" class="block text-sm font-medium text-gray-700 mb-2">
+                            SMTP Port <span class="text-red-500">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.SmtpPort, new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500", type = "number", placeholder = "e.g., 587" })
+                        @Html.ValidationMessageFor(m => m.SmtpPort, "", new { @class = "text-red-500 text-xs mt-1" })
+                        <p class="text-xs text-gray-500 mt-1">Common ports: 587 (TLS), 465 (SSL), 25 (Standard)</p>
+                    </div>
+
+                    <!-- SMTP Username -->
+                    <div>
+                        <label for="SmtpUsername" class="block text-sm font-medium text-gray-700 mb-2">
+                            SMTP Username <span class="text-red-500">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.SmtpUsername, new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500", placeholder = "Your email address" })
+                        @Html.ValidationMessageFor(m => m.SmtpUsername, "", new { @class = "text-red-500 text-xs mt-1" })
+                    </div>
+
+                    <!-- SMTP Password -->
+                    <div>
+                        <label for="SmtpPassword" class="block text-sm font-medium text-gray-700 mb-2">
+                            SMTP Password <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            @Html.PasswordFor(m => m.SmtpPassword, new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500", placeholder = "Your email password or app password", id = "smtpPassword" })
+                            <button type="button" onclick="togglePassword()" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700">
+                                <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                            </button>
+                        </div>
+                        @Html.ValidationMessageFor(m => m.SmtpPassword, "", new { @class = "text-red-500 text-xs mt-1" })
+                        <p class="text-xs text-gray-500 mt-1">For Gmail, use an App Password instead of your regular password.</p>
+                    </div>
+
+                    <!-- From Email -->
+                    <div>
+                        <label for="FromEmail" class="block text-sm font-medium text-gray-700 mb-2">
+                            From Email <span class="text-red-500">*</span>
+                        </label>
+                        @Html.TextBoxFor(m => m.FromEmail, new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500", type = "email", placeholder = "sender@example.com" })
+                        @Html.ValidationMessageFor(m => m.FromEmail, "", new { @class = "text-red-500 text-xs mt-1" })
+                    </div>
+
+                    <!-- From Name -->
+                    <div>
+                        <label for="FromName" class="block text-sm font-medium text-gray-700 mb-2">
+                            From Name
+                        </label>
+                        @Html.TextBoxFor(m => m.FromName, new { @class = "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500", placeholder = "e.g., CvBuilder System" })
+                    </div>
+
+                    <!-- Enable SSL -->
+                    <div class="flex items-center">
+                        @Html.CheckBoxFor(m => m.EnableSsl, new { @class = "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" })
+                        <label for="EnableSsl" class="ml-2 text-sm font-medium text-gray-700">
+                            Enable SSL/TLS
+                        </label>
+                    </div>
+
+                    <!-- Is Active -->
+                    <div class="flex items-center">
+                        @Html.CheckBoxFor(m => m.IsActive, new { @class = "w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" })
+                        <label for="IsActive" class="ml-2 text-sm font-medium text-gray-700">
+                            Active (Use these settings for sending emails)
+                        </label>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex items-center gap-3 pt-4 border-t border-gray-200">
+                        <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors">
+                            <i class="fas fa-save mr-2"></i> Save Settings
+                        </button>
+                        <button type="button" onclick="testSmtpConnection()" class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-colors">
+                            <i class="fas fa-vial mr-2"></i> Test Connection
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Information Card -->
+        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div class="flex items-start">
+                <i class="fas fa-info-circle text-blue-600 mr-3 mt-1"></i>
+                <div class="text-sm text-blue-800">
+                    <p class="font-semibold mb-2">SMTP Configuration Tips:</p>
+                    <ul class="list-disc list-inside space-y-1 ml-2">
+                        <li><strong>Gmail:</strong> Use smtp.gmail.com, port 587, and enable SSL. You'll need to create an <strong>App Password</strong> in your Google Account settings (not your regular password).</li>
+                        <li><strong>Outlook/Hotmail:</strong> Use smtp-mail.outlook.com, port 587, and enable SSL.</li>
+                        <li><strong>Custom SMTP:</strong> Contact your email provider for the correct SMTP server and port settings.</li>
+                        <li>After saving, use the "Test Connection" button to verify your settings work correctly.</li>
+                        <li><strong>Important:</strong> If test says "successful" but you don't receive the email, check your spam/junk folder. Also verify that you're using an App Password for Gmail, not your regular password.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById('smtpPassword');
+            const toggleIcon = document.getElementById('passwordToggleIcon');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        function testSmtpConnection() {
+            Swal.fire({
+                title: 'Testing SMTP Connection',
+                text: 'Please wait...',
+                icon: 'info',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            fetch('/ps-admin/TestSmtpConnection', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: data.message,
+                        icon: 'success',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#16A34A'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Test Failed',
+                        text: data.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: '#d33'
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'An unexpected error occurred: ' + error.message,
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#d33'
+                });
+            });
+        }
+    </script>
+</body>
+</html>
+

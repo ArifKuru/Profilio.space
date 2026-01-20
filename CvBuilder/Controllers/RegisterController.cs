@@ -22,7 +22,7 @@ namespace CvBuilder.Controllers
         {
             // --- 1. REZERVE KELİME KONTROLÜ (YENİ EKLENDİ) ---
             // Bu kullanıcı adları sistem tarafından kullanıldığı için alınamaz.
-            string[] reservedNames = { "admin", "home", "login", "register" ,"profile"};
+            string[] reservedNames = { "admin", "home", "login", "register" ,"profile","gdpr","privacy","terms","disclaimer"};
 
             // Kullanıcı adı boş değilse ve listede varsa (küçük harfe çevirip kontrol et)
             if (!string.IsNullOrEmpty(p.username) && reservedNames.Contains(p.username.ToLower()))
@@ -64,7 +64,7 @@ namespace CvBuilder.Controllers
                 Session["user_id"] = p.id;
                 Session["username"] = p.username;
 
-                return RedirectToAction("Index", "About");
+                return RedirectToAction("Index", "Dashboard");
             }
         }
 
